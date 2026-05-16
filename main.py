@@ -1,11 +1,15 @@
 import wave
 
+import json
+
 import psutil
 import questionary
 import tqdm
 
 from collections import defaultdict
 from pathlib import Path
+
+from wing_snapfile.snapfile import Snapfile
 
 
 def get_input_path() -> Path:
@@ -199,7 +203,7 @@ def main():
         "Keys Vocal",
         "Zak Vocal",
         "Zak Guitar",
-        "EMPTY Unused",
+        "Crowd",
         "Talkback",
         "Tracks L",
         "Tracks R",
@@ -267,7 +271,7 @@ def main():
                 while True:
                     pbar.update(frames_written - pbar.n)
                     frames = wf.readframes(
-                        2**16
+                        2**20
                     )  # tune for performance/memory tradeoff
                     if not frames:
                         break
@@ -299,4 +303,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    with open(Path("TestRouting.snap"), "r") as f:
+        snapfile_json = json.load(f)
+
+    snapfile = Snapfile.from_dict(snapfile_json)
+    print(snapfile.audio_engine_data.channels[1].input.settings)
