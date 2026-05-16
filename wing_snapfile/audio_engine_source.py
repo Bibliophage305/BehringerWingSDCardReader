@@ -3,51 +3,6 @@ from dataclass_type_validator import dataclass_validate
 
 from .types import OneIndexedList
 
-#     │ col│   g│icon│mode│mute│name│ osc│ pol│rcvc│ rmt│tags│user│ vph
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  LCL│  y │  y │  y │  y │  y │  y │    │  y │  y │  y │  y │    │  y 
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#    A│  y │  y │  y │  y │  y │  y │    │  y │  y │  y │  y │    │  y 
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#    B│  y │  y │  y │  y │  y │  y │    │  y │  y │  y │  y │    │  y 
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#    C│  y │  y │  y │  y │  y │  y │    │  y │  y │  y │  y │    │  y 
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  AES│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  AUX│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  CRD│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  MOD│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-# PLAY│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#   SC│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  USB│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  OSC│  y │    │  y │  y │  y │  y │  y │    │    │    │  y │    │    
-# ────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
-#  USR│  y │    │  y │  y │  y │  y │    │  y │    │    │  y │  y │    
-
-# ['g', 'vph','pol', 'rmt', 'rcvc', 'osc', 'user]
-
-# LCL: {'mode': 'M', 'g': 15, 'vph': True, 'mute': False, 'pol': False, 'col': 1, 'name': 'Kick', 'icon': 1, 'tags': '', 'rmt': 'OFF', 'rcvc': False}
-# A: {'mode': 'M', 'g': 0, 'vph': False, 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': '', 'rmt': 'OFF', 'rcvc': False}
-# B: {'mode': 'M', 'g': 0, 'vph': False, 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': '', 'rmt': 'OFF', 'rcvc': False}
-# C: {'mode': 'M', 'g': 0, 'vph': False, 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': '', 'rmt': 'OFF', 'rcvc': False}
-# AUX: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 2, 'tags': ''}
-# SC: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': ''}
-# USB: {'mode': 'ST', 'mute': False, 'pol': False, 'col': 8, 'name': 'USB 1/2', 'icon': 605, 'tags': ''}
-# CRD: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': ''}
-# MOD: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': ''}
-# PLAY: {'mode': 'ST', 'mute': False, 'pol': False, 'col': 8, 'name': '2TR', 'icon': 608, 'tags': ''}
-# AES: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': ''}
-# OSC: {'mode': 'M', 'mute': False, 'col': 1, 'name': '', 'icon': 0, 'tags': '', 'osc': {'lvl': -6, 'mode': 'PINK', 'f': 999.9920044}}
-
-
-# USR: {'mode': 'M', 'mute': False, 'pol': False, 'col': 1, 'name': '', 'icon': 0, 'tags': '', 'user': {'grp': 'OFF', 'in': 1, 'tap': 'PRE', 'lr': 'L+R'}}
 
 @dataclass_validate
 @dataclass
@@ -74,6 +29,7 @@ class AudioEngineSource:
             "tags": data["tags"],
         }
 
+
 @dataclass_validate
 @dataclass
 class AudioEnginePhaseInvertibleSource(AudioEngineSource):
@@ -86,8 +42,9 @@ class AudioEnginePhaseInvertibleSource(AudioEngineSource):
             "phase_invert": data["pol"],
         }
 
+
 @dataclass_validate
-@dataclass    
+@dataclass
 class AudioEnginePreampAccessibleSource(AudioEnginePhaseInvertibleSource):
     gain: float
     phantom_power: bool
@@ -104,6 +61,7 @@ class AudioEnginePreampAccessibleSource(AudioEnginePhaseInvertibleSource):
             "link_customization_to_source": data["rcvc"],
         }
 
+
 @dataclass_validate
 @dataclass
 class AudioEngineOscillatorSettings:
@@ -114,11 +72,12 @@ class AudioEngineOscillatorSettings:
     @classmethod
     def from_dict(cls, data):
         return cls(
-            level=data["lvl"],
+            level=float(data["lvl"]),
             mode=data["mode"],
-            frequency=data["f"],
+            frequency=float(data["f"]),
         )
-    
+
+
 @dataclass_validate
 @dataclass
 class AudioEngineOscillatorSource(AudioEngineSource):
@@ -131,35 +90,69 @@ class AudioEngineOscillatorSource(AudioEngineSource):
             "oscillator_settings": AudioEngineOscillatorSettings.from_dict(data["osc"]),
         }
 
+
 @dataclass_validate
 @dataclass
 class AudioEngineUserSignalSettings:
-    # {'grp': 'OFF', 'in': 1, 'tap': 'PRE', 'lr': 'L+R'}
     group: str
     input: int
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(**cls._from_dict_kwargs(data))
+
+    @classmethod
+    def _from_dict_kwargs(cls, data):
+        return {
+            "group": data["grp"],
+            "input": data["in"],
+        }
+
+
+@dataclass_validate
+@dataclass
+class AudioEngineUserSignalFullSettings(AudioEngineUserSignalSettings):
     tap_point: str
     lr_mode: str
 
     @classmethod
-    def from_dict(cls, data):
-        return cls(
-            group=data["grp"],
-            input=data["in"],
-            tap_point=data["tap"],
-            lr_mode=data["lr"],
-        )
+    def _from_dict_kwargs(cls, data):
+        return {
+            **AudioEngineUserSignalSettings._from_dict_kwargs(data),
+            "tap_point": data["tap"],
+            "lr_mode": data["lr"],
+        }
+
 
 @dataclass_validate
 @dataclass
 class AudioEngineUserSignalSource(AudioEnginePhaseInvertibleSource):
+    user_signal_settings: AudioEngineUserSignalFullSettings
+
+    @classmethod
+    def _from_dict_kwargs(cls, data):
+        return {
+            **AudioEnginePhaseInvertibleSource._from_dict_kwargs(data),
+            "user_signal_settings": AudioEngineUserSignalFullSettings.from_dict(
+                data["user"]
+            ),
+        }
+
+
+@dataclass_validate
+@dataclass
+class AudioEngineUserSignalPatchSource(AudioEnginePhaseInvertibleSource):
     user_signal_settings: AudioEngineUserSignalSettings
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             **AudioEnginePhaseInvertibleSource._from_dict_kwargs(data),
-            "user_signal_settings": AudioEngineUserSignalSettings.from_dict(data["user"]),
+            "user_signal_settings": AudioEngineUserSignalSettings.from_dict(
+                data["user"]
+            ),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -176,22 +169,54 @@ class AudioEngineSourceBank:
     usb_playback_sources: OneIndexedList[AudioEnginePhaseInvertibleSource]
     aes3_sources: OneIndexedList[AudioEnginePhaseInvertibleSource]
     user_signal_sources: OneIndexedList[AudioEngineUserSignalSource]
+    user_signal_patch_sources: OneIndexedList[AudioEngineUserSignalPatchSource]
     oscillator_sources: OneIndexedList[AudioEngineOscillatorSource]
 
     @classmethod
     def from_dict(cls, data):
         return cls(
-            local_sources=OneIndexedList.from_indexed_dict(data["LCL"], AudioEnginePreampAccessibleSource.from_dict),
-            aux_sources=OneIndexedList.from_indexed_dict(data["AUX"], AudioEnginePhaseInvertibleSource.from_dict),
-            aes50_a_sources=OneIndexedList.from_indexed_dict(data["A"], AudioEnginePreampAccessibleSource.from_dict),
-            aes50_b_sources=OneIndexedList.from_indexed_dict(data["B"], AudioEnginePreampAccessibleSource.from_dict),
-            aes50_c_sources=OneIndexedList.from_indexed_dict(data["C"], AudioEnginePreampAccessibleSource.from_dict),
-            stageconnect_sources=OneIndexedList.from_indexed_dict(data["SC"], AudioEnginePhaseInvertibleSource.from_dict),
-            usb_sources=OneIndexedList.from_indexed_dict(data["USB"], AudioEnginePhaseInvertibleSource.from_dict),
-            expansion_card_sources=OneIndexedList.from_indexed_dict(data["CRD"], AudioEnginePhaseInvertibleSource.from_dict),
-            module_sources=OneIndexedList.from_indexed_dict(data["MOD"], AudioEnginePhaseInvertibleSource.from_dict),
-            usb_playback_sources=OneIndexedList.from_indexed_dict(data["PLAY"], AudioEnginePhaseInvertibleSource.from_dict),
-            aes3_sources=OneIndexedList.from_indexed_dict(data["AES"], AudioEnginePhaseInvertibleSource.from_dict),
-            user_signal_sources=OneIndexedList.from_indexed_dict(data["USR"], AudioEngineUserSignalSource.from_dict),
-            oscillator_sources=OneIndexedList.from_indexed_dict(data["OSC"], AudioEngineOscillatorSource.from_dict),
+            local_sources=OneIndexedList.from_indexed_dict(
+                data["LCL"], AudioEnginePreampAccessibleSource.from_dict
+            ),
+            aux_sources=OneIndexedList.from_indexed_dict(
+                data["AUX"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            aes50_a_sources=OneIndexedList.from_indexed_dict(
+                data["A"], AudioEnginePreampAccessibleSource.from_dict
+            ),
+            aes50_b_sources=OneIndexedList.from_indexed_dict(
+                data["B"], AudioEnginePreampAccessibleSource.from_dict
+            ),
+            aes50_c_sources=OneIndexedList.from_indexed_dict(
+                data["C"], AudioEnginePreampAccessibleSource.from_dict
+            ),
+            stageconnect_sources=OneIndexedList.from_indexed_dict(
+                data["SC"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            usb_sources=OneIndexedList.from_indexed_dict(
+                data["USB"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            expansion_card_sources=OneIndexedList.from_indexed_dict(
+                data["CRD"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            module_sources=OneIndexedList.from_indexed_dict(
+                data["MOD"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            usb_playback_sources=OneIndexedList.from_indexed_dict(
+                data["PLAY"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            aes3_sources=OneIndexedList.from_indexed_dict(
+                data["AES"], AudioEnginePhaseInvertibleSource.from_dict
+            ),
+            user_signal_sources=OneIndexedList.from_indexed_dict(
+                {k: v for k, v in data["USR"].items() if int(k) <= 24},
+                AudioEngineUserSignalSource.from_dict,
+            ),
+            user_signal_patch_sources=OneIndexedList.from_indexed_dict(
+                {str(int(k) - 24): v for k, v in data["USR"].items() if int(k) > 24},
+                AudioEngineUserSignalPatchSource.from_dict,
+            ),
+            oscillator_sources=OneIndexedList.from_indexed_dict(
+                data["OSC"], AudioEngineOscillatorSource.from_dict
+            ),
         )
