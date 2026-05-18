@@ -3,7 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineSend:
+class AudioSend:
     on: bool
     fader_level: float
 
@@ -20,19 +20,19 @@ class AudioEngineSend:
 
 @dataclass_validate
 @dataclass
-class AudioEngineLimitedSend(AudioEngineSend):
+class AudioLimitedSend(AudioSend):
     pre_fader: bool
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineSend._from_dict_kwargs(data),
+            **AudioSend._from_dict_kwargs(data),
             "pre_fader": data["pre"],
         }
 
 @dataclass_validate
 @dataclass
-class AudioEngineFullSend(AudioEngineSend):
+class AudioFullSend(AudioSend):
     pre_always_on: bool
     mode: str
     pan_link: int
@@ -41,7 +41,7 @@ class AudioEngineFullSend(AudioEngineSend):
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineSend._from_dict_kwargs(data),
+            **AudioSend._from_dict_kwargs(data),
             "pre_always_on": data["pon"],
             "mode": data["mode"],
             "pan_link": data["plink"],

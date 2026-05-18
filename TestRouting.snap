@@ -39,34 +39,34 @@
             "hsg": 0,
             "hsf": 11999.27344
           },
-          "lim": 0,
+          "lim": -22,
           "dly": {
-            "on": false,
-            "m": 0.100000001
+            "on": true,
+            "m": 34.89999771
           },
           "dim": 20,
           "pfldim": 12,
-          "eqbdtrim": 0,
+          "eqbdtrim": 5,
           "srclvl": 0,
-          "srcmix": -144,
-          "src": "MAIN.1",
-          "dirin": "OFF",
+          "srcmix": -26.30498695,
+          "src": "MTX.5",
+          "dirin": "CH.3",
           "tags": ""
         },
         "2": {
-          "lvl": -144,
-          "inv": false,
-          "pan": 0,
-          "wid": 100,
+          "lvl": -7.790811539,
+          "inv": true,
+          "pan": 49,
+          "wid": 50,
           "eq": {
-            "on": false,
-            "lsg": 0,
-            "lsf": 60.13883591,
+            "on": true,
+            "lsg": -6.699999809,
+            "lsf": 272.5241394,
             "1g": 0,
             "1f": 129.8763428,
             "1q": 1.995881796,
-            "2g": 0,
-            "2f": 299.2471619,
+            "2g": 9.800001144,
+            "2f": 286.6025085,
             "2q": 1.995881796,
             "3g": 0,
             "3f": 699.4875488,
@@ -80,27 +80,27 @@
             "6g": 0,
             "6f": 6013.883789,
             "6q": 1.995881796,
-            "hsg": 0,
-            "hsf": 11999.27344
+            "hsg": -15,
+            "hsf": 3147.060059
           },
-          "lim": 0,
+          "lim": -14,
           "dly": {
-            "on": false,
-            "m": 0.100000001
+            "on": true,
+            "m": 25
           },
-          "dim": 20,
-          "pfldim": 12,
-          "eqbdtrim": 0,
-          "srclvl": 0,
-          "srcmix": -144,
+          "dim": 30,
+          "pfldim": 21,
+          "eqbdtrim": 7,
+          "srclvl": -6.656892776,
+          "srcmix": -47.63440704,
           "src": "MAIN.1",
-          "dirin": "OFF",
+          "dirin": "CH.5",
           "tags": ""
         }
       },
       "solo": {
         "mode": "LIVE",
-        "mon": "PH",
+        "mon": "PH+SPK",
         "mute": false,
         "chtap": "PFL",
         "bustap": "AFL",
@@ -145,8 +145,8 @@
           "mode": "AUTO",
           "mondim": 0,
           "busdim": 0,
-          "indiv": false,
-          "B1": false,
+          "indiv": true,
+          "B1": true,
           "B2": false,
           "B3": false,
           "B4": false,
@@ -160,7 +160,7 @@
           "B12": false,
           "B13": false,
           "B14": false,
-          "B15": false,
+          "B15": true,
           "B16": false,
           "MX1": false,
           "MX2": false,
@@ -5249,12 +5249,12 @@
             "in": 7
           },
           "5": {
-            "grp": "BUS",
-            "in": 9
+            "grp": "MON",
+            "in": 1
           },
           "6": {
-            "grp": "BUS",
-            "in": 11
+            "grp": "MON",
+            "in": 2
           },
           "7": {
             "grp": "MAIN",
@@ -6862,7 +6862,7 @@
           "att": 10,
           "hld": 10,
           "rel": 200.474884,
-          "acc": 0,
+          "acc": 55,
           "ratio": "1:3"
         },
         "dynxo": {
@@ -7832,7 +7832,7 @@
         "name": "",
         "icon": 0,
         "led": true,
-        "mute": false,
+        "mute": true,
         "fdr": -28.60000229,
         "pan": 39,
         "wid": 125,
@@ -8938,7 +8938,7 @@
           "mix": 100,
           "gain": 0,
           "1-thr": -20,
-          "1-ratio": 2,
+          "1-ratio": 1.200000048,
           "1-att": 50,
           "1-rel": 300.8161621,
           "1-filt": "BP",
@@ -11420,7 +11420,7 @@
           "gain": 0,
           "knee": "SOFT",
           "thr": 0,
-          "thrpull": false,
+          "thrpull": true,
           "ratio": 3.019951582,
           "att": "SLOW",
           "rel": 353.3465271
@@ -11767,7 +11767,7 @@
           "mdl": "ONEC",
           "mix": 100,
           "gain": 0,
-          "gr": 3,
+          "gr": 8.400000572,
           "dag": true
         },
         "dynxo": {
@@ -13507,11 +13507,11 @@
           "heq": "SHV"
         },
         "dyn": {
-          "on": false,
+          "on": true,
           "mdl": "LMT",
           "mix": 100,
           "gain": 0,
-          "tspd": 0.5,
+          "tspd": 0.349999994,
           "trans": 0,
           "tgain": 0,
           "ton": false,
@@ -27295,7 +27295,7 @@
         "icon": 0,
         "led": true,
         "busmono": false,
-        "mute": false,
+        "mute": true,
         "fdr": -144,
         "pan": 0,
         "wid": 100,
@@ -27573,7 +27573,7 @@
         "icon": 2,
         "led": false,
         "busmono": true,
-        "mute": false,
+        "mute": true,
         "fdr": -32.79999924,
         "pan": 0,
         "wid": 0,
@@ -27656,10 +27656,10 @@
           }
         },
         "dir": {
-          "on": false,
-          "lvl": -144,
-          "inv": false,
-          "in": "OFF"
+          "on": true,
+          "lvl": -14.40000153,
+          "inv": true,
+          "in": "AES"
         },
         "col": 1,
         "name": "",

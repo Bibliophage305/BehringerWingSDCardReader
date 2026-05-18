@@ -308,4 +308,4 @@ if __name__ == "__main__":
         snapfile_json = json.load(f)
 
     snapfile = Snapfile.from_dict(snapfile_json)
-    print(snapfile.audio_engine_data.channels[1].input.settings)
+    # print(snapfile.audio_engine_data.channels[1].input.settings)

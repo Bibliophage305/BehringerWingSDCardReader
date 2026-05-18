@@ -3,7 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineGateSidechain:
+class AudioGateSidechain:
     type: str
     frequency: float
     q: float
@@ -11,8 +11,8 @@ class AudioEngineGateSidechain:
     tap: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineGateSidechain":
-        return AudioEngineGateSidechain(
+    def from_dict(cls, data: dict[str, object]) -> "AudioGateSidechain":
+        return AudioGateSidechain(
             type=data["type"],
             frequency=float(data["f"]),
             q=float(data["q"]),

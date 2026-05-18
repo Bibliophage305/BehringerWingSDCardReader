@@ -3,14 +3,14 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineDynamicsCrossover:
+class AudioDynamicsCrossover:
     depth: int
     type: str
     frequency: float
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineDynamicsCrossover":
-        return AudioEngineDynamicsCrossover(
+    def from_dict(cls, data: dict[str, object]) -> "AudioDynamicsCrossover":
+        return AudioDynamicsCrossover(
             depth=data["depth"],
             type=data["type"],
             frequency=float(data["f"])

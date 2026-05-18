@@ -3,13 +3,13 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEnginePreInsertPlugin:
+class AudioPreInsertPlugin:
     on: bool
     insert: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEnginePreInsertPlugin":
-        return AudioEnginePreInsertPlugin(
+    def from_dict(cls, data: dict[str, object]) -> "AudioPreInsertPlugin":
+        return AudioPreInsertPlugin(
             on=data["on"],
             insert=data["ins"]
         )

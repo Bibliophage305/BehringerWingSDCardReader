@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
-from .dynamics_plugins import DynamicsPlugin, parse_dynamics_plugin
+from wing_snapfile.audio.dynamics_plugins import DynamicsPlugin, parse_dynamics_plugin
 
 @dataclass_validate
 @dataclass
-class AudioEngineDynamics:
+class AudioDynamics:
     on: bool
     model: str
     mix: int
@@ -12,8 +12,8 @@ class AudioEngineDynamics:
     parameters: DynamicsPlugin
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineDynamics":
-        return AudioEngineDynamics(
+    def from_dict(cls, data: dict[str, object]) -> "AudioDynamics":
+        return AudioDynamics(
             on=data["on"],
             model=data["mdl"],
             mix=data["mix"],

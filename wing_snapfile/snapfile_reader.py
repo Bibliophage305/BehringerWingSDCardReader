@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .types import OneIndexedList
+from wing_snapfile.types import OneIndexedList
 
 JsonPrimitive = str | int | float | bool | None
 
@@ -97,14 +97,14 @@ class WLiveCard:
 
 
 @dataclass
-class AudioEngineCards:
+class AudioCards:
     wlive: WLiveCard
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineCards":
+    def from_dict(cls, data: dict[str, object]) -> "AudioCards":
         wlive = data["wlive"]
         slots = _parse_numbered_list(wlive, WLiveSlot.from_dict)
-        return AudioEngineCards(
+        return AudioCards(
             wlive=WLiveCard(
                 slots=slots,
                 autoin=wlive["autoin"],
@@ -118,19 +118,19 @@ class AudioEngineCards:
 
 
 @dataclass
-class AudioEnginePlay:
+class AudioPlay:
     repeat: bool
 
 
 @dataclass
-class AudioEngineRec:
+class AudioRec:
     channels: str
     path: str
     resolution: str
 
 
 @dataclass
-class ConsoleEngineDataDaw:
+class ConsoleDataDaw:
     on: bool
     conn: str
     emul: str
@@ -140,8 +140,8 @@ class ConsoleEngineDataDaw:
     preset: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "ConsoleEngineDataDaw":
-        return ConsoleEngineDataDaw(
+    def from_dict(cls, data: dict[str, object]) -> "ConsoleDataDaw":
+        return ConsoleDataDaw(
             on=data["on"],
             conn=data["conn"],
             emul=data["emul"],
@@ -221,16 +221,16 @@ class NamedLayerSurface:
 
 
 @dataclass
-class ConsoleEngineDataLayer:
+class ConsoleDataLayer:
     surfaces: list[NamedLayerSurface]
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "ConsoleEngineDataLayer":
+    def from_dict(cls, data: dict[str, object]) -> "ConsoleDataLayer":
         surfaces = [
             NamedLayerSurface(name=name, surface=LayerSurface.from_dict(surface_value))
             for name, surface_value in data.items()
         ]
-        return ConsoleEngineDataLayer(surfaces=surfaces)
+        return ConsoleDataLayer(surfaces=surfaces)
 
 
 @dataclass
@@ -283,22 +283,22 @@ class NamedNode:
 
 
 @dataclass
-class ConsoleEngineDataUser:
+class ConsoleDataUser:
     pages:list[UserPage]
     settings: list[NamedNode]
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "ConsoleEngineDataUser":
+    def from_dict(cls, data: dict[str, object]) -> "ConsoleDataUser":
         pages = _parse_numbered_list(data, UserPage.from_dict)
         settings = [
             NamedNode(name=name, value=_parse_json_node(value))
             for name, value in data.items()
             if not name.isdigit()
         ]
-        return ConsoleEngineDataUser(pages=pages, settings=settings)
+        return ConsoleDataUser(pages=pages, settings=settings)
 
 @dataclass
-class ConsoleEngineDataConfig:
+class ConsoleDataConfig:
     lights: dict
     rta: dict
     muteovr: bool
@@ -336,8 +336,8 @@ class ConsoleEngineDataConfig:
     showfdr: bool
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "ConsoleEngineDataConfig":
-        return ConsoleEngineDataConfig(
+    def from_dict(cls, data: dict[str, object]) -> "ConsoleDataConfig":
+        return ConsoleDataConfig(
             lights=data["lights"],
             rta=data["rta"],
             muteovr=data["muteovr"],

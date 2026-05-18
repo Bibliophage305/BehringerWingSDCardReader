@@ -3,15 +3,13 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineRecordSettings:
-    path: str
-    resolution: str
-    channels: str
+class AudioMuteGroup:
+    name: str
+    mute_on: bool
 
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
-            path=data["path"],
-            resolution=data["resolution"],
-            channels=data["channels"],
+            name=data["name"],
+            mute_on=data["mute"],
         )

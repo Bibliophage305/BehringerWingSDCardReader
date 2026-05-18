@@ -1,19 +1,19 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
-from .audio_engine_dynamics_crossover import AudioEngineDynamicsCrossover
-from .audio_engine_dynamics_sidechain import AudioEngineDynamicsSidechain
-from .audio_engine_eq import AudioEngineEQ
-from .audio_engine_input import AudioEngineInput, AudioEngineRoutableInput
-from .audio_engine_filter import AudioEngineFilter
-from .audio_engine_tap_eq import AudioEngineTapEQ
-from .audio_engine_gate_sidechain import AudioEngineGateSidechain
-from .audio_engine_dynamics import AudioEngineDynamics
-from .audio_engine_pre_insert_plugin import AudioEnginePreInsertPlugin
-from .audio_engine_post_insert_plugin import AudioEnginePostInsertPlugin
-from .audio_engine_send import AudioEngineFullSend, AudioEngineLimitedSend
+from wing_snapfile.audio.dynamics_crossover import AudioDynamicsCrossover
+from wing_snapfile.audio.dynamics_sidechain import AudioDynamicsSidechain
+from wing_snapfile.audio.eq import AudioEQ
+from wing_snapfile.audio.input import AudioInput, AudioRoutableInput
+from wing_snapfile.audio.filter import AudioFilter
+from wing_snapfile.audio.tap_eq import AudioTapEQ
+from wing_snapfile.audio.gate_sidechain import AudioGateSidechain
+from wing_snapfile.audio.dynamics import AudioDynamics
+from wing_snapfile.audio.pre_insert_plugin import AudioPreInsertPlugin
+from wing_snapfile.audio.post_insert_plugin import AudioPostInsertPlugin
+from wing_snapfile.audio.send import AudioFullSend, AudioLimitedSend
 
-from .snapfile_reader import OneIndexedList
+from wing_snapfile.types import OneIndexedList
 
 @dataclass_validate
 @dataclass
@@ -23,7 +23,7 @@ class Routable:
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            "input": AudioEngineRoutableInput.from_dict(data["in"]),
+            "input": AudioRoutableInput.from_dict(data["in"]),
             "link_customization_to_source": data["clink"],
         }
 
@@ -41,77 +41,77 @@ class Soloable:
 @dataclass_validate
 @dataclass
 class FullBusSendable:
-    bus_sends: OneIndexedList[AudioEngineFullSend]
+    bus_sends: OneIndexedList[AudioFullSend]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             "bus_sends": OneIndexedList.from_indexed_dict(
                 {k: v for k, v in data["send"].items() if not k.startswith("MX")},
-                AudioEngineFullSend.from_dict,
+                AudioFullSend.from_dict,
             ),
         }
 
 @dataclass_validate
 @dataclass
 class LimitedBusSendable:
-    bus_sends: OneIndexedList[AudioEngineLimitedSend]
+    bus_sends: OneIndexedList[AudioLimitedSend]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             "bus_sends": OneIndexedList.from_indexed_dict(
                 {k: v for k, v in data["send"].items() if not k.startswith("MX")},
-                AudioEngineLimitedSend.from_dict,
+                AudioLimitedSend.from_dict,
             ),
         }
 
 @dataclass_validate
 @dataclass
 class FullMatrixSendable:
-    matrix_sends: OneIndexedList[AudioEngineFullSend]
+    matrix_sends: OneIndexedList[AudioFullSend]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             "matrix_sends": OneIndexedList.from_indexed_dict(
                 {k[2:]: v for k, v in data["send"].items() if k.startswith("MX")},
-                AudioEngineFullSend.from_dict,
+                AudioFullSend.from_dict,
             ),
         }
 
 @dataclass_validate
 @dataclass
 class LimitedMatrixSendable:
-    matrix_sends: OneIndexedList[AudioEngineLimitedSend]
+    matrix_sends: OneIndexedList[AudioLimitedSend]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             "matrix_sends": OneIndexedList.from_indexed_dict(
                 {k[2:]: v for k, v in data["send"].items() if k.startswith("MX")},
-                AudioEngineLimitedSend.from_dict,
+                AudioLimitedSend.from_dict,
             ),
         }
 
 @dataclass_validate
 @dataclass
 class MainSendable:
-    main_sends: OneIndexedList[AudioEngineLimitedSend]
+    main_sends: OneIndexedList[AudioLimitedSend]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
             "main_sends": OneIndexedList.from_indexed_dict(
                 data["main"],
-                AudioEngineLimitedSend.from_dict,
+                AudioLimitedSend.from_dict,
             ),
         }
 
 @dataclass_validate
 @dataclass
-class AudioEngineChannel:
-    input: AudioEngineInput
+class AudioChannel:
+    input: AudioInput
     color: int
     name: str
     icon: int
@@ -121,15 +121,15 @@ class AudioEngineChannel:
     pan: int
     width: int
     monitor_mode: str
-    eq_plugin: AudioEngineEQ
-    dynamics_plugin: AudioEngineDynamics
-    pre_insert_plugin: AudioEnginePreInsertPlugin
+    eq_plugin: AudioEQ
+    dynamics_plugin: AudioDynamics
+    pre_insert_plugin: AudioPreInsertPlugin
     tags: list[str]
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            "input": AudioEngineInput.from_dict(data["in"]),
+            "input": AudioInput.from_dict(data["in"]),
             "color": data["col"],
             "name": data["name"],
             "icon": data["icon"],
@@ -139,9 +139,9 @@ class AudioEngineChannel:
             "pan": data["pan"],
             "width": data["wid"],
             "monitor_mode": data["mon"],
-            "eq_plugin": AudioEngineEQ.from_dict(data["eq"]),
-            "dynamics_plugin": AudioEngineDynamics.from_dict(data["dyn"]),
-            "pre_insert_plugin": AudioEnginePreInsertPlugin.from_dict(data["preins"]),
+            "eq_plugin": AudioEQ.from_dict(data["eq"]),
+            "dynamics_plugin": AudioDynamics.from_dict(data["dyn"]),
+            "pre_insert_plugin": AudioPreInsertPlugin.from_dict(data["preins"]),
             "tags": data["tags"].split(","),
         }
 
@@ -151,13 +151,13 @@ class AudioEngineChannel:
 
 @dataclass_validate
 @dataclass
-class AudioEngineBusChannel(AudioEngineChannel, LimitedBusSendable, LimitedMatrixSendable, MainSendable):
+class AudioBusChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, MainSendable):
     mono_bus: bool
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineChannel._from_dict_kwargs(data),
+            **AudioChannel._from_dict_kwargs(data),
             **LimitedBusSendable._from_dict_kwargs(data),
             **LimitedMatrixSendable._from_dict_kwargs(data),
             **MainSendable._from_dict_kwargs(data),
@@ -166,7 +166,7 @@ class AudioEngineBusChannel(AudioEngineChannel, LimitedBusSendable, LimitedMatri
 
 @dataclass_validate
 @dataclass
-class AudioEngineDirectInput:
+class AudioDirectInput:
     direct_input: bool
     fader_level: float
     phase_invert: bool
@@ -183,27 +183,27 @@ class AudioEngineDirectInput:
 
 @dataclass_validate
 @dataclass
-class AudioEngineMatrixChannel(AudioEngineChannel):
-    direct_input_settings: AudioEngineDirectInput
+class AudioMatrixChannel(AudioChannel):
+    direct_input_settings: AudioDirectInput
     mono_bus: bool
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineChannel._from_dict_kwargs(data),
-            "direct_input_settings": AudioEngineDirectInput.from_dict(data["dir"]),
+            **AudioChannel._from_dict_kwargs(data),
+            "direct_input_settings": AudioDirectInput.from_dict(data["dir"]),
             "mono_bus": data["busmono"],
         }
 
 @dataclass_validate
 @dataclass
-class AudioEngineMainChannel(AudioEngineChannel, LimitedBusSendable, LimitedMatrixSendable):
+class AudioMainChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable):
     mono_bus: bool
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineChannel._from_dict_kwargs(data),
+            **AudioChannel._from_dict_kwargs(data),
             **LimitedBusSendable._from_dict_kwargs(data),
             **LimitedMatrixSendable._from_dict_kwargs(data),
             "mono_bus": data["busmono"],
@@ -211,11 +211,11 @@ class AudioEngineMainChannel(AudioEngineChannel, LimitedBusSendable, LimitedMatr
 
 @dataclass_validate
 @dataclass
-class AudioEngineAuxChannel(AudioEngineChannel, Routable, Soloable, FullBusSendable, FullMatrixSendable, MainSendable):
+class AudioAuxChannel(AudioChannel, Routable, Soloable, FullBusSendable, FullMatrixSendable, MainSendable):
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineChannel._from_dict_kwargs(data),
+            **AudioChannel._from_dict_kwargs(data),
             **Routable._from_dict_kwargs(data),
             **Soloable._from_dict_kwargs(data),
             **FullBusSendable._from_dict_kwargs(data),
@@ -225,35 +225,35 @@ class AudioEngineAuxChannel(AudioEngineChannel, Routable, Soloable, FullBusSenda
 
 @dataclass_validate
 @dataclass
-class AudioEngineFullChannel(AudioEngineChannel, Routable, Soloable, FullBusSendable, FullMatrixSendable, MainSendable):
-    filter: AudioEngineFilter
+class AudioFullChannel(AudioChannel, Routable, Soloable, FullBusSendable, FullMatrixSendable, MainSendable):
+    filter: AudioFilter
     processing_order: str
     processing_tap_point: str
-    tap_eq: AudioEngineTapEQ
-    gate_plugin: AudioEngineDynamics
-    gate_sidechain: AudioEngineGateSidechain
-    dynamics_crossover: AudioEngineDynamicsCrossover
-    dynamics_sidechain: AudioEngineDynamicsSidechain
+    tap_eq: AudioTapEQ
+    gate_plugin: AudioDynamics
+    gate_sidechain: AudioGateSidechain
+    dynamics_crossover: AudioDynamicsCrossover
+    dynamics_sidechain: AudioDynamicsSidechain
     tap_width: int
-    post_insert_plugin: AudioEnginePostInsertPlugin
+    post_insert_plugin: AudioPostInsertPlugin
 
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineChannel._from_dict_kwargs(data),
+            **AudioChannel._from_dict_kwargs(data),
             **Routable._from_dict_kwargs(data),
             **Soloable._from_dict_kwargs(data),
             **FullBusSendable._from_dict_kwargs(data),
             **FullMatrixSendable._from_dict_kwargs(data),
             **MainSendable._from_dict_kwargs(data),
-            "filter": AudioEngineFilter.from_dict(data["flt"]),
+            "filter": AudioFilter.from_dict(data["flt"]),
             "processing_order": data["proc"],
             "processing_tap_point": data["ptap"],
-            "tap_eq": AudioEngineTapEQ.from_dict(data["peq"]),
-            "gate_plugin": AudioEngineDynamics.from_dict(data["gate"]),
-            "gate_sidechain": AudioEngineGateSidechain.from_dict(data["gatesc"]),
-            "dynamics_crossover": AudioEngineDynamicsCrossover.from_dict(data["dynxo"]),
-            "dynamics_sidechain": AudioEngineDynamicsSidechain.from_dict(data["dynsc"]),
+            "tap_eq": AudioTapEQ.from_dict(data["peq"]),
+            "gate_plugin": AudioDynamics.from_dict(data["gate"]),
+            "gate_sidechain": AudioGateSidechain.from_dict(data["gatesc"]),
+            "dynamics_crossover": AudioDynamicsCrossover.from_dict(data["dynxo"]),
+            "dynamics_sidechain": AudioDynamicsSidechain.from_dict(data["dynsc"]),
             "tap_width": data["tapwid"],
-            "post_insert_plugin": AudioEnginePostInsertPlugin.from_dict(data["postins"]),
+            "post_insert_plugin": AudioPostInsertPlugin.from_dict(data["postins"]),
         }

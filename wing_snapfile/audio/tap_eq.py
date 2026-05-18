@@ -3,7 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineTapEQ:
+class AudioTapEQ:
     on: bool
     band1_gain: float
     band1_freq: float
@@ -16,8 +16,8 @@ class AudioEngineTapEQ:
     band3_q: float
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineTapEQ":
-        return AudioEngineTapEQ(
+    def from_dict(cls, data: dict[str, object]) -> "AudioTapEQ":
+        return AudioTapEQ(
             on=data["on"],
             band1_gain=float(data["1g"]),
             band1_freq=float(data["1f"]),

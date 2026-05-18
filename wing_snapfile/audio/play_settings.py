@@ -3,7 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEnginePlaySettings:
+class AudioPlaySettings:
     repeat: bool
 
     @classmethod

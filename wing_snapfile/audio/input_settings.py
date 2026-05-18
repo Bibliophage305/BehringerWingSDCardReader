@@ -20,7 +20,7 @@ class Delayable:
 
 @dataclass_validate
 @dataclass
-class AudioEngineInputSettings:
+class AudioInputSettings:
     is_phase_inverted: bool
     trim: float
     balance: float
@@ -40,7 +40,7 @@ class AudioEngineInputSettings:
 
 @dataclass_validate
 @dataclass
-class AudioEngineSourceSwitchableDelayableInputSettings(AudioEngineInputSettings, SourceSwitchable, Delayable):
+class AudioSourceSwitchableDelayableInputSettings(AudioInputSettings, SourceSwitchable, Delayable):
     auto_source_switch: bool
     use_alternate_source: bool
     is_phase_inverted: bool
@@ -53,7 +53,7 @@ class AudioEngineSourceSwitchableDelayableInputSettings(AudioEngineInputSettings
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            **AudioEngineInputSettings._from_dict_kwargs(data),
+            **AudioInputSettings._from_dict_kwargs(data),
             **SourceSwitchable._from_dict_kwargs(data),
             **Delayable._from_dict_kwargs(data),
         }

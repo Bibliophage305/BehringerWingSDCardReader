@@ -3,7 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 @dataclass_validate
 @dataclass
-class AudioEngineFilter:
+class AudioFilter:
     low_cut_enabled: bool
     low_cut_frequency: float
     low_cut_slope: str
@@ -15,8 +15,8 @@ class AudioEngineFilter:
     tilt_amount: float
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineFilter":
-        return AudioEngineFilter(
+    def from_dict(cls, data: dict[str, object]) -> "AudioFilter":
+        return AudioFilter(
             low_cut_enabled=data["lc"],
             low_cut_frequency=float(data["lcf"]),
             low_cut_slope=data["lcs"],

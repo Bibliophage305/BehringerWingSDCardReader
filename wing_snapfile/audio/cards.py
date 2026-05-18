@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
-from .types import OneIndexedList
+from wing_snapfile.types import OneIndexedList
 
 @dataclass_validate
 @dataclass
-class AudioEngineWLiveCardSlotConfig:
+class AudioWLiveCardSlotConfig:
     rectracks: int
     playmode: str
 
@@ -18,25 +18,25 @@ class AudioEngineWLiveCardSlotConfig:
     
 @dataclass_validate
 @dataclass
-class AudioEngineWLiveCardSlot:
-    config: AudioEngineWLiveCardSlotConfig
+class AudioWLiveCardSlot:
+    config: AudioWLiveCardSlotConfig
 
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
-            config=AudioEngineWLiveCardSlotConfig.from_dict(data["cfg"])
+            config=AudioWLiveCardSlotConfig.from_dict(data["cfg"])
         )
 
 @dataclass_validate
 @dataclass
-class AudioEngineWLiveCard:
+class AudioWLiveCard:
     sd_link_mode: str
     auto_input: str
     show_meters: bool
     auto_stop: str
     auto_play: str
     auto_record: str
-    slots: OneIndexedList[AudioEngineWLiveCardSlot]
+    slots: OneIndexedList[AudioWLiveCardSlot]
 
     @classmethod
     def from_dict(cls, data: dict):
@@ -47,12 +47,12 @@ class AudioEngineWLiveCard:
             auto_stop=data["auto_stop"],
             auto_play=data["auto_play"],
             auto_record=data["auto_rec"],
-            slots=OneIndexedList.from_indexed_dict({k: v for k, v in data.items() if k.isdigit()}, AudioEngineWLiveCardSlot.from_dict),
+            slots=OneIndexedList.from_indexed_dict({k: v for k, v in data.items() if k.isdigit()}, AudioWLiveCardSlot.from_dict),
         )
     
 @dataclass_validate
 @dataclass
-class AudioEngineWMADICard:
+class AudioWMADICard:
     mode: str
     rxclock: bool
 
@@ -65,13 +65,13 @@ class AudioEngineWMADICard:
 
 @dataclass_validate
 @dataclass
-class AudioEngineCards:
-    wlive_card: AudioEngineWLiveCard
-    wmadi_card: AudioEngineWMADICard
+class AudioCards:
+    wlive_card: AudioWLiveCard
+    wmadi_card: AudioWMADICard
 
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
-            wlive_card=AudioEngineWLiveCard.from_dict(data["wlive"]),
-            wmadi_card=AudioEngineWMADICard.from_dict(data["wmadi"]),
+            wlive_card=AudioWLiveCard.from_dict(data["wlive"]),
+            wmadi_card=AudioWMADICard.from_dict(data["wmadi"]),
         )

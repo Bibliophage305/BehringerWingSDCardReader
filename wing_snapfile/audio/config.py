@@ -1,17 +1,21 @@
 # TODO
 
 from dataclasses import dataclass
-from .snapfile_reader import (
+from dataclass_type_validator import dataclass_validate
+from wing_snapfile.snapfile_reader import (
     _parse_json_node,
     _parse_json_object_list,
     JsonObject,
 )
+from wing_snapfile.types import OneIndexedList
+from wing_snapfile.audio.monitor import AudioMonitor
 
+@dataclass_validate
 @dataclass
-class AudioEngineConfig:
+class AudioConfig:
     mainlink: str
     dcamgrp: bool
-    mon: list[JsonObject]
+    mon: OneIndexedList[AudioMonitor]
     solo: JsonObject
     rta: JsonObject
     mtr: JsonObject
@@ -19,11 +23,11 @@ class AudioEngineConfig:
     amix: JsonObject
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "AudioEngineConfig":
-        return AudioEngineConfig(
+    def from_dict(cls, data: dict[str, object]) -> "AudioConfig":
+        return AudioConfig(
             mainlink=data["mainlink"],
             dcamgrp=data["dcamgrp"],
-            mon=_parse_json_object_list(data["mon"]),
+            mon=OneIndexedList.from_indexed_dict(data["mon"], AudioMonitor.from_dict),
             solo=_parse_json_node(data["solo"]),
             rta=_parse_json_node(data["rta"]),
             mtr=_parse_json_node(data["mtr"]),
