@@ -29,3 +29,17 @@ class AudioTapEQ:
             band3_freq=float(data["3f"]),
             band3_q=float(data["3q"])
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "1g": self.band1_gain,
+            "1f": self.band1_freq,
+            "1q": self.band1_q,
+            "2g": self.band2_gain,
+            "2f": self.band2_freq,
+            "2q": self.band2_q,
+            "3g": self.band3_gain,
+            "3f": self.band3_freq,
+            "3q": self.band3_q,
+        }

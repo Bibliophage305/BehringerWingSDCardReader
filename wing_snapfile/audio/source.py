@@ -28,6 +28,16 @@ class AudioSource:
             "icon": data["icon"],
             "tags": data["tags"],
         }
+    
+    def to_dict(self):
+        return {
+            "mode": self.mode,
+            "mute": self.mute,
+            "col": self.color,
+            "name": self.name,
+            "icon": self.icon,
+            "tags": self.tags,
+        }
 
 
 @dataclass_validate
@@ -40,6 +50,12 @@ class AudioPhaseInvertibleSource(AudioSource):
         return {
             **AudioSource._from_dict_kwargs(data),
             "phase_invert": data["pol"],
+        }
+
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "pol": self.phase_invert,
         }
 
 
@@ -60,6 +76,15 @@ class AudioPreampAccessibleSource(AudioPhaseInvertibleSource):
             "remote_control": data["rmt"],
             "link_customization_to_source": data["rcvc"],
         }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "g": self.gain,
+            "vph": self.phantom_power,
+            "rmt": self.remote_control,
+            "rcvc": self.link_customization_to_source,
+        }
 
 
 @dataclass_validate
@@ -76,6 +101,13 @@ class AudioOscillatorSettings:
             mode=data["mode"],
             frequency=float(data["f"]),
         )
+    
+    def to_dict(self):
+        return {
+            "lvl": self.level,
+            "mode": self.mode,
+            "f": self.frequency,
+        }
 
 
 @dataclass_validate
@@ -88,6 +120,12 @@ class AudioOscillatorSource(AudioSource):
         return {
             **AudioSource._from_dict_kwargs(data),
             "oscillator_settings": AudioOscillatorSettings.from_dict(data["osc"]),
+        }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "osc": self.oscillator_settings.to_dict(),
         }
 
 
@@ -107,6 +145,12 @@ class AudioUserSignalSettings:
             "group": data["grp"],
             "input": data["in"],
         }
+    
+    def to_dict(self):
+        return {
+            "grp": self.group,
+            "in": self.input,
+        }
 
 
 @dataclass_validate
@@ -123,6 +167,13 @@ class AudioUserSignalFullSettings(AudioUserSignalSettings):
             "lr_mode": data["lr"],
         }
 
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "tap": self.tap_point,
+            "lr": self.lr_mode,
+        }
+
 
 @dataclass_validate
 @dataclass
@@ -136,6 +187,12 @@ class AudioUserSignalSource(AudioPhaseInvertibleSource):
             "user_signal_settings": AudioUserSignalFullSettings.from_dict(
                 data["user"]
             ),
+        }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "user": self.user_signal_settings.to_dict(),
         }
 
 
@@ -151,6 +208,12 @@ class AudioUserSignalPatchSource(AudioPhaseInvertibleSource):
             "user_signal_settings": AudioUserSignalSettings.from_dict(
                 data["user"]
             ),
+        }
+
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "user": self.user_signal_settings.to_dict(),
         }
 
 
@@ -220,3 +283,23 @@ class AudioSourceBank:
                 data["OSC"], AudioOscillatorSource.from_dict
             ),
         )
+    
+    def to_dict(self):
+        return {
+            "LCL": self.local_sources.to_dict(),
+            "AUX": self.aux_sources.to_dict(),
+            "A": self.aes50_a_sources.to_dict(),
+            "B": self.aes50_b_sources.to_dict(),
+            "C": self.aes50_c_sources.to_dict(),
+            "SC": self.stageconnect_sources.to_dict(),
+            "USB": self.usb_sources.to_dict(),
+            "CRD": self.expansion_card_sources.to_dict(),
+            "MOD": self.module_sources.to_dict(),
+            "PLAY": self.usb_playback_sources.to_dict(),
+            "AES": self.aes3_sources.to_dict(),
+            "USR": {
+                **self.user_signal_sources.to_dict(),
+                **self.user_signal_patch_sources.to_dict(offset=24),
+            },
+            "OSC": self.oscillator_sources.to_dict(),
+        }

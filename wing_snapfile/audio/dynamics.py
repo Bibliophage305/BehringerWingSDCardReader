@@ -20,3 +20,12 @@ class AudioDynamics:
             gain=float(data["gain"]),
             parameters=parse_dynamics_plugin(data)
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "mdl": self.model,
+            "mix": self.mix,
+            "gain": self.gain,
+            **self.parameters.to_dict(),
+        }

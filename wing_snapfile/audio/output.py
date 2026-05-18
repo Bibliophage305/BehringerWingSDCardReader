@@ -15,6 +15,12 @@ class AudioOutput:
             input_group=data["grp"],
             input_number=data["in"],
         )
+    
+    def to_dict(self):
+        return {
+            "grp": self.input_group,
+            "in": self.input_number,
+        }
 
 
 @dataclass_validate
@@ -69,3 +75,18 @@ class AudioOutputBank:
                 data["AES"], AudioOutput.from_dict
             ),
         )
+
+    def to_dict(self):
+        return {
+            "LCL": self.local_outputs.to_dict(),
+            "AUX": self.aux_outputs.to_dict(),
+            "A": self.aes50_a_outputs.to_dict(),
+            "B": self.aes50_b_outputs.to_dict(),
+            "C": self.aes50_c_outputs.to_dict(),
+            "SC": self.stageconnect_outputs.to_dict(),
+            "USB": self.usb_outputs.to_dict(),
+            "CRD": self.expansion_card_outputs.to_dict(),
+            "MOD": self.module_outputs.to_dict(),
+            "REC": self.usb_recording_outputs.to_dict(),
+            "AES": self.aes3_outputs.to_dict(),
+        }

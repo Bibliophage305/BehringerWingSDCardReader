@@ -23,3 +23,8 @@ class OneIndexedList(list):
                 raise ValueError(f"Expected contiguous 1-indexed keys, found {k} at position {i + 1}")
             items.append(parser(v))
         return items
+    
+    def to_dict(self, offset=0, prefix="") -> dict[str, object]:
+        return {f"{prefix}{i}": 
+                item if type(item) in (int, float, str, bool, dict) else item.to_dict()
+                for i, item in enumerate(self, start=1+offset)}

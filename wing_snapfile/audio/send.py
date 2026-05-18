@@ -17,6 +17,12 @@ class AudioSend:
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**cls._from_dict_kwargs(data))
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "lvl": self.fader_level,
+        }
 
 @dataclass_validate
 @dataclass
@@ -28,6 +34,12 @@ class AudioLimitedSend(AudioSend):
         return {
             **AudioSend._from_dict_kwargs(data),
             "pre_fader": data["pre"],
+        }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "pre": self.pre_fader,
         }
 
 @dataclass_validate
@@ -46,4 +58,13 @@ class AudioFullSend(AudioSend):
             "mode": data["mode"],
             "pan_link": data["plink"],
             "pan": int(data["pan"]),
+        }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "pon": self.pre_always_on,
+            "mode": self.mode,
+            "plink": self.pan_link,
+            "pan": self.pan,
         }

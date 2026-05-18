@@ -55,6 +55,33 @@ class AudioMonitorEQ:
             hsg=float(data["hsg"]),
             hsf=float(data["hsf"])
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "lsg": self.lsg,
+            "lsf": self.lsf,
+            "1g": self.g1,
+            "1f": self.f1,
+            "1q": self.q1,
+            "2g": self.g2,
+            "2f": self.f2,
+            "2q": self.q2,
+            "3g": self.g3,
+            "3f": self.f3,
+            "3q": self.q3,
+            "4g": self.g4,
+            "4f": self.f4,
+            "4q": self.q4,
+            "5g": self.g5,
+            "5f": self.f5,
+            "5q": self.q5,
+            "6g": self.g6,
+            "6f": self.f6,
+            "6q": self.q6,
+            "hsg": self.hsg,
+            "hsf": self.hsf
+        }
 
 @dataclass_validate
 @dataclass
@@ -68,6 +95,12 @@ class AudioMonitorDelay:
             on=data["on"],
             metres=float(data["m"])
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "m": self.metres
+        }
 
 @dataclass_validate
 @dataclass
@@ -107,3 +140,22 @@ class AudioMonitor:
             direct_input=data["dirin"],
             tags=data["tags"].split(","),
         )
+    
+    def to_dict(self):
+        return {
+            "lvl": self.fader_level,
+            "inv": self.phase_invert,
+            "pan": self.pan,
+            "wid": self.width,
+            "eq": self.eq.to_dict(),
+            "lim": self.limiter_threshold,
+            "dly": self.delay.to_dict(),
+            "dim": self.dim,
+            "pfldim": self.pfl_dim,
+            "eqbdtrim": self.band_solo_trim,
+            "srclvl": self.source_level,
+            "srcmix": self.source_mix,
+            "src": self.source,
+            "dirin": self.direct_input,
+            "tags": ",".join(self.tags),
+        }

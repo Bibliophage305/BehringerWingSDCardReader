@@ -8058,11 +8058,11 @@
           },
           "MX1": {
             "on": false,
-            "lvl": -144,
-            "pon": false,
-            "mode": "PRE",
-            "plink": 0,
-            "pan": 0
+            "lvl": 0,
+            "pon": true,
+            "mode": "GRP",
+            "plink": 1,
+            "pan": 39
           },
           "MX2": {
             "on": false,
@@ -17559,11 +17559,11 @@
             "pan": 0
           },
           "MX1": {
-            "on": false,
-            "lvl": -144,
-            "pon": false,
-            "mode": "PRE",
-            "plink": 0,
+            "on": true,
+            "lvl": 0,
+            "pon": true,
+            "mode": "GRP",
+            "plink": 1,
             "pan": 0
           },
           "MX2": {
@@ -21665,11 +21665,11 @@
             "pan": 0
           },
           "MX1": {
-            "on": false,
-            "lvl": -144,
-            "pon": false,
-            "mode": "PRE",
-            "plink": 0,
+            "on": true,
+            "lvl": 0,
+            "pon": true,
+            "mode": "GRP",
+            "plink": 1,
             "pan": 0
           },
           "MX2": {
@@ -27558,15 +27558,15 @@
         "in": {
           "set": {
             "inv": true,
-            "trim": 0,
-            "bal": 0
+            "trim": -7.5,
+            "bal": 7.899999619
           }
         },
         "dir": {
           "on": true,
-          "lvl": -144,
+          "lvl": -16.76441956,
           "inv": true,
-          "in": "MON.SPK"
+          "in": "MON.PH"
         },
         "col": 9,
         "name": "Matrix 1",
@@ -27594,7 +27594,7 @@
           "2q": 0.997970223,
           "3g": 15,
           "3f": 1002.37439,
-          "3q": 0.997970223,
+          "3q": 2.292652845,
           "4g": 0,
           "4f": 1499.78833,
           "4q": 0.997970223,

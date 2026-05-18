@@ -19,3 +19,12 @@ class AudioDynamicsSidechain:
             source=data["src"],
             tap=data["tap"]
         )
+    
+    def to_dict(self):
+        return {
+            "type": self.type,
+            "f": self.frequency,
+            "q": self.q,
+            "src": self.source,
+            "tap": self.tap,
+        }

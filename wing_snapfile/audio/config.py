@@ -28,6 +28,18 @@ class AudioSoloConfig:
             source_solo=data["srcsolo"],
         )
 
+    def to_dict(self):
+        return {
+            "mode": self.mode,
+            "mon": self.monitor_outputs,
+            "mute": self.mute,
+            "chtap": self.channel_tap,
+            "bustap": self.bus_tap,
+            "maintap": self.main_tap,
+            "mtxtap": self.matrix_tap,
+            "srcsolo": self.source_solo,
+        }
+
 @dataclass_validate
 @dataclass
 class AudioRTAConfig:
@@ -53,6 +65,18 @@ class AudioRTAConfig:
             eq_autogain=data["eqauto"],
         )
 
+    def to_dict(self):
+        return {
+            "rtarange": self.rta_range,
+            "rtagain": self.rta_gain,
+            "rtaauto": self.rta_autogain,
+            "eqdecay": self.eq_decay,
+            "eqdet": self.eq_detector,
+            "eqrange": self.eq_range,
+            "eqgain": self.eq_gain,
+            "eqauto": self.eq_autogain,
+        }
+
 @dataclass_validate
 @dataclass
 class AudioMeterTapPoints:
@@ -71,6 +95,15 @@ class AudioMeterTapPoints:
             matrix_tap=data["mtx"],
             dca_tap=data["dca"],
         )
+    
+    def to_dict(self):
+        return {
+            "in": self.channel_tap,
+            "bus": self.bus_tap,
+            "main": self.main_tap,
+            "mtx": self.matrix_tap,
+            "dca": self.dca_tap,
+        }
 
 
 @dataclass_validate
@@ -94,12 +127,23 @@ class AudioMeterConfig:
             main_meter_position=data["mainpos"],
         )
 
+    def to_dict(self):
+        return {
+            "scopesrc": self.scope_source,
+            "scopetap": self.scope_tap_point,
+            "mtrsfc": self.surface_meter_tap_points.to_dict(),
+            "mtrpage": self.meter_page_tap_points.to_dict(),
+            "mainmtr": self.main_meter_source,
+            "mainpos": self.main_meter_position,
+        }
+
 @dataclass_validate
 @dataclass
 class AudioTalkbackAssignments:
     mode: str
     monitor_dim: int
     bus_dim: int
+    individual_send_levels: bool
     bus_assignments: OneIndexedList[bool]
     matrix_assignments: OneIndexedList[bool]
     main_assignments: OneIndexedList[bool]
@@ -110,6 +154,7 @@ class AudioTalkbackAssignments:
             mode=data["mode"],
             monitor_dim=data["mondim"],
             bus_dim=data["busdim"],
+            individual_send_levels=data["indiv"],
             bus_assignments=OneIndexedList.from_indexed_dict(
                 {k[1:]: v for k, v in data.items() if k.startswith("B") and k[1:].isdigit()}
             ),
@@ -120,6 +165,17 @@ class AudioTalkbackAssignments:
                 {k[1:]: v for k, v in data.items() if k.startswith("M") and k[1:].isdigit()}
             ),
         )
+    
+    def to_dict(self):
+        return {
+            "mode": self.mode,
+            "mondim": self.monitor_dim,
+            "busdim": self.bus_dim,
+            "indiv": self.individual_send_levels,
+            **self.bus_assignments.to_dict(prefix="B"),
+            **self.matrix_assignments.to_dict(prefix="MX"),
+            **self.main_assignments.to_dict(prefix="M"),
+        }
 
 @dataclass_validate
 @dataclass
@@ -137,6 +193,14 @@ class AudioTalkbackConfig:
             talkback_a=AudioTalkbackAssignments.from_dict(data["A"]),
             talkback_b=AudioTalkbackAssignments.from_dict(data["B"]),
         )
+    
+    def to_dict(self):
+        return {
+            "assign": self.assign,
+            "lvl": self.fader_level,
+            "A": self.talkback_a.to_dict(),
+            "B": self.talkback_b.to_dict(),
+        }
 
 @dataclass_validate
 @dataclass
@@ -151,6 +215,11 @@ class AudioAutomixConfig:
             y_enable=data["y"],
         )
 
+    def to_dict(self):
+        return {
+            "x": self.x_enable,
+            "y": self.y_enable,
+        }
 
 @dataclass_validate
 @dataclass
@@ -176,4 +245,15 @@ class AudioConfig:
             talk=AudioTalkbackConfig.from_dict(data["talk"]),
             amix=AudioAutomixConfig.from_dict(data["amix"]),
         )
-
+    
+    def to_dict(self):
+        return {
+            "mainlink": self.mainlink,
+            "dcamgrp": self.dcamgrp,
+            "mon": self.mon.to_dict(),
+            "solo": self.solo.to_dict(),
+            "rta": self.rta.to_dict(),
+            "mtr": self.mtr.to_dict(),
+            "talk": self.talk.to_dict(),
+            "amix": self.amix.to_dict(),
+        }

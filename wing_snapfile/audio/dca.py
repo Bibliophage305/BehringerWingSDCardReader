@@ -23,3 +23,14 @@ class AudioDCA:
             fader_level=float(data["fdr"]),
             monitor_mode=data["mon"],
         )
+    
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "col": self.color,
+            "icon": self.icon,
+            "led": self.led_on,
+            "mute": self.mute_on,
+            "fdr": self.fader_level,
+            "mon": self.monitor_mode,
+        }

@@ -35,29 +35,93 @@ class WingEQ(EQPlugin):
     high_type: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, object]) -> "WingEQ":
-        return WingEQ(
-            low_gain=float(data["lg"]),
-            low_frequency=float(data["lf"]),
-            low_q=float(data["lq"]),
-            low_type=data["leq"],
-            band_1_gain=float(data["1g"]),
-            band_1_frequency=float(data["1f"]),
-            band_1_q=float(data["1q"]),
-            band_2_gain=float(data["2g"]),
-            band_2_frequency=float(data["2f"]),
-            band_2_q=float(data["2q"]),
-            band_3_gain=float(data["3g"]),
-            band_3_frequency=float(data["3f"]),
-            band_3_q=float(data["3q"]),
-            band_4_gain=float(data["4g"]),
-            band_4_frequency=float(data["4f"]),
-            band_4_q=float(data["4q"]),
-            high_gain=float(data["hg"]),
-            high_frequency=float(data["hf"]),
-            high_q=float(data["hq"]),
-            high_type=data["heq"],
-        )
+    def from_dict(cls, data: dict):
+        return cls(**cls._from_dict_kwargs(data))
+
+    @classmethod
+    def _from_dict_kwargs(cls, data):
+        return {
+            "low_gain": float(data["lg"]),
+            "low_frequency": float(data["lf"]),
+            "low_q": float(data["lq"]),
+            "low_type": data["leq"],
+            "band_1_gain": float(data["1g"]),
+            "band_1_frequency": float(data["1f"]),
+            "band_1_q": float(data["1q"]),
+            "band_2_gain": float(data["2g"]),
+            "band_2_frequency": float(data["2f"]),
+            "band_2_q": float(data["2q"]),
+            "band_3_gain": float(data["3g"]),
+            "band_3_frequency": float(data["3f"]),
+            "band_3_q": float(data["3q"]),
+            "band_4_gain": float(data["4g"]),
+            "band_4_frequency": float(data["4f"]),
+            "band_4_q": float(data["4q"]),
+            "high_gain": float(data["hg"]),
+            "high_frequency": float(data["hf"]),
+            "high_q": float(data["hq"]),
+            "high_type": data["heq"],
+        }
+    
+    def to_dict(self):
+        return {
+            "lg": self.low_gain,
+            "lf": self.low_frequency,
+            "lq": self.low_q,
+            "leq": self.low_type,
+            "1g": self.band_1_gain,
+            "1f": self.band_1_frequency,
+            "1q": self.band_1_q,
+            "2g": self.band_2_gain,
+            "2f": self.band_2_frequency,
+            "2q": self.band_2_q,
+            "3g": self.band_3_gain,
+            "3f": self.band_3_frequency,
+            "3q": self.band_3_q,
+            "4g": self.band_4_gain,
+            "4f": self.band_4_frequency,
+            "4q": self.band_4_q,
+            "hg": self.high_gain,
+            "hf": self.high_frequency,
+            "hq": self.high_q,
+            "heq": self.high_type,
+        }
+    
+@dataclass_validate
+@dataclass
+class WingSixBandEQ(WingEQ):
+    band_5_gain: float
+    band_5_frequency: float
+    band_5_q: float
+    band_6_gain: float
+    band_6_frequency: float
+    band_6_q: float
+    tilt: float
+
+    @classmethod
+    def _from_dict_kwargs(cls, data):
+        return {
+            **super()._from_dict_kwargs(data),
+            "band_5_gain": float(data["5g"]),
+            "band_5_frequency": float(data["5f"]),
+            "band_5_q": float(data["5q"]),
+            "band_6_gain": float(data["6g"]),
+            "band_6_frequency": float(data["6f"]),
+            "band_6_q": float(data["6q"]),
+            "tilt": float(data["tilt"]),
+        }
+    
+    def to_dict(self):
+        return {
+            **super().to_dict(),
+            "5g": self.band_5_gain,
+            "5f": self.band_5_frequency,
+            "5q": self.band_5_q,
+            "6g": self.band_6_gain,
+            "6f": self.band_6_frequency,
+            "6q": self.band_6_q,
+            "tilt": self.tilt,
+        }
 
 
 @dataclass_validate
@@ -92,6 +156,22 @@ class SoulAnalogue(EQPlugin):
             high_frequency=float(data["hf"]),
             high_gain=float(data["hg"]),
         )
+    
+    def to_dict(self):
+        return {
+            "lf": self.low_frequency,
+            "lg": self.low_gain,
+            "lmf": self.low_mid_frequency,
+            "lmf3": self.low_mid_frequency_x3,
+            "lmq": self.low_mid_q,
+            "lmg": self.low_mid_gain,
+            "hmf": self.high_mid_frequency,
+            "hmf3": self.high_mid_frequency_x3,
+            "hmq": self.high_mid_q,
+            "hmg": self.high_mid_gain,
+            "hf": self.high_frequency,
+            "hg": self.high_gain,
+        }
 
 
 @dataclass_validate
@@ -131,6 +211,24 @@ class Even88Formant(EQPlugin):
             high_type=data["ht"],
         )
 
+    def to_dict(self):
+        return {
+            "lf": self.low_frequency,
+            "lg": self.low_gain,
+            "lq": self.low_q,
+            "lt": self.low_type,
+            "lmf": self.low_mid_frequency,
+            "lmg": self.low_mid_gain,
+            "lmq": self.low_mid_q,
+            "hmf": self.high_mid_frequency,
+            "hmg": self.high_mid_gain,
+            "hmq": self.high_mid_q,
+            "hf": self.high_frequency,
+            "hg": self.high_gain,
+            "hq": self.high_q,
+            "ht": self.high_type,
+        }
+
 
 @dataclass_validate
 @dataclass
@@ -156,6 +254,18 @@ class Even84(EQPlugin):
             high_frequency=data["hf"],
             high_gain=float(data["hg"]),
         )
+
+    def to_dict(self):
+        return {
+            "g": self.gain,
+            "lf": self.low_frequency,
+            "lg": self.low_gain,
+            "mf": self.mid_frequency,
+            "mg": self.mid_gain,
+            "mq": self.mid_q,
+            "hf": self.high_frequency,
+            "hg": self.high_gain,
+        }
 
 
 @dataclass_validate
@@ -196,6 +306,25 @@ class Fortissimo110(EQPlugin):
             high_gain=float(data["hg"]),
             gain=float(data["g"]),
         )
+
+    def to_dict(self):
+        return {
+            "peq": self.parametric_eq,
+            "lmf": self.low_mid_frequency,
+            "lmg": self.low_mid_gain,
+            "lmq": self.low_mid_q,
+            "lmf3": self.low_mid_frequency_x3,
+            "hmf": self.high_mid_frequency,
+            "hmg": self.high_mid_gain,
+            "hmq": self.high_mid_q,
+            "hmf3": self.high_mid_frequency_x3,
+            "shv": self.shelving,
+            "lf": self.low_frequency,
+            "lg": self.low_gain,
+            "hf": self.high_frequency,
+            "hg": self.high_gain,
+            "g": self.gain,
+        }
 
 
 @dataclass_validate
@@ -238,6 +367,26 @@ class Pulsar(EQPlugin):
             eq5_high_boost=float(data["5hb"]),
             eq5_high_frequency=data["5hf"],
         )
+    
+    def to_dict(self):
+        return {
+            "eq1": self.eq1_enabled,
+            "1lb": self.eq1_low_boost,
+            "1latt": self.eq1_low_attenuation,
+            "1lf": self.eq1_low_frequency,
+            "1hw": self.eq1_high_width,
+            "1hb": self.eq1_high_boost,
+            "1hf": self.eq1_high_frequency,
+            "1hatt": self.eq1_high_attenuation,
+            "1hattf": self.eq1_high_attenuation_frequency,
+            "eq5": self.eq5_enabled,
+            "5lb": self.eq5_low_boost,
+            "5lf": self.eq5_low_frequency,
+            "5md": self.eq5_mid_dip,
+            "5mf": self.eq5_mid_frequency,
+            "5hb": self.eq5_high_boost,
+            "5hf": self.eq5_high_frequency,
+        }
 
 
 @dataclass_validate
@@ -264,6 +413,18 @@ class MachEQ4(EQPlugin):
             air_mode=data["airm"],
             again=data["again"],
         )
+    
+    def to_dict(self):
+        return {
+            "sub": self.sub,
+            "40": self.hz_40,
+            "160": self.hz_160,
+            "650": self.hz_650,
+            "2k5": self.khz_2_5,
+            "air": self.air,
+            "airm": self.air_mode,
+            "again": self.again,
+        }
 
 
 PLUGIN_MODEL_MAP: dict[str, Type[EQPlugin]] = {
@@ -279,7 +440,10 @@ PLUGIN_MODEL_MAP: dict[str, Type[EQPlugin]] = {
 
 def parse_eq_plugin(data: dict[str, object]) -> EQPlugin:
     model = data["mdl"]
-    plugin_cls = PLUGIN_MODEL_MAP[model]
+    if model == "STD" and "5g" in data:
+        plugin_cls = WingSixBandEQ
+    else:
+        plugin_cls = PLUGIN_MODEL_MAP[model]
     plugin_data = {k: v for k, v in data.items() if k not in {"on", "mdl", "mix"}}
     return plugin_cls.from_dict(plugin_data)
 

@@ -7,11 +7,21 @@ class AudioDynamicsCrossover:
     depth: int
     type: str
     frequency: float
+    q: float
 
     @classmethod
     def from_dict(cls, data: dict[str, object]) -> "AudioDynamicsCrossover":
         return AudioDynamicsCrossover(
             depth=data["depth"],
             type=data["type"],
-            frequency=float(data["f"])
+            frequency=float(data["f"]),
+            q=float(data["q"])
         )
+    
+    def to_dict(self):
+        return {
+            "depth": self.depth,
+            "type": self.type,
+            "f": self.frequency,
+            "q": self.q,
+        }

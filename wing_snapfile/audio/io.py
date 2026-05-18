@@ -20,3 +20,11 @@ class AudioIo:
             alternate_inputs=data["altsw"],
             global_input_select_override=data["autoaltovr"],
         )
+
+    def to_dict(self):
+        return {
+            "in": self.sources.to_dict(),
+            "out": self.outputs.to_dict(),
+            "altsw": self.alternate_inputs,
+            "autoaltovr": self.global_input_select_override,
+        }

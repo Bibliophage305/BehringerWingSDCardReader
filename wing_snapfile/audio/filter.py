@@ -27,3 +27,16 @@ class AudioFilter:
             tilt_mode=data["mdl"],
             tilt_amount=float(data["tilt"])
         )
+    
+    def to_dict(self):
+        return {
+            "lc": self.low_cut_enabled,
+            "lcf": self.low_cut_frequency,
+            "lcs": self.low_cut_slope,
+            "hc": self.high_cut_enabled,
+            "hcf": self.high_cut_frequency,
+            "hcs": self.high_cut_slope,
+            "tf": self.tilt_enabled,
+            "mdl": self.tilt_mode,
+            "tilt": self.tilt_amount,
+        }

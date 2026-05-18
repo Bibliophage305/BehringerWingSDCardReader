@@ -13,3 +13,9 @@ class AudioMuteGroup:
             name=data["name"],
             mute_on=data["mute"],
         )
+    
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "mute": self.mute_on,
+        }

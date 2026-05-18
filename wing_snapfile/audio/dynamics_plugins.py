@@ -2,39 +2,6 @@ from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 from typing import Type
 
-# {'on': True, 'mdl': 'GATE', 'mix': 100, 'gain': 0, 'thr': -40, 'range': 40, 'att': 10, 'hld': 10, 'rel': 200.474884, 'acc': 0, 'ratio': '1:3'}
-# {'on': True, 'mdl': 'DUCK', 'mix': 100, 'gain': 0, 'thr': -20, 'range': 20, 'att': 100, 'hld': 100.4754639, 'rel': 503.5701599}
-# {'on': True, 'mdl': 'E88', 'mix': 100, 'gain': 0, 'thr': -35, 'hyst': 6, 'range': 60, 'rel': 354.5083618, 'fast': False, 'm40': False}
-# {'on': False, 'mdl': 'D241G', 'mix': 100, 'gain': 0, 'thr': -40, 'slow': False}
-# {'on': False, 'mdl': '9000G', 'mix': 100, 'gain': 0, 'thr': -35, 'range': 40, 'hld': 50.81421661, 'rel': 806.477356, 'fast': False, 'mode': 'GATE'}
-# {'on': False, 'mdl': 'DEQ', 'mix': 100, 'gain': 0, 'thr': -20, 'ratio': 2, 'att': 50, 'rel': 300.8161621, 'filt': 'BP', 'g': 0, 'f': 1002.37439, 'q': 0.997970223, 'mode': 'high'}
-# {'on': False, 'mdl': 'DEQ2', 'mix': 100, 'gain': 0, '1-thr': -20, '1-ratio': 2, '1-att': 50, '1-rel': 300.8161621, '1-filt': 'BP', '1-g': 0, '1-f': 200, '1-q': 0.997970223, '1-mode': 'high', '2-thr': -20, '2-ratio': 2, '2-att': 50, '2-rel': 300.8161621, '2-filt': 'BP', '2-g': 0, '2-f': 2992.470947, '2-q': 0.997970223, '2-mode': 'high'}
-# {'on': False, 'mdl': 'DS902', 'mix': 100, 'gain': 0, 'f': 5029.671387, 'range': 4, 'mode': 'HF'}
-# {'on': False, 'mdl': 'WAVE', 'mix': 100, 'gain': 0, 'att': 0, 'sust': 0, 'g': 0}
-# {'on': False, 'mdl': 'RIDE', 'mix': 100, 'gain': 0, 'thr': -40, 'tgt': -18, 'spd': 10, 'ratio': 4, 'hld': 1.539926767, 'range': 6}
-# {'on': False, 'mdl': 'WARM', 'mix': 100, 'gain': 0, 'drv': 33, 'hrm': 0, 'col': 0, 'trim': 0, 'wmix': 100}
-# {'on': False, 'mdl': 'COMP', 'mix': 100, 'gain': 0, 'thr': -10, 'ratio': 3, 'knee': 3, 'det': 'RMS', 'att': 50, 'hld': 20, 'rel': 150.3349457, 'env': 'LOG', 'auto': True}
-# {'on': False, 'mdl': 'EXP', 'mix': 100, 'gain': 0, 'thr': -40, 'ratio': 3, 'knee': 1, 'det': 'RMS', 'att': 50, 'hld': 100.0000076, 'rel': 150.3349457, 'env': 'LOG', 'auto': True}
-# {'on': False, 'mdl': 'E88C', 'mix': 100, 'gain': 0, 'knee': 'SOFT', 'thr': 0, 'thrpull': False, 'ratio': 3.019951582, 'att': 'SLOW', 'rel': 353.3465271}
-# {'on': False, 'mdl': 'ONEC', 'mix': 100, 'gain': 0, 'gr': 3, 'dag': True}
-# {'on': False, 'mdl': '9000C', 'mix': 100, 'gain': 0, 'thr': -10, 'ratio': 2.799999952, 'fast': False, 'rel': 398.815918, 'peak': False}
-# {'on': False, 'mdl': 'B160', 'mix': 100, 'gain': 0, 'thr': 0.512091637, 'comp': 3}
-# {'on': False, 'mdl': 'B560', 'mix': 100, 'gain': 0, 'thr': 0, 'ratio': 3, 'easy': True}
-# {'on': False, 'mdl': 'RED3', 'mix': 100, 'gain': 0, 'thr': -12, 'ratio': 3, 'att': 20.06982613, 'rel': 398.815918, 'auto': False}
-# {'on': False, 'mdl': 'LMT', 'mix': 100, 'gain': 0, 'tspd': 0.5, 'trans': 0, 'tgain': 0, 'ton': False, 'comp': 10, 'cgain': 0, 'con': True}
-# {'on': False, 'mdl': 'SBUS', 'mix': 100, 'gain': 0, 'thr': -12, 'ratio': 3, 'att': 10, 'rel': 'AUTO'}
-# {'on': False, 'mdl': '2250', 'mix': 100, 'gain': 0, 'thr': 2, 'ratio': 3, 'att': 'MED', 'rel': 202.0557404, 'knee': 'SOFT', 'type': 'NEW'}
-# {'on': False, 'mdl': '76LA', 'mix': 100, 'gain': 0, 'in': -30, 'out': -27, 'att': 2, 'rel': 2, 'ratio': '8'}
-# {'on': False, 'mdl': 'LA', 'mix': 100, 'gain': 0, 'ingain': 40, 'peak': 20, 'mode': 'COMP'}
-# {'on': False, 'mdl': 'F670', 'mix': 100, 'gain': 0, 'in': -10, 'thr': 5, 'time': 2, 'bias': 1}
-# {'on': False, 'mdl': 'L100', 'mix': 100, 'gain': 0, 'ingain': 3, 'gr': 3, 'att': 'MED', 'rel': 'MED'}
-# {'on': False, 'mdl': 'BLISS', 'mix': 100, 'gain': 0, 'thr': -15, 'ratio': 3, 'att': 9.915781021, 'rel': 101.8793488, 'afast': False, 'alog': False, 'glon': False, 'glim': -12}
-# {'on': False, 'mdl': 'NSTR', 'mix': 100, 'gain': 0, 'in': 4, 'out': 3, 'att': 4, 'rel': 5, 'ratio': '3:1'}
-# {'on': False, 'mdl': 'PSE', 'mix': 100, 'gain': 0, 'thr': 0, 'depth': 12, 'fast': False, 'peak': False}
-# {'on': False, 'mdl': 'CMB', 'mix': 100, 'gain': 0, 'thr': -36, 'depth': 12, 'fast': False, 'peak': False, 'ingain': 40, 'cpeak': 0, 'cmode': 'COMP'}
-# {'on': False, 'mdl': 'ECL33', 'mix': 100, 'gain': 0, 'lon': False, 'lthr': -5, 'lrec': 'A1', 'lfast': False, 'con': True, 'cthr': -15, 'ratio': 3, 'crec': 'A1', 'cfast': False, 'cgain': 0}
-# {'on': False, 'mdl': 'D241C', 'mix': 100, 'gain': 0, 'thr': -20, 'ratio': 3, 'att': 10.06669521, 'rel': 397.1640625, 'lim': 0, 'lrel': 397.1640625, 'auto': True}
-
 @dataclass_validate
 @dataclass
 class DynamicsPlugin:
@@ -64,6 +31,17 @@ class WingGate(DynamicsPlugin):
             accent=data["acc"],
             ratio=data["ratio"]
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "range": self.range,
+            "att": self.attack,
+            "hld": self.hold,
+            "rel": self.release,
+            "acc": self.accent,
+            "ratio": self.ratio,
+        }
 
 @dataclass_validate
 @dataclass
@@ -83,6 +61,15 @@ class WingDucker(DynamicsPlugin):
             hold=float(data["hld"]),
             release=float(data["rel"]),
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "range": self.range,
+            "att": self.attack,
+            "hld": self.hold,
+            "rel": self.release,
+        }
 
 @dataclass_validate
 @dataclass
@@ -104,6 +91,16 @@ class Even88Gate(DynamicsPlugin):
             fast=data["fast"],
             m40=data["m40"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "hyst": self.hysteresis,
+            "range": self.range,
+            "rel": self.release,
+            "fast": self.fast,
+            "m40": self.m40,
+        }
 
 @dataclass_validate
 @dataclass
@@ -117,6 +114,12 @@ class DrawMore241(DynamicsPlugin):
             threshold=float(data["thr"]),
             slow=data["slow"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "slow": self.slow,
+        }
 
 @dataclass_validate
 @dataclass
@@ -138,6 +141,16 @@ class Soul9000Gate(DynamicsPlugin):
             fast=data["fast"],
             mode=data["mode"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "range": self.range,
+            "hld": self.hold,
+            "rel": self.release,
+            "fast": self.fast,
+            "mode": self.mode,
+        }
 
 @dataclass_validate
 @dataclass
@@ -165,8 +178,20 @@ class DynamicEQ(DynamicsPlugin):
             q=float(data["q"]),
             mode=data["mode"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+            "filt": self.filter_type,
+            "g": self.gain,
+            "f": self.frequency,
+            "q": self.q,
+            "mode": self.mode,
+        }
 
-# {'on': False, 'mdl': 'DEQ2', 'mix': 100, 'gain': 0, '1-thr': -20, '1-ratio': 2, '1-att': 50, '1-rel': 300.8161621, '1-filt': 'BP', '1-g': 0, '1-f': 200, '1-q': 0.997970223, '1-mode': 'high', '2-thr': -20, '2-ratio': 2, '2-att': 50, '2-rel': 300.8161621, '2-filt': 'BP', '2-g': 0, '2-f': 2992.470947, '2-q': 0.997970223, '2-mode': 'high'}
 @dataclass_validate
 @dataclass
 class DualDynamicEQ(DynamicsPlugin):
@@ -212,6 +237,28 @@ class DualDynamicEQ(DynamicsPlugin):
             band2_mode=data["2-mode"],
         )
     
+    def to_dict(self):
+        return {
+            "1-thr": self.band1_threshold,
+            "1-ratio": self.band1_ratio,
+            "1-att": self.band1_attack,
+            "1-rel": self.band1_release,
+            "1-filt": self.band1_filter_type,
+            "1-g": self.band1_gain,
+            "1-f": self.band1_frequency,
+            "1-q": self.band1_q,
+            "1-mode": self.band1_mode,
+            "2-thr": self.band2_threshold,
+            "2-ratio": self.band2_ratio,
+            "2-att": self.band2_attack,
+            "2-rel": self.band2_release,
+            "2-filt": self.band2_filter_type,
+            "2-g": self.band2_gain,
+            "2-f": self.band2_frequency,
+            "2-q": self.band2_q,
+            "2-mode": self.band2_mode,
+        }
+    
 @dataclass_validate
 @dataclass
 class BDX902DeEsser(DynamicsPlugin):
@@ -226,6 +273,13 @@ class BDX902DeEsser(DynamicsPlugin):
             range=float(data["range"]),
             mode=data["mode"],
         )
+    
+    def to_dict(self):
+        return {
+            "f": self.frequency,
+            "range": self.range,
+            "mode": self.mode,
+        }
 
 @dataclass_validate
 @dataclass
@@ -241,6 +295,13 @@ class WaveDesigner(DynamicsPlugin):
             sustain=float(data["sust"]),
             gain=float(data["g"]),
         )
+    
+    def to_dict(self):
+        return {
+            "att": self.attack,
+            "sust": self.sustain,
+            "g": self.gain,
+        }
 
 
 @dataclass_validate
@@ -263,6 +324,16 @@ class AutoRider(DynamicsPlugin):
             hold=float(data["hld"]),
             range=float(data["range"]),
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "tgt": self.target,
+            "spd": self.speed,
+            "ratio": self.ratio,
+            "hld": self.hold,
+            "range": self.range,
+        }
 
 @dataclass_validate
 @dataclass
@@ -282,6 +353,15 @@ class SoulWarmthPre(DynamicsPlugin):
             trim=float(data["trim"]),
             mix=float(data["wmix"]),
         )
+    
+    def to_dict(self):
+        return {
+            "drv": self.drive,
+            "hrm": self.harmonic,
+            "col": self.color,
+            "trim": self.trim,
+            "wmix": self.mix,
+        }
 
 
 
@@ -312,6 +392,19 @@ class WingCompressor(DynamicsPlugin):
             envelope=data["env"],
             auto=data["auto"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "knee": self.knee,
+            "det": self.detector,
+            "att": self.attack,
+            "hld": self.hold,
+            "rel": self.release,
+            "env": self.envelope,
+            "auto": self.auto,
+        }
 
 
 @dataclass_validate
@@ -340,6 +433,19 @@ class WingExpander(DynamicsPlugin):
             envelope=data["env"],
             auto=data["auto"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "knee": self.knee,
+            "det": self.detector,
+            "att": self.attack,
+            "hld": self.hold,
+            "rel": self.release,
+            "env": self.envelope,
+            "auto": self.auto,
+        }
 
 @dataclass_validate
 @dataclass
@@ -362,6 +468,16 @@ class Even88Comp(DynamicsPlugin):
             attack=data["att"],
             release=float(data["rel"]),
         )
+    
+    def to_dict(self):
+        return {
+            "knee": self.knee,
+            "thr": self.threshold,
+            "thrpull": self.threshold_pad,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+        }
 
 @dataclass_validate
 @dataclass
@@ -376,6 +492,12 @@ class OneKnobComp(DynamicsPlugin):
             gain_reduction=float(data["gr"]),
             auto_gain=data["dag"],
         )
+    
+    def to_dict(self):
+        return {
+            "gr": self.gain_reduction,
+            "dag": self.auto_gain,
+        }
 
 @dataclass_validate
 @dataclass
@@ -396,7 +518,14 @@ class Soul9000(DynamicsPlugin):
             peak=data["peak"],
         )
 
-
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "fast": self.fast,
+            "rel": self.release,
+            "peak": self.peak,
+        }
 
 @dataclass_validate
 @dataclass
@@ -410,6 +539,12 @@ class BDX160Comp(DynamicsPlugin):
             threshold=float(data["thr"]),
             compression=float(data["comp"]),
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "comp": self.compression,
+        }
 
 
 @dataclass_validate
@@ -426,6 +561,13 @@ class BDX560Easy(DynamicsPlugin):
             ratio=float(data["ratio"]),
             easy=data["easy"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "easy": self.easy,
+        }
 
 @dataclass_validate
 @dataclass
@@ -445,6 +587,15 @@ class Red3Compressor(DynamicsPlugin):
             release=float(data["rel"]),
             auto=data["auto"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+            "auto": self.auto,
+        }
 
 @dataclass_validate
 @dataclass
@@ -469,6 +620,17 @@ class LMTCompressor(DynamicsPlugin):
             compressor_gain=float(data["cgain"]),
             compressor_on=data["con"],
         )
+    
+    def to_dict(self):
+        return {
+            "tspd": self.transient_speed,
+            "trans": self.transient_emphasis,
+            "tgain": self.transient_gain,
+            "ton": self.transient_shaper_on,
+            "comp": self.compression_amount,
+            "cgain": self.compressor_gain,
+            "con": self.compressor_on,
+        }
 
 @dataclass_validate
 @dataclass
@@ -486,6 +648,14 @@ class SoulBusComp(DynamicsPlugin):
             attack=float(data["att"]),
             release=data["rel"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+        }
 
 @dataclass_validate
 @dataclass
@@ -507,6 +677,16 @@ class PIA2250Rack(DynamicsPlugin):
             knee=data["knee"],
             type=data["type"],
         )
+    
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+            "knee": self.knee,
+            "type": self.type,
+        }
 
 @dataclass_validate
 @dataclass
@@ -526,6 +706,15 @@ class LimiterAmp76(DynamicsPlugin):
             release=float(data["rel"]),
             ratio=data["ratio"],
         )
+    
+    def to_dict(self):
+        return {
+            "in": self.input_gain,
+            "out": self.output_gain,
+            "att": self.attack,
+            "rel": self.release,
+            "ratio": self.ratio,
+        }
 
 
 @dataclass_validate
@@ -542,6 +731,13 @@ class LALeveler(DynamicsPlugin):
             peak=float(data["peak"]),
             mode=data["mode"],
         )
+    
+    def to_dict(self):
+        return {
+            "ingain": self.input_gain,
+            "peak": self.peak,
+            "mode": self.mode,
+        }
 
 @dataclass_validate
 @dataclass
@@ -559,6 +755,14 @@ class FairKid(DynamicsPlugin):
             time_constant=float(data["time"]),
             bias=float(data["bias"]),
         )
+    
+    def to_dict(self):
+        return {
+            "in": self.input_gain,
+            "thr": self.threshold,
+            "time": self.time_constant,
+            "bias": self.bias,
+        }
 
 @dataclass_validate
 @dataclass
@@ -576,6 +780,14 @@ class LTA100Leveler(DynamicsPlugin):
             attack=data["att"],
             release=data["rel"],
         )
+
+    def to_dict(self):
+        return {
+            "ingain": self.input_gain,
+            "gr": self.gain_reduction,
+            "att": self.attack,
+            "rel": self.release,
+        }
 
 @dataclass_validate
 @dataclass
@@ -602,6 +814,17 @@ class EternalBliss(DynamicsPlugin):
             gate_limit=float(data["glim"]),
         )
 
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+            "afast": self.attack_fast,
+            "alog": self.attack_log,
+            "glon": self.gate_limit_on,
+            "glim": self.gate_limit,
+        }
 
 
 
@@ -626,6 +849,15 @@ class NoStressor(DynamicsPlugin):
             ratio=data["ratio"],
         )
 
+    def to_dict(self):
+        return {
+            "in": self.input_gain,
+            "out": self.output_gain,
+            "att": self.attack,
+            "rel": self.release,
+            "ratio": self.ratio,
+        }
+
 @dataclass_validate
 @dataclass
 class SourceExtractor(DynamicsPlugin):
@@ -642,6 +874,14 @@ class SourceExtractor(DynamicsPlugin):
             fast=data["fast"],
             peak=data["peak"],
         )
+
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "depth": self.depth,
+            "fast": self.fast,
+            "peak": self.peak,
+        }
 
 @dataclass_validate
 @dataclass
@@ -666,7 +906,16 @@ class PSELACombo(DynamicsPlugin):
             compressor_mode=data["cmode"],
         )
 
-
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "depth": self.depth,
+            "fast": self.fast,
+            "peak": self.peak,
+            "ingain": self.input_gain,
+            "cpeak": self.compressor_peak,
+            "cmode": self.compressor_mode,
+        }
 
 
 
@@ -701,6 +950,20 @@ class EvenCompLim(DynamicsPlugin):
             compressor_fast=data["cfast"],
             compressor_gain=float(data["cgain"]),
         )
+    
+    def to_dict(self):
+        return {
+            "lon": self.limiter_on,
+            "lthr": self.limiter_threshold,
+            "lrec": self.limiter_recovery,
+            "lfast": self.limiter_fast,
+            "con": self.compressor_on,
+            "cthr": self.compressor_threshold,
+            "ratio": self.ratio,
+            "crec": self.compressor_recovery,
+            "cfast": self.compressor_fast,
+            "cgain": self.compressor_gain,
+        }
 
 
 
@@ -727,6 +990,16 @@ class DrawMoreComp(DynamicsPlugin):
             auto=data["auto"],
         )
 
+    def to_dict(self):
+        return {
+            "thr": self.threshold,
+            "ratio": self.ratio,
+            "att": self.attack,
+            "rel": self.release,
+            "lim": self.limiter,
+            "lrel": self.limiter_release,
+            "auto": self.auto,
+        }
 
 
 

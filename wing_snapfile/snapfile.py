@@ -25,3 +25,14 @@ class Snapfile:
             audio_engine_data=AudioData.from_dict(data["ae_data"]),
             console_engine_data=ConsoleData.from_dict(data["ce_data"]),
         )
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "type": self.type,
+            "creator": self.creator,
+            "creator_vers": self.creator_vers,
+            "creator_model": self.creator_model,
+            "creator_name": self.creator_name,
+            "ae_data": self.audio_engine_data.to_dict(),
+            "ce_data": self.console_engine_data.to_dict(),
+        }

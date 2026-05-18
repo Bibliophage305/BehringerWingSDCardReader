@@ -13,3 +13,9 @@ class AudioPreInsertPlugin:
             on=data["on"],
             insert=data["ins"]
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "ins": self.insert,
+        }

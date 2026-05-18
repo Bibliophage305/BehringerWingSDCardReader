@@ -15,3 +15,10 @@ class AudioRecordSettings:
             resolution=data["resolution"],
             channels=data["channels"],
         )
+    
+    def to_dict(self):
+        return {
+            "path": self.path,
+            "resolution": self.resolution,
+            "channels": self.channels,
+        }

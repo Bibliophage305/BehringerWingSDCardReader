@@ -11,3 +11,8 @@ class AudioPlaySettings:
         return cls(
             repeat=data["repeat"]
         )
+    
+    def to_dict(self):
+        return {
+            "repeat": self.repeat,
+        }

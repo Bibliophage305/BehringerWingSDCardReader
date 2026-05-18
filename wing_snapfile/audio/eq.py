@@ -18,3 +18,11 @@ class AudioEQ:
             mix=data["mix"],
             parameters=parse_eq_plugin(data)
         )
+    
+    def to_dict(self):
+        return {
+            "on": self.on,
+            "mdl": self.model,
+            "mix": self.mix,
+            **self.parameters.to_dict(),
+        }

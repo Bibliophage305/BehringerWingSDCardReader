@@ -16,6 +16,12 @@ class AudioWLiveCardSlotConfig:
             playmode=data["playmode"],
         )
     
+    def to_dict(self):
+        return {
+            "rectracks": str(self.rectracks),
+            "playmode": self.playmode,
+        }
+    
 @dataclass_validate
 @dataclass
 class AudioWLiveCardSlot:
@@ -26,6 +32,11 @@ class AudioWLiveCardSlot:
         return cls(
             config=AudioWLiveCardSlotConfig.from_dict(data["cfg"])
         )
+    
+    def to_dict(self):
+        return {
+            "cfg": self.config.to_dict(),
+        }
 
 @dataclass_validate
 @dataclass
@@ -50,6 +61,18 @@ class AudioWLiveCard:
             slots=OneIndexedList.from_indexed_dict({k: v for k, v in data.items() if k.isdigit()}, AudioWLiveCardSlot.from_dict),
         )
     
+    def to_dict(self):
+        data = {
+            "sdlink": self.sd_link_mode,
+            "autoin": self.auto_input,
+            "meters": self.show_meters,
+            "auto_stop": self.auto_stop,
+            "auto_play": self.auto_play,
+            "auto_rec": self.auto_record,
+            **self.slots.to_dict(),
+        }
+        return data
+    
 @dataclass_validate
 @dataclass
 class AudioWMADICard:
@@ -62,6 +85,12 @@ class AudioWMADICard:
             mode=data["mode"],
             rxclock=data["rxclock"],
         )
+    
+    def to_dict(self):
+        return {
+            "mode": self.mode,
+            "rxclock": self.rxclock,
+        }
 
 @dataclass_validate
 @dataclass
@@ -75,3 +104,9 @@ class AudioCards:
             wlive_card=AudioWLiveCard.from_dict(data["wlive"]),
             wmadi_card=AudioWMADICard.from_dict(data["wmadi"]),
         )
+    
+    def to_dict(self):
+        return {
+            "wlive": self.wlive_card.to_dict(),
+            "wmadi": self.wmadi_card.to_dict(),
+        }

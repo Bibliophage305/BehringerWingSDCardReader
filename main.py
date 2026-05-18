@@ -301,6 +301,23 @@ def main():
         channel_list, output_path, total_frames, sampwidth, channels_to_extract
     )
 
+def compare_dicts(d1: dict, d2: dict, path=""):
+    are_equal = True
+    for key in sorted(d1.keys() | d2.keys()):
+        if key not in d1:
+            print(f"Key {path + key} only in second dict")
+        elif key not in d2:
+            print(f"Key {path + key} only in first dict")
+        else:
+            v1 = d1[key]
+            v2 = d2[key]
+            if isinstance(v1, dict) and isinstance(v2, dict):
+                compare_dicts(v1, v2, path + key + ".")
+            elif v1 != v2:
+                print(f"Value mismatch at {path + key}: {v1} != {v2}")
+                are_equal = False
+    return are_equal
+
 
 if __name__ == "__main__":
     # main()
@@ -308,4 +325,6 @@ if __name__ == "__main__":
         snapfile_json = json.load(f)
 
     snapfile = Snapfile.from_dict(snapfile_json)
-    # print(snapfile.audio_engine_data.channels[1].input.settings)
+
+    if compare_dicts(snapfile_json, snapfile.to_dict()):
+        print("Success: snapfile JSON matches after parsing and serialization")

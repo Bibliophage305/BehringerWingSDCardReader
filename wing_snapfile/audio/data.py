@@ -69,3 +69,20 @@ class AudioData:
             play_settings=AudioPlaySettings.from_dict(data["play"]),
             record_settings=AudioRecordSettings.from_dict(data["rec"]),
         )
+
+    def to_dict(self):
+        return {
+            "cfg": self.config.to_dict(),
+            "io": self.io.to_dict(),
+            "ch": self.channels.to_dict(),
+            "aux": self.aux_channels.to_dict(),
+            "bus": self.busses.to_dict(),
+            "main": self.mains.to_dict(),
+            "mtx": self.matrices.to_dict(),
+            "dca": self.dcas.to_dict(),
+            "mgrp": self.mute_groups.to_dict(),
+            "fx": self.fx.to_dict(),
+            "cards": self.cards.to_dict(),
+            "play": self.play_settings.to_dict(),
+            "rec": self.record_settings.to_dict(),
+        }

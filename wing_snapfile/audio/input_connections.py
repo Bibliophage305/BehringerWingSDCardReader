@@ -17,3 +17,11 @@ class AudioInputConnections:
             alt_group=data["altgrp"],
             alt_input=data["altin"]
         )
+
+    def to_dict(self):
+        return {
+            "grp": self.group,
+            "in": self.input,
+            "altgrp": self.alt_group,
+            "altin": self.alt_input,
+        }
