@@ -110,7 +110,7 @@
       },
       "rta": {
         "rtarange": 30,
-        "rtagain": 0,
+        "rtagain": 16,
         "rtaauto": true,
         "eqdecay": "MED",
         "eqdet": "PEAK",
@@ -123,9 +123,9 @@
         "scopetap": "IN",
         "mtrsfc": {
           "in": "PRE",
-          "bus": "POST",
-          "main": "POST",
-          "mtx": "POST",
+          "bus": "PRE",
+          "main": "PRE",
+          "mtx": "PRE",
           "dca": "PRE"
         },
         "mtrpage": {
@@ -136,7 +136,7 @@
           "dca": "PRE"
         },
         "mainmtr": "MAIN.1",
-        "mainpos": "AUTO"
+        "mainpos": "PRE"
       },
       "talk": {
         "assign": "OFF",

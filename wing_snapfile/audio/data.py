@@ -16,10 +16,6 @@ from wing_snapfile.audio.mute_group import AudioMuteGroup
 from wing_snapfile.audio.cards import AudioCards
 from wing_snapfile.audio.play_settings import AudioPlaySettings
 from wing_snapfile.audio.record_settings import AudioRecordSettings
-from wing_snapfile.snapfile_reader import (
-    _parse_json_object_list,
-    JsonObject,
-)
 from wing_snapfile.types import OneIndexedList
 
 
@@ -35,7 +31,7 @@ class AudioData:
     matrices: OneIndexedList[AudioMatrixChannel]
     dcas: OneIndexedList[AudioDCA]
     mute_groups: OneIndexedList[AudioMuteGroup]
-    fx: list[JsonObject]
+    fx: OneIndexedList[dict]
     cards: AudioCards
     play_settings: AudioPlaySettings
     record_settings: AudioRecordSettings
@@ -66,7 +62,9 @@ class AudioData:
             mute_groups=OneIndexedList.from_indexed_dict(
                 data["mgrp"], AudioMuteGroup.from_dict
             ),
-            fx=_parse_json_object_list(data["fx"]),
+            fx=OneIndexedList.from_indexed_dict(
+                data["fx"], lambda x: x
+            ),
             cards=AudioCards.from_dict(data["cards"]),
             play_settings=AudioPlaySettings.from_dict(data["play"]),
             record_settings=AudioRecordSettings.from_dict(data["rec"]),

@@ -1,7 +1,8 @@
 # TODO
 
 from dataclasses import dataclass
-from ..snapfile_reader import (
+from dataclass_type_validator import dataclass_validate
+from wing_snapfile.snapfile_reader import (
     ConsoleDataConfig,
     ConsoleDataDaw,
     ConsoleDataLayer,
@@ -12,15 +13,14 @@ from ..snapfile_reader import (
     JsonObject,
 )
 
-from typing import Any
-
+@dataclass_validate
 @dataclass
 class ConsoleData:
     cfg: ConsoleDataConfig
     daw: ConsoleDataDaw
     gpio: list[GpioPin]
     layer: ConsoleDataLayer
-    lib: Any | None
+    lib: dict
     midi: JsonObject
     osc: JsonObject
     safes: JsonObject
@@ -39,7 +39,7 @@ class ConsoleData:
             daw=ConsoleDataDaw.from_dict(data["daw"]),
             gpio=_parse_numbered_list(data["gpio"], GpioPin.from_dict),
             layer=ConsoleDataLayer.from_dict(data["layer"]),
-            lib=data["lib"] or None,
+            lib=data["lib"],
             midi=_parse_json_object_as_object(data["midi"]),
             osc=_parse_json_object_as_object(data["osc"]),
             safes=_parse_json_object_as_object(data["safes"]),
