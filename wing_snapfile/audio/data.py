@@ -63,7 +63,7 @@ class AudioData:
                 data["mgrp"], AudioMuteGroup.from_dict
             ),
             fx=OneIndexedList.from_indexed_dict(
-                data["fx"], lambda x: x
+                data["fx"]
             ),
             cards=AudioCards.from_dict(data["cards"]),
             play_settings=AudioPlaySettings.from_dict(data["play"]),

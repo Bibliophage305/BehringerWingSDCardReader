@@ -111,16 +111,13 @@ class AudioTalkbackAssignments:
             monitor_dim=data["mondim"],
             bus_dim=data["busdim"],
             bus_assignments=OneIndexedList.from_indexed_dict(
-                {k[1:]: v for k, v in data.items() if k.startswith("B") and k[1:].isdigit()},
-                lambda x: x,
+                {k[1:]: v for k, v in data.items() if k.startswith("B") and k[1:].isdigit()}
             ),
             matrix_assignments=OneIndexedList.from_indexed_dict(
-                {k[2:]: v for k, v in data.items() if k.startswith("MX") and k[2:].isdigit()},
-                lambda x: x,
+                {k[2:]: v for k, v in data.items() if k.startswith("MX") and k[2:].isdigit()}
             ),
             main_assignments=OneIndexedList.from_indexed_dict(
-                {k[1:]: v for k, v in data.items() if k.startswith("M") and k[1:].isdigit()},
-                lambda x: x,
+                {k[1:]: v for k, v in data.items() if k.startswith("M") and k[1:].isdigit()}
             ),
         )
 

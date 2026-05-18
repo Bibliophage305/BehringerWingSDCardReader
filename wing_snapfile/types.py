@@ -16,7 +16,7 @@ class OneIndexedList(list):
         raise TypeError("Indices must be integers or slices")
     
     @classmethod
-    def from_indexed_dict(cls, data: dict[str, object], parser) -> "OneIndexedList":
+    def from_indexed_dict(cls, data: dict[str, object], parser=lambda x: x) -> "OneIndexedList":
         items = OneIndexedList()
         for i, (k, v) in enumerate(sorted(data.items(), key=lambda pair: int(pair[0]))):
             if k != str(i + 1):
