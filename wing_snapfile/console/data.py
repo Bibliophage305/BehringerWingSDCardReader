@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
-from wing_snapfile.types import OneIndexedList
+from wing_snapfile.types.one_indexed_list import OneIndexedList
 
 
 @dataclass_validate

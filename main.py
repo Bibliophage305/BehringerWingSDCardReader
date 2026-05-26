@@ -9,7 +9,7 @@ import tqdm
 from collections import defaultdict
 from pathlib import Path
 
-from wing_snapfile.snapfile import Snapfile
+from wing_snapfile.api.snapfile import load_snapfile, dump_snapfile
 
 
 def get_input_path() -> Path:
@@ -324,13 +324,15 @@ if __name__ == "__main__":
     with open(Path("TestRouting.snap"), "r") as f:
         snapfile_json = json.load(f)
 
-    snapfile = Snapfile.from_dict(snapfile_json)
+    snapfile = load_snapfile(snapfile_json)
 
     print(snapfile.audio_engine_data.channels[1].tags)
     print(snapfile.audio_engine_data.dcas)
 
-    if compare_dicts(snapfile_json, snapfile.to_dict()):
-        if snapfile_json == snapfile.to_dict():
+    roundtrip_json = dump_snapfile(snapfile)
+
+    if compare_dicts(snapfile_json, roundtrip_json):
+        if snapfile_json == roundtrip_json:
             print("Success: snapfile JSON matches exactly after parsing and serialization")
         else:
             print("How strange! JSON dicts are equal but not identical after parsing and serialization")

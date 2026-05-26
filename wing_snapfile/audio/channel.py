@@ -20,7 +20,7 @@ from wing_snapfile.audio.post_insert_plugin import (
 )
 from wing_snapfile.audio.send import AudioFullSend, AudioLimitedSend
 
-from wing_snapfile.types import OneIndexedList
+from wing_snapfile.types.one_indexed_list import OneIndexedList
 
 
 @dataclass_validate
