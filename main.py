@@ -326,5 +326,11 @@ if __name__ == "__main__":
 
     snapfile = Snapfile.from_dict(snapfile_json)
 
+    print(snapfile.audio_engine_data.channels[1].tags)
+    print(snapfile.audio_engine_data.dcas)
+
     if compare_dicts(snapfile_json, snapfile.to_dict()):
-        print("Success: snapfile JSON matches after parsing and serialization")
+        if snapfile_json == snapfile.to_dict():
+            print("Success: snapfile JSON matches exactly after parsing and serialization")
+        else:
+            print("How strange! JSON dicts are equal but not identical after parsing and serialization")
