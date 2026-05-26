@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioPostInsertPlugin:
@@ -17,7 +18,7 @@ class AudioPostInsertPlugin:
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**cls._from_dict_kwargs(data))
-    
+
     def to_dict(self):
         return {
             "on": self.on,
@@ -38,7 +39,7 @@ class AudioPostInsertPluginWithAutomix(AudioPostInsertPlugin):
             "mode": data["mode"],
             "autogain_weight": float(data["w"]),
         }
-    
+
     def to_dict(self):
         return {
             "on": self.on,

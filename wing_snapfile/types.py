@@ -14,17 +14,24 @@ class OneIndexedList(list):
             step = index.step
             return OneIndexedList(super().__getitem__(slice(start, stop, step)))
         raise TypeError("Indices must be integers or slices")
-    
+
     @classmethod
-    def from_indexed_dict(cls, data: dict[str, object], parser=lambda x: x) -> "OneIndexedList":
+    def from_indexed_dict(
+        cls, data: dict[str, object], parser=lambda x: x
+    ) -> "OneIndexedList":
         items = OneIndexedList()
         for i, (k, v) in enumerate(sorted(data.items(), key=lambda pair: int(pair[0]))):
             if k != str(i + 1):
-                raise ValueError(f"Expected contiguous 1-indexed keys, found {k} at position {i + 1}")
+                raise ValueError(
+                    f"Expected contiguous 1-indexed keys, found {k} at position {i + 1}"
+                )
             items.append(parser(v))
         return items
-    
+
     def to_dict(self, offset=0, prefix="") -> dict[str, object]:
-        return {f"{prefix}{i}": 
+        return {
+            f"{prefix}{i}": (
                 item if type(item) in (int, float, str, bool, dict) else item.to_dict()
-                for i, item in enumerate(self, start=1+offset)}
+            )
+            for i, item in enumerate(self, start=1 + offset)
+        }

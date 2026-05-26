@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioMonitorEQ:
@@ -53,9 +54,9 @@ class AudioMonitorEQ:
             f6=float(data["6f"]),
             q6=float(data["6q"]),
             hsg=float(data["hsg"]),
-            hsf=float(data["hsf"])
+            hsf=float(data["hsf"]),
         )
-    
+
     def to_dict(self):
         return {
             "on": self.on,
@@ -80,8 +81,9 @@ class AudioMonitorEQ:
             "6f": self.f6,
             "6q": self.q6,
             "hsg": self.hsg,
-            "hsf": self.hsf
+            "hsf": self.hsf,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -91,16 +93,11 @@ class AudioMonitorDelay:
 
     @classmethod
     def from_dict(cls, data: dict[str, object]) -> "AudioMonitorDelay":
-        return AudioMonitorDelay(
-            on=data["on"],
-            metres=float(data["m"])
-        )
-    
+        return AudioMonitorDelay(on=data["on"], metres=float(data["m"]))
+
     def to_dict(self):
-        return {
-            "on": self.on,
-            "m": self.metres
-        }
+        return {"on": self.on, "m": self.metres}
+
 
 @dataclass_validate
 @dataclass
@@ -140,7 +137,7 @@ class AudioMonitor:
             direct_input=data["dirin"],
             tags=data["tags"].split(","),
         )
-    
+
     def to_dict(self):
         return {
             "lvl": self.fader_level,

@@ -4,16 +4,24 @@ from dataclass_type_validator import dataclass_validate
 from wing_snapfile.audio.dynamics_crossover import AudioDynamicsCrossover
 from wing_snapfile.audio.dynamics_sidechain import AudioDynamicsSidechain
 from wing_snapfile.audio.eq import AudioEQ
-from wing_snapfile.audio.input import AudioInput, AudioRoutableInput, AudioSourceSwitchableDelayableInput
+from wing_snapfile.audio.input import (
+    AudioInput,
+    AudioRoutableInput,
+    AudioSourceSwitchableDelayableInput,
+)
 from wing_snapfile.audio.filter import AudioFilter
 from wing_snapfile.audio.tap_eq import AudioTapEQ
 from wing_snapfile.audio.gate_sidechain import AudioGateSidechain
 from wing_snapfile.audio.dynamics import AudioDynamics
 from wing_snapfile.audio.pre_insert_plugin import AudioPreInsertPlugin
-from wing_snapfile.audio.post_insert_plugin import AudioPostInsertPlugin, AudioPostInsertPluginWithAutomix
+from wing_snapfile.audio.post_insert_plugin import (
+    AudioPostInsertPlugin,
+    AudioPostInsertPluginWithAutomix,
+)
 from wing_snapfile.audio.send import AudioFullSend, AudioLimitedSend
 
 from wing_snapfile.types import OneIndexedList
+
 
 @dataclass_validate
 @dataclass
@@ -26,12 +34,13 @@ class Routable:
             "input": AudioRoutableInput.from_dict(data["in"]),
             "link_customization_to_source": data["clink"],
         }
-    
+
     def to_dict(self):
         return {
             "in": self.input.to_dict(),
             "clink": self.link_customization_to_source,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -43,11 +52,12 @@ class Soloable:
         return {
             "solo_safe": data["solosafe"],
         }
-    
+
     def to_dict(self):
         return {
             "solosafe": self.solo_safe,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -63,13 +73,14 @@ class DelaySettings:
             delay_mode=data["mode"],
             delay_amount=float(data["dly"]),
         )
-    
+
     def to_dict(self):
         return {
             "on": self.on,
             "mode": self.delay_mode,
             "dly": self.delay_amount,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -81,12 +92,13 @@ class Delayable:
         return {
             "delay_settings": DelaySettings.from_dict(data["dly"]),
         }
-    
+
     def to_dict(self):
         return {
             "dly": self.delay_settings.to_dict(),
         }
-    
+
+
 @dataclass_validate
 @dataclass
 class DynamicsSidechainable:
@@ -97,11 +109,12 @@ class DynamicsSidechainable:
         return {
             "dynamics_sidechain": AudioDynamicsSidechain.from_dict(data["dynsc"]),
         }
-    
+
     def to_dict(self):
         return {
             "dynsc": self.dynamics_sidechain.to_dict(),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -114,14 +127,14 @@ class DynamicsFullyProcessable(DynamicsSidechainable):
             **DynamicsSidechainable._from_dict_kwargs(data),
             "dynamics_crossover": AudioDynamicsCrossover.from_dict(data["dynxo"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
             "dynxo": self.dynamics_crossover.to_dict(),
         }
 
-    
+
 @dataclass_validate
 @dataclass
 class WithPostInsertPlugin:
@@ -132,11 +145,12 @@ class WithPostInsertPlugin:
         return {
             "post_insert_plugin": AudioPostInsertPlugin.from_dict(data["postins"]),
         }
-    
+
     def to_dict(self):
         return {
             "postins": self.post_insert_plugin.to_dict(),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -146,9 +160,11 @@ class WithPostInsertPluginWithAutomix:
     @classmethod
     def _from_dict_kwargs(cls, data):
         return {
-            "post_insert_plugin": AudioPostInsertPluginWithAutomix.from_dict(data["postins"]),
+            "post_insert_plugin": AudioPostInsertPluginWithAutomix.from_dict(
+                data["postins"]
+            ),
         }
-    
+
     def to_dict(self):
         return {
             "postins": self.post_insert_plugin.to_dict(),
@@ -168,9 +184,10 @@ class FullBusSendable:
                 AudioFullSend.from_dict,
             ),
         }
-    
+
     def to_dict(self):
         return self.bus_sends.to_dict()
+
 
 @dataclass_validate
 @dataclass
@@ -185,9 +202,10 @@ class LimitedBusSendable:
                 AudioLimitedSend.from_dict,
             ),
         }
-    
+
     def to_dict(self):
         return self.bus_sends.to_dict()
+
 
 @dataclass_validate
 @dataclass
@@ -202,9 +220,10 @@ class FullMatrixSendable:
                 AudioFullSend.from_dict,
             ),
         }
-    
+
     def to_dict(self):
         return self.matrix_sends.to_dict(prefix="MX")
+
 
 @dataclass_validate
 @dataclass
@@ -219,9 +238,10 @@ class LimitedMatrixSendable:
                 AudioLimitedSend.from_dict,
             ),
         }
-    
+
     def to_dict(self):
         return self.matrix_sends.to_dict(prefix="MX")
+
 
 @dataclass_validate
 @dataclass
@@ -236,9 +256,10 @@ class MainSendable:
                 AudioLimitedSend.from_dict,
             ),
         }
-    
+
     def to_dict(self):
         return self.main_sends.to_dict()
+
 
 @dataclass_validate
 @dataclass
@@ -280,7 +301,7 @@ class AudioChannel:
     @classmethod
     def from_dict(cls, data):
         return cls(**cls._from_dict_kwargs(data))
-    
+
     def to_dict(self):
         return {
             "in": self.input.to_dict(),
@@ -299,9 +320,18 @@ class AudioChannel:
             "tags": ",".join(self.tags),
         }
 
+
 @dataclass_validate
 @dataclass
-class AudioBusChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, MainSendable, DynamicsFullyProcessable, WithPostInsertPlugin, Delayable):
+class AudioBusChannel(
+    AudioChannel,
+    LimitedBusSendable,
+    LimitedMatrixSendable,
+    MainSendable,
+    DynamicsFullyProcessable,
+    WithPostInsertPlugin,
+    Delayable,
+):
     mono_bus: bool
 
     @classmethod
@@ -316,7 +346,7 @@ class AudioBusChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, M
             **Delayable._from_dict_kwargs(data),
             "mono_bus": data["busmono"],
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -330,6 +360,7 @@ class AudioBusChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, M
             "main": MainSendable.to_dict(self),
             "busmono": self.mono_bus,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -347,7 +378,7 @@ class AudioDirectInput:
             phase_invert=data["inv"],
             input_selector=data["in"],
         )
-    
+
     def to_dict(self):
         return {
             "on": self.direct_input,
@@ -356,9 +387,12 @@ class AudioDirectInput:
             "in": self.input_selector,
         }
 
+
 @dataclass_validate
 @dataclass
-class AudioMatrixChannel(AudioChannel, DynamicsFullyProcessable, WithPostInsertPlugin, Delayable):
+class AudioMatrixChannel(
+    AudioChannel, DynamicsFullyProcessable, WithPostInsertPlugin, Delayable
+):
     direct_input_settings: AudioDirectInput
     mono_bus: bool
 
@@ -372,7 +406,7 @@ class AudioMatrixChannel(AudioChannel, DynamicsFullyProcessable, WithPostInsertP
             "direct_input_settings": AudioDirectInput.from_dict(data["dir"]),
             "mono_bus": data["busmono"],
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -383,9 +417,17 @@ class AudioMatrixChannel(AudioChannel, DynamicsFullyProcessable, WithPostInsertP
             "busmono": self.mono_bus,
         }
 
+
 @dataclass_validate
 @dataclass
-class AudioMainChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, Delayable, DynamicsFullyProcessable, WithPostInsertPlugin):
+class AudioMainChannel(
+    AudioChannel,
+    LimitedBusSendable,
+    LimitedMatrixSendable,
+    Delayable,
+    DynamicsFullyProcessable,
+    WithPostInsertPlugin,
+):
     mono_bus: bool
 
     @classmethod
@@ -399,7 +441,7 @@ class AudioMainChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, 
             **WithPostInsertPlugin._from_dict_kwargs(data),
             "mono_bus": data["busmono"],
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -413,9 +455,18 @@ class AudioMainChannel(AudioChannel, LimitedBusSendable, LimitedMatrixSendable, 
             "busmono": self.mono_bus,
         }
 
+
 @dataclass_validate
 @dataclass
-class AudioAuxChannel(AudioChannel, Routable, Soloable, FullBusSendable, FullMatrixSendable, MainSendable, DynamicsSidechainable):
+class AudioAuxChannel(
+    AudioChannel,
+    Routable,
+    Soloable,
+    FullBusSendable,
+    FullMatrixSendable,
+    MainSendable,
+    DynamicsSidechainable,
+):
     input: AudioSourceSwitchableDelayableInput
 
     @classmethod
@@ -430,24 +481,34 @@ class AudioAuxChannel(AudioChannel, Routable, Soloable, FullBusSendable, FullMat
             **DynamicsSidechainable._from_dict_kwargs(data),
             "input": AudioSourceSwitchableDelayableInput.from_dict(data["in"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
             **Routable.to_dict(self),
             **Soloable.to_dict(self),
             "send": {
-                 **FullBusSendable.to_dict(self),
-                 **FullMatrixSendable.to_dict(self),
+                **FullBusSendable.to_dict(self),
+                **FullMatrixSendable.to_dict(self),
             },
             "main": MainSendable.to_dict(self),
             **DynamicsSidechainable.to_dict(self),
             # "in": self.input.to_dict(),
         }
 
+
 @dataclass_validate
 @dataclass
-class AudioFullChannel(AudioChannel, Routable, Soloable, DynamicsFullyProcessable, WithPostInsertPluginWithAutomix, FullBusSendable, FullMatrixSendable, MainSendable):
+class AudioFullChannel(
+    AudioChannel,
+    Routable,
+    Soloable,
+    DynamicsFullyProcessable,
+    WithPostInsertPluginWithAutomix,
+    FullBusSendable,
+    FullMatrixSendable,
+    MainSendable,
+):
     input: AudioSourceSwitchableDelayableInput
     filter: AudioFilter
     processing_order: str
@@ -479,7 +540,7 @@ class AudioFullChannel(AudioChannel, Routable, Soloable, DynamicsFullyProcessabl
             "dynamics_sidechain": AudioDynamicsSidechain.from_dict(data["dynsc"]),
             "tap_width": data["tapwid"],
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),

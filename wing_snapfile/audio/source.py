@@ -28,7 +28,7 @@ class AudioSource:
             "icon": data["icon"],
             "tags": data["tags"],
         }
-    
+
     def to_dict(self):
         return {
             "mode": self.mode,
@@ -76,7 +76,7 @@ class AudioPreampAccessibleSource(AudioPhaseInvertibleSource):
             "remote_control": data["rmt"],
             "link_customization_to_source": data["rcvc"],
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -101,7 +101,7 @@ class AudioOscillatorSettings:
             mode=data["mode"],
             frequency=float(data["f"]),
         )
-    
+
     def to_dict(self):
         return {
             "lvl": self.level,
@@ -121,7 +121,7 @@ class AudioOscillatorSource(AudioSource):
             **AudioSource._from_dict_kwargs(data),
             "oscillator_settings": AudioOscillatorSettings.from_dict(data["osc"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -145,7 +145,7 @@ class AudioUserSignalSettings:
             "group": data["grp"],
             "input": data["in"],
         }
-    
+
     def to_dict(self):
         return {
             "grp": self.group,
@@ -184,11 +184,9 @@ class AudioUserSignalSource(AudioPhaseInvertibleSource):
     def _from_dict_kwargs(cls, data):
         return {
             **AudioPhaseInvertibleSource._from_dict_kwargs(data),
-            "user_signal_settings": AudioUserSignalFullSettings.from_dict(
-                data["user"]
-            ),
+            "user_signal_settings": AudioUserSignalFullSettings.from_dict(data["user"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -205,9 +203,7 @@ class AudioUserSignalPatchSource(AudioPhaseInvertibleSource):
     def _from_dict_kwargs(cls, data):
         return {
             **AudioPhaseInvertibleSource._from_dict_kwargs(data),
-            "user_signal_settings": AudioUserSignalSettings.from_dict(
-                data["user"]
-            ),
+            "user_signal_settings": AudioUserSignalSettings.from_dict(data["user"]),
         }
 
     def to_dict(self):
@@ -283,7 +279,7 @@ class AudioSourceBank:
                 data["OSC"], AudioOscillatorSource.from_dict
             ),
         )
-    
+
     def to_dict(self):
         return {
             "LCL": self.local_sources.to_dict(),

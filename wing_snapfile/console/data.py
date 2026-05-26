@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 from wing_snapfile.types import OneIndexedList
 
+
 @dataclass_validate
 @dataclass
 class ConsoleData:

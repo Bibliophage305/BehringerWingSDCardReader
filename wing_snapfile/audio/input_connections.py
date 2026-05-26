@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioInputConnections:
@@ -15,7 +16,7 @@ class AudioInputConnections:
             group=data["grp"],
             input=data["in"],
             alt_group=data["altgrp"],
-            alt_input=data["altin"]
+            alt_input=data["altin"],
         )
 
     def to_dict(self):

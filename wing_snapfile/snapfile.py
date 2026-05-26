@@ -3,6 +3,7 @@ from dataclass_type_validator import dataclass_validate
 from wing_snapfile.console.data import ConsoleData
 from wing_snapfile.audio.data import AudioData
 
+
 @dataclass_validate
 @dataclass
 class Snapfile:

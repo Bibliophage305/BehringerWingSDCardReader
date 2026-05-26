@@ -3,6 +3,7 @@ from dataclass_type_validator import dataclass_validate
 
 from wing_snapfile.types import OneIndexedList
 
+
 @dataclass_validate
 @dataclass
 class AudioOutput:
@@ -15,7 +16,7 @@ class AudioOutput:
             input_group=data["grp"],
             input_number=data["in"],
         )
-    
+
     def to_dict(self):
         return {
             "grp": self.input_group,

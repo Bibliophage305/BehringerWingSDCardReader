@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 class SourceSwitchable:
     @classmethod
     def _from_dict_kwargs(cls, data):
@@ -8,12 +9,13 @@ class SourceSwitchable:
             "auto_source_switch": data["srcauto"],
             "use_alternate_source": data["altsrc"],
         }
-    
+
     def to_dict(self):
         return {
             "srcauto": self.auto_source_switch,
             "altsrc": self.use_alternate_source,
         }
+
 
 class Delayable:
     @classmethod
@@ -21,15 +23,16 @@ class Delayable:
         return {
             "delay_mode": data["dlymode"],
             "delay_amount": float(data["dly"]),
-            "delay_on": data["dlyon"]
+            "delay_on": data["dlyon"],
         }
-    
+
     def to_dict(self):
         return {
             "dlymode": self.delay_mode,
             "dly": self.delay_amount,
             "dlyon": self.delay_on,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -49,7 +52,7 @@ class AudioInputSettings:
     @classmethod
     def from_dict(cls, data):
         return cls(**cls._from_dict_kwargs(data))
-    
+
     def to_dict(self):
         return {
             "inv": self.is_phase_inverted,
@@ -60,7 +63,9 @@ class AudioInputSettings:
 
 @dataclass_validate
 @dataclass
-class AudioSourceSwitchableDelayableInputSettings(AudioInputSettings, SourceSwitchable, Delayable):
+class AudioSourceSwitchableDelayableInputSettings(
+    AudioInputSettings, SourceSwitchable, Delayable
+):
     auto_source_switch: bool
     use_alternate_source: bool
     is_phase_inverted: bool
@@ -77,7 +82,7 @@ class AudioSourceSwitchableDelayableInputSettings(AudioInputSettings, SourceSwit
             **SourceSwitchable._from_dict_kwargs(data),
             **Delayable._from_dict_kwargs(data),
         }
-    
+
     def to_dict(self):
         return {
             **AudioInputSettings.to_dict(self),

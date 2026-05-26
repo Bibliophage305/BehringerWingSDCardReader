@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioRecordSettings:
@@ -15,7 +16,7 @@ class AudioRecordSettings:
             resolution=data["resolution"],
             channels=data["channels"],
         )
-    
+
     def to_dict(self):
         return {
             "path": self.path,
