@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioFilter:
@@ -25,9 +26,9 @@ class AudioFilter:
             high_cut_slope=data["hcs"],
             tilt_enabled=data["tf"],
             tilt_mode=data["mdl"],
-            tilt_amount=float(data["tilt"])
+            tilt_amount=float(data["tilt"]),
         )
-    
+
     def to_dict(self):
         return {
             "lc": self.low_cut_enabled,

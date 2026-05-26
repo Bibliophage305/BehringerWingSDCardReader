@@ -3,6 +3,7 @@ from dataclass_type_validator import dataclass_validate
 from wing_snapfile.types import OneIndexedList
 from wing_snapfile.audio.monitor import AudioMonitor
 
+
 @dataclass_validate
 @dataclass
 class AudioSoloConfig:
@@ -14,7 +15,7 @@ class AudioSoloConfig:
     main_tap: str
     matrix_tap: str
     source_solo: str
-    
+
     @classmethod
     def from_dict(cls, data: dict[str, object]) -> "AudioSoloConfig":
         return AudioSoloConfig(
@@ -39,6 +40,7 @@ class AudioSoloConfig:
             "mtxtap": self.matrix_tap,
             "srcsolo": self.source_solo,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -77,6 +79,7 @@ class AudioRTAConfig:
             "eqauto": self.eq_autogain,
         }
 
+
 @dataclass_validate
 @dataclass
 class AudioMeterTapPoints:
@@ -95,7 +98,7 @@ class AudioMeterTapPoints:
             matrix_tap=data["mtx"],
             dca_tap=data["dca"],
         )
-    
+
     def to_dict(self):
         return {
             "in": self.channel_tap,
@@ -137,6 +140,7 @@ class AudioMeterConfig:
             "mainpos": self.main_meter_position,
         }
 
+
 @dataclass_validate
 @dataclass
 class AudioTalkbackAssignments:
@@ -156,16 +160,28 @@ class AudioTalkbackAssignments:
             bus_dim=data["busdim"],
             individual_send_levels=data["indiv"],
             bus_assignments=OneIndexedList.from_indexed_dict(
-                {k[1:]: v for k, v in data.items() if k.startswith("B") and k[1:].isdigit()}
+                {
+                    k[1:]: v
+                    for k, v in data.items()
+                    if k.startswith("B") and k[1:].isdigit()
+                }
             ),
             matrix_assignments=OneIndexedList.from_indexed_dict(
-                {k[2:]: v for k, v in data.items() if k.startswith("MX") and k[2:].isdigit()}
+                {
+                    k[2:]: v
+                    for k, v in data.items()
+                    if k.startswith("MX") and k[2:].isdigit()
+                }
             ),
             main_assignments=OneIndexedList.from_indexed_dict(
-                {k[1:]: v for k, v in data.items() if k.startswith("M") and k[1:].isdigit()}
+                {
+                    k[1:]: v
+                    for k, v in data.items()
+                    if k.startswith("M") and k[1:].isdigit()
+                }
             ),
         )
-    
+
     def to_dict(self):
         return {
             "mode": self.mode,
@@ -176,6 +192,7 @@ class AudioTalkbackAssignments:
             **self.matrix_assignments.to_dict(prefix="MX"),
             **self.main_assignments.to_dict(prefix="M"),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -193,7 +210,7 @@ class AudioTalkbackConfig:
             talkback_a=AudioTalkbackAssignments.from_dict(data["A"]),
             talkback_b=AudioTalkbackAssignments.from_dict(data["B"]),
         )
-    
+
     def to_dict(self):
         return {
             "assign": self.assign,
@@ -201,6 +218,7 @@ class AudioTalkbackConfig:
             "A": self.talkback_a.to_dict(),
             "B": self.talkback_b.to_dict(),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -220,6 +238,7 @@ class AudioAutomixConfig:
             "x": self.x_enable,
             "y": self.y_enable,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -245,7 +264,7 @@ class AudioConfig:
             talk=AudioTalkbackConfig.from_dict(data["talk"]),
             amix=AudioAutomixConfig.from_dict(data["amix"]),
         )
-    
+
     def to_dict(self):
         return {
             "mainlink": self.mainlink,

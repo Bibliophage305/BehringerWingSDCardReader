@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioDynamicsCrossover:
@@ -15,9 +16,9 @@ class AudioDynamicsCrossover:
             depth=data["depth"],
             type=data["type"],
             frequency=float(data["f"]),
-            q=float(data["q"])
+            q=float(data["q"]),
         )
-    
+
     def to_dict(self):
         return {
             "depth": self.depth,

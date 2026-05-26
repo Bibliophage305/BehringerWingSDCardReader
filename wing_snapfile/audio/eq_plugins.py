@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 from typing import Type
 
+
 @dataclass_validate
 @dataclass
 class EQPlugin:
@@ -62,7 +63,7 @@ class WingEQ(EQPlugin):
             "high_q": float(data["hq"]),
             "high_type": data["heq"],
         }
-    
+
     def to_dict(self):
         return {
             "lg": self.low_gain,
@@ -86,7 +87,8 @@ class WingEQ(EQPlugin):
             "hq": self.high_q,
             "heq": self.high_type,
         }
-    
+
+
 @dataclass_validate
 @dataclass
 class WingSixBandEQ(WingEQ):
@@ -110,7 +112,7 @@ class WingSixBandEQ(WingEQ):
             "band_6_q": float(data["6q"]),
             "tilt": float(data["tilt"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
@@ -156,7 +158,7 @@ class SoulAnalogue(EQPlugin):
             high_frequency=float(data["hf"]),
             high_gain=float(data["hg"]),
         )
-    
+
     def to_dict(self):
         return {
             "lf": self.low_frequency,
@@ -367,7 +369,7 @@ class Pulsar(EQPlugin):
             eq5_high_boost=float(data["5hb"]),
             eq5_high_frequency=data["5hf"],
         )
-    
+
     def to_dict(self):
         return {
             "eq1": self.eq1_enabled,
@@ -413,7 +415,7 @@ class MachEQ4(EQPlugin):
             air_mode=data["airm"],
             again=data["again"],
         )
-    
+
     def to_dict(self):
         return {
             "sub": self.sub,
@@ -446,4 +448,3 @@ def parse_eq_plugin(data: dict[str, object]) -> EQPlugin:
         plugin_cls = PLUGIN_MODEL_MAP[model]
     plugin_data = {k: v for k, v in data.items() if k not in {"on", "mdl", "mix"}}
     return plugin_cls.from_dict(plugin_data)
-

@@ -4,6 +4,7 @@ from dataclass_type_validator import dataclass_validate
 from wing_snapfile.audio.source import AudioSourceBank
 from wing_snapfile.audio.output import AudioOutputBank
 
+
 @dataclass_validate
 @dataclass
 class AudioIo:

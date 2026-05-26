@@ -1,7 +1,11 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
-from wing_snapfile.audio.input_settings import AudioInputSettings, AudioSourceSwitchableDelayableInputSettings
+from wing_snapfile.audio.input_settings import (
+    AudioInputSettings,
+    AudioSourceSwitchableDelayableInputSettings,
+)
 from wing_snapfile.audio.input_connections import AudioInputConnections
+
 
 @dataclass_validate
 @dataclass
@@ -17,11 +21,12 @@ class AudioInput:
         return {
             "settings": AudioInputSettings.from_dict(data["set"]),
         }
-    
+
     def to_dict(self):
         return {
             "set": self.settings.to_dict(),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -34,12 +39,13 @@ class AudioRoutableInput(AudioInput):
             **AudioInput._from_dict_kwargs(data),
             "connections": AudioInputConnections.from_dict(data["conn"]),
         }
-    
+
     def to_dict(self):
         return {
             **super().to_dict(),
             "conn": self.connections.to_dict(),
         }
+
 
 @dataclass_validate
 @dataclass
@@ -50,5 +56,7 @@ class AudioSourceSwitchableDelayableInput(AudioRoutableInput):
     def _from_dict_kwargs(cls, data):
         return {
             **AudioRoutableInput._from_dict_kwargs(data),
-            "settings": AudioSourceSwitchableDelayableInputSettings.from_dict(data["set"]),
+            "settings": AudioSourceSwitchableDelayableInputSettings.from_dict(
+                data["set"]
+            ),
         }

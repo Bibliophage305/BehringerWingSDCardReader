@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioDynamicsSidechain:
@@ -17,9 +18,9 @@ class AudioDynamicsSidechain:
             frequency=float(data["f"]),
             q=float(data["q"]),
             source=data["src"],
-            tap=data["tap"]
+            tap=data["tap"],
         )
-    
+
     def to_dict(self):
         return {
             "type": self.type,

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 
+
 @dataclass_validate
 @dataclass
 class AudioTapEQ:
@@ -27,9 +28,9 @@ class AudioTapEQ:
             band2_q=float(data["2q"]),
             band3_gain=float(data["3g"]),
             band3_freq=float(data["3f"]),
-            band3_q=float(data["3q"])
+            band3_q=float(data["3q"]),
         )
-    
+
     def to_dict(self):
         return {
             "on": self.on,

@@ -2,12 +2,14 @@ from dataclasses import dataclass
 from dataclass_type_validator import dataclass_validate
 from typing import Type
 
+
 @dataclass_validate
 @dataclass
 class DynamicsPlugin:
     @classmethod
     def from_dict(cls, data: dict[str, object]) -> "DynamicsPlugin":
         raise NotImplementedError
+
 
 @dataclass_validate
 @dataclass
@@ -29,9 +31,9 @@ class WingGate(DynamicsPlugin):
             hold=data["hld"],
             release=data["rel"],
             accent=data["acc"],
-            ratio=data["ratio"]
+            ratio=data["ratio"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -42,6 +44,7 @@ class WingGate(DynamicsPlugin):
             "acc": self.accent,
             "ratio": self.ratio,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -61,7 +64,7 @@ class WingDucker(DynamicsPlugin):
             hold=float(data["hld"]),
             release=float(data["rel"]),
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -70,6 +73,7 @@ class WingDucker(DynamicsPlugin):
             "hld": self.hold,
             "rel": self.release,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -91,7 +95,7 @@ class Even88Gate(DynamicsPlugin):
             fast=data["fast"],
             m40=data["m40"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -101,6 +105,7 @@ class Even88Gate(DynamicsPlugin):
             "fast": self.fast,
             "m40": self.m40,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -114,12 +119,13 @@ class DrawMore241(DynamicsPlugin):
             threshold=float(data["thr"]),
             slow=data["slow"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
             "slow": self.slow,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -141,7 +147,7 @@ class Soul9000Gate(DynamicsPlugin):
             fast=data["fast"],
             mode=data["mode"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -151,6 +157,7 @@ class Soul9000Gate(DynamicsPlugin):
             "fast": self.fast,
             "mode": self.mode,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -178,7 +185,7 @@ class DynamicEQ(DynamicsPlugin):
             q=float(data["q"]),
             mode=data["mode"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -191,6 +198,7 @@ class DynamicEQ(DynamicsPlugin):
             "q": self.q,
             "mode": self.mode,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -236,7 +244,7 @@ class DualDynamicEQ(DynamicsPlugin):
             band2_q=float(data["2-q"]),
             band2_mode=data["2-mode"],
         )
-    
+
     def to_dict(self):
         return {
             "1-thr": self.band1_threshold,
@@ -258,7 +266,8 @@ class DualDynamicEQ(DynamicsPlugin):
             "2-q": self.band2_q,
             "2-mode": self.band2_mode,
         }
-    
+
+
 @dataclass_validate
 @dataclass
 class BDX902DeEsser(DynamicsPlugin):
@@ -273,13 +282,14 @@ class BDX902DeEsser(DynamicsPlugin):
             range=float(data["range"]),
             mode=data["mode"],
         )
-    
+
     def to_dict(self):
         return {
             "f": self.frequency,
             "range": self.range,
             "mode": self.mode,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -295,7 +305,7 @@ class WaveDesigner(DynamicsPlugin):
             sustain=float(data["sust"]),
             gain=float(data["g"]),
         )
-    
+
     def to_dict(self):
         return {
             "att": self.attack,
@@ -324,7 +334,7 @@ class AutoRider(DynamicsPlugin):
             hold=float(data["hld"]),
             range=float(data["range"]),
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -334,6 +344,7 @@ class AutoRider(DynamicsPlugin):
             "hld": self.hold,
             "range": self.range,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -353,7 +364,7 @@ class SoulWarmthPre(DynamicsPlugin):
             trim=float(data["trim"]),
             mix=float(data["wmix"]),
         )
-    
+
     def to_dict(self):
         return {
             "drv": self.drive,
@@ -362,8 +373,6 @@ class SoulWarmthPre(DynamicsPlugin):
             "trim": self.trim,
             "wmix": self.mix,
         }
-
-
 
 
 @dataclass_validate
@@ -392,7 +401,7 @@ class WingCompressor(DynamicsPlugin):
             envelope=data["env"],
             auto=data["auto"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -433,7 +442,7 @@ class WingExpander(DynamicsPlugin):
             envelope=data["env"],
             auto=data["auto"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -446,6 +455,7 @@ class WingExpander(DynamicsPlugin):
             "env": self.envelope,
             "auto": self.auto,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -468,7 +478,7 @@ class Even88Comp(DynamicsPlugin):
             attack=data["att"],
             release=float(data["rel"]),
         )
-    
+
     def to_dict(self):
         return {
             "knee": self.knee,
@@ -478,6 +488,7 @@ class Even88Comp(DynamicsPlugin):
             "att": self.attack,
             "rel": self.release,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -492,12 +503,13 @@ class OneKnobComp(DynamicsPlugin):
             gain_reduction=float(data["gr"]),
             auto_gain=data["dag"],
         )
-    
+
     def to_dict(self):
         return {
             "gr": self.gain_reduction,
             "dag": self.auto_gain,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -527,6 +539,7 @@ class Soul9000(DynamicsPlugin):
             "peak": self.peak,
         }
 
+
 @dataclass_validate
 @dataclass
 class BDX160Comp(DynamicsPlugin):
@@ -539,7 +552,7 @@ class BDX160Comp(DynamicsPlugin):
             threshold=float(data["thr"]),
             compression=float(data["comp"]),
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -561,13 +574,14 @@ class BDX560Easy(DynamicsPlugin):
             ratio=float(data["ratio"]),
             easy=data["easy"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
             "ratio": self.ratio,
             "easy": self.easy,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -587,7 +601,7 @@ class Red3Compressor(DynamicsPlugin):
             release=float(data["rel"]),
             auto=data["auto"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -596,6 +610,7 @@ class Red3Compressor(DynamicsPlugin):
             "rel": self.release,
             "auto": self.auto,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -620,7 +635,7 @@ class LMTCompressor(DynamicsPlugin):
             compressor_gain=float(data["cgain"]),
             compressor_on=data["con"],
         )
-    
+
     def to_dict(self):
         return {
             "tspd": self.transient_speed,
@@ -631,6 +646,7 @@ class LMTCompressor(DynamicsPlugin):
             "cgain": self.compressor_gain,
             "con": self.compressor_on,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -648,7 +664,7 @@ class SoulBusComp(DynamicsPlugin):
             attack=float(data["att"]),
             release=data["rel"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -656,6 +672,7 @@ class SoulBusComp(DynamicsPlugin):
             "att": self.attack,
             "rel": self.release,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -677,7 +694,7 @@ class PIA2250Rack(DynamicsPlugin):
             knee=data["knee"],
             type=data["type"],
         )
-    
+
     def to_dict(self):
         return {
             "thr": self.threshold,
@@ -687,6 +704,7 @@ class PIA2250Rack(DynamicsPlugin):
             "knee": self.knee,
             "type": self.type,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -706,7 +724,7 @@ class LimiterAmp76(DynamicsPlugin):
             release=float(data["rel"]),
             ratio=data["ratio"],
         )
-    
+
     def to_dict(self):
         return {
             "in": self.input_gain,
@@ -731,13 +749,14 @@ class LALeveler(DynamicsPlugin):
             peak=float(data["peak"]),
             mode=data["mode"],
         )
-    
+
     def to_dict(self):
         return {
             "ingain": self.input_gain,
             "peak": self.peak,
             "mode": self.mode,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -755,7 +774,7 @@ class FairKid(DynamicsPlugin):
             time_constant=float(data["time"]),
             bias=float(data["bias"]),
         )
-    
+
     def to_dict(self):
         return {
             "in": self.input_gain,
@@ -763,6 +782,7 @@ class FairKid(DynamicsPlugin):
             "time": self.time_constant,
             "bias": self.bias,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -788,6 +808,7 @@ class LTA100Leveler(DynamicsPlugin):
             "att": self.attack,
             "rel": self.release,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -827,9 +848,6 @@ class EternalBliss(DynamicsPlugin):
         }
 
 
-
-
-
 @dataclass_validate
 @dataclass
 class NoStressor(DynamicsPlugin):
@@ -858,6 +876,7 @@ class NoStressor(DynamicsPlugin):
             "ratio": self.ratio,
         }
 
+
 @dataclass_validate
 @dataclass
 class SourceExtractor(DynamicsPlugin):
@@ -882,6 +901,7 @@ class SourceExtractor(DynamicsPlugin):
             "fast": self.fast,
             "peak": self.peak,
         }
+
 
 @dataclass_validate
 @dataclass
@@ -918,10 +938,6 @@ class PSELACombo(DynamicsPlugin):
         }
 
 
-
-
-
-
 @dataclass_validate
 @dataclass
 class EvenCompLim(DynamicsPlugin):
@@ -950,7 +966,7 @@ class EvenCompLim(DynamicsPlugin):
             compressor_fast=data["cfast"],
             compressor_gain=float(data["cgain"]),
         )
-    
+
     def to_dict(self):
         return {
             "lon": self.limiter_on,
@@ -964,7 +980,6 @@ class EvenCompLim(DynamicsPlugin):
             "cfast": self.compressor_fast,
             "cgain": self.compressor_gain,
         }
-
 
 
 @dataclass_validate
@@ -1000,9 +1015,6 @@ class DrawMoreComp(DynamicsPlugin):
             "lrel": self.limiter_release,
             "auto": self.auto,
         }
-
-
-
 
 
 PLUGIN_MODEL_MAP: dict[str, Type[DynamicsPlugin]] = {
@@ -1044,5 +1056,7 @@ PLUGIN_MODEL_MAP: dict[str, Type[DynamicsPlugin]] = {
 def parse_dynamics_plugin(data: dict[str, object]) -> DynamicsPlugin:
     model = data["mdl"]
     plugin_cls = PLUGIN_MODEL_MAP[model]
-    plugin_data = {k: v for k, v in data.items() if k not in {"on", "mdl", "mix", "gain"}}
+    plugin_data = {
+        k: v for k, v in data.items() if k not in {"on", "mdl", "mix", "gain"}
+    }
     return plugin_cls.from_dict(plugin_data)
