@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, Protocol, runtime_checkable
+from typing import Callable, Generic, TypeVar, Protocol, runtime_checkable
 
 T = TypeVar("T")
 
@@ -46,13 +46,8 @@ class OneIndexedList(list[T], Generic[T]):
 
         return out
 
-    def to_dict(self, offset=0, prefix=""):
-        def _serialize(item):
-            if isinstance(item, DictSerializable):
-                return item.to_dict()
-            return item
-
+    def to_dict(self, encoder: Callable = lambda x: x, offset: int = 0, prefix: str ="") -> dict[str, object]:
         return {
-            f"{prefix}{i}": _serialize(item)
+            f"{prefix}{i}": encoder(item)
             for i, item in enumerate(self, start=1 + offset)
         }

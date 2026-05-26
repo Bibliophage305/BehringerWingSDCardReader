@@ -1,5 +1,5 @@
 from wing_snapfile.models.snapfile import Snapfile
-from wing_snapfile.protocol.codecs.snapfile import SnapfileCodec
+from wing_snapfile.codecs.snapfile import SnapfileCodec
 
 def load_snapfile(data: dict) -> Snapfile:
     return SnapfileCodec.decode(data)
