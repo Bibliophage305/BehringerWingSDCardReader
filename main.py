@@ -6,6 +6,8 @@ import psutil
 import questionary
 import tqdm
 
+import msgspec
+
 from collections import defaultdict
 from pathlib import Path
 
@@ -323,11 +325,11 @@ if __name__ == "__main__":
     # main()
     with open(Path("TestRouting.snap"), "r") as f:
         snapfile_json = json.load(f)
-
+    
     snapfile = load_snapfile(snapfile_json)
 
-    print(snapfile.audio_engine_data.channels[1].tags)
-    print(snapfile.audio_engine_data.dcas)
+    # print(snapfile.audio_engine_data.channels[1].tags)
+    # print(snapfile.audio_engine_data.dcas)
 
     roundtrip_json = dump_snapfile(snapfile)
 

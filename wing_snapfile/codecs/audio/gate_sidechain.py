@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.gate_sidechain import AudioGateSidechain
+from wing_snapfile.models.audio.gate_sidechain import GateSidechain
 
 
-class AudioGateSidechainCodec:
+class GateSidechainCodec:
     @staticmethod
-    def decode(data: dict) -> AudioGateSidechain:
-        return AudioGateSidechain(
+    def decode(data: dict) -> GateSidechain:
+        return GateSidechain(
             type=data["type"],
             frequency=float(data["f"]),
             q=float(data["q"]),
@@ -13,7 +13,7 @@ class AudioGateSidechainCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioGateSidechain) -> dict:
+    def encode(obj: GateSidechain) -> dict:
         return {
             "type": obj.type,
             "f": obj.frequency,

@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.filter import AudioFilter
+from wing_snapfile.models.audio.filter import Filter
 
 
-class AudioFilterCodec:
+class FilterCodec:
     @staticmethod
-    def decode(data: dict) -> AudioFilter:
-        return AudioFilter(
+    def decode(data: dict) -> Filter:
+        return Filter(
             low_cut_enabled=data["lc"],
             low_cut_frequency=float(data["lcf"]),
             low_cut_slope=data["lcs"],
@@ -17,7 +17,7 @@ class AudioFilterCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioFilter) -> dict:
+    def encode(obj: Filter) -> dict:
         return {
             "lc": obj.low_cut_enabled,
             "lcf": obj.low_cut_frequency,

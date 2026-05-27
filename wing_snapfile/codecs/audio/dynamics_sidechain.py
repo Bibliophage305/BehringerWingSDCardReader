@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.dynamics_sidechain import AudioDynamicsSidechain
+from wing_snapfile.models.audio.dynamics_sidechain import DynamicsSidechain
 
 
-class AudioDynamicsSidechainCodec:
+class DynamicsSidechainCodec:
     @staticmethod
-    def decode(data: dict) -> AudioDynamicsSidechain:
-        return AudioDynamicsSidechain(
+    def decode(data: dict) -> DynamicsSidechain:
+        return DynamicsSidechain(
             type=data["type"],
             frequency=float(data["f"]),
             q=float(data["q"]),
@@ -13,7 +13,7 @@ class AudioDynamicsSidechainCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioDynamicsSidechain) -> dict:
+    def encode(obj: DynamicsSidechain) -> dict:
         return {
             "type": obj.type,
             "f": obj.frequency,

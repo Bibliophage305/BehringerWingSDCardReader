@@ -1,9 +1,12 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 from wing_snapfile.types.one_indexed_list import OneIndexedList
 
 
-class AudioSource(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Source:
     mode: str
     mute: bool
     color: int
@@ -12,57 +15,75 @@ class AudioSource(msgspec.Struct, kw_only=True):
     tags: list[str]
 
 
-class AudioPhaseInvertibleSource(AudioSource, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class PhaseInvertibleSource(Source):
     phase_invert: bool
 
 
-class AudioPreampAccessibleSource(AudioPhaseInvertibleSource, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class PreampAccessibleSource(PhaseInvertibleSource):
     gain: float
     phantom_power: bool
     remote_control: str
     link_customization_to_source: bool
 
 
-class AudioOscillatorSettings(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class OscillatorSettings:
     level: float
     mode: str
     frequency: float
 
 
-class AudioOscillatorSource(AudioSource, kw_only=True):
-    oscillator_settings: AudioOscillatorSettings
+@dataclass_validate
+@dataclass(kw_only=True)
+class OscillatorSource(Source):
+    oscillator_settings: OscillatorSettings
 
 
-class AudioUserSignalSettings(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class UserSignalSettings:
     group: str
     input: int
 
 
-class AudioUserSignalFullSettings(AudioUserSignalSettings, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class UserSignalFullSettings(UserSignalSettings):
     tap_point: str
     lr_mode: str
 
 
-class AudioUserSignalSource(AudioPhaseInvertibleSource, kw_only=True):
-    user_signal_settings: AudioUserSignalFullSettings
+@dataclass_validate
+@dataclass(kw_only=True)
+class UserSignalSource(PhaseInvertibleSource):
+    user_signal_settings: UserSignalFullSettings
 
 
-class AudioUserSignalPatchSource(AudioPhaseInvertibleSource, kw_only=True):
-    user_signal_settings: AudioUserSignalSettings
+@dataclass_validate
+@dataclass(kw_only=True)
+class UserSignalPatchSource(PhaseInvertibleSource):
+    user_signal_settings: UserSignalSettings
 
 
-class AudioSourceBank(msgspec.Struct, kw_only=True):
-    local_sources: OneIndexedList[AudioPreampAccessibleSource]
-    aux_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    aes50_a_sources: OneIndexedList[AudioPreampAccessibleSource]
-    aes50_b_sources: OneIndexedList[AudioPreampAccessibleSource]
-    aes50_c_sources: OneIndexedList[AudioPreampAccessibleSource]
-    stageconnect_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    usb_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    expansion_card_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    module_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    usb_playback_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    aes3_sources: OneIndexedList[AudioPhaseInvertibleSource]
-    user_signal_sources: OneIndexedList[AudioUserSignalSource]
-    user_signal_patch_sources: OneIndexedList[AudioUserSignalPatchSource]
-    oscillator_sources: OneIndexedList[AudioOscillatorSource]
+@dataclass_validate
+@dataclass(kw_only=True)
+class SourceBank:
+    local_sources: OneIndexedList[PreampAccessibleSource]
+    aux_sources: OneIndexedList[PhaseInvertibleSource]
+    aes50_a_sources: OneIndexedList[PreampAccessibleSource]
+    aes50_b_sources: OneIndexedList[PreampAccessibleSource]
+    aes50_c_sources: OneIndexedList[PreampAccessibleSource]
+    stageconnect_sources: OneIndexedList[PhaseInvertibleSource]
+    usb_sources: OneIndexedList[PhaseInvertibleSource]
+    expansion_card_sources: OneIndexedList[PhaseInvertibleSource]
+    module_sources: OneIndexedList[PhaseInvertibleSource]
+    usb_playback_sources: OneIndexedList[PhaseInvertibleSource]
+    aes3_sources: OneIndexedList[PhaseInvertibleSource]
+    user_signal_sources: OneIndexedList[UserSignalSource]
+    user_signal_patch_sources: OneIndexedList[UserSignalPatchSource]
+    oscillator_sources: OneIndexedList[OscillatorSource]

@@ -1,20 +1,20 @@
 from wing_snapfile.models.audio.input_settings import (
-    AudioInputSettings,
-    AudioSourceSwitchableDelayableInputSettings,
+    InputSettings,
+    FullInputSettings,
 )
 
 
-class AudioInputSettingsCodec:
+class InputSettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioInputSettings:
-        return AudioInputSettings(
+    def decode(data: dict) -> InputSettings:
+        return InputSettings(
             is_phase_inverted=data["inv"],
             trim=float(data["trim"]),
             balance=float(data["bal"]),
         )
 
     @staticmethod
-    def encode(obj: AudioInputSettings) -> dict:
+    def encode(obj: InputSettings) -> dict:
         return {
             "inv": obj.is_phase_inverted,
             "trim": obj.trim,
@@ -22,10 +22,10 @@ class AudioInputSettingsCodec:
         }
 
 
-class AudioSourceSwitchableDelayableInputSettingsCodec:
+class FullInputSettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioSourceSwitchableDelayableInputSettings:
-        return AudioSourceSwitchableDelayableInputSettings(
+    def decode(data: dict) -> FullInputSettings:
+        return FullInputSettings(
             is_phase_inverted=data["inv"],
             trim=float(data["trim"]),
             balance=float(data["bal"]),
@@ -37,7 +37,7 @@ class AudioSourceSwitchableDelayableInputSettingsCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioSourceSwitchableDelayableInputSettings) -> dict:
+    def encode(obj: FullInputSettings) -> dict:
         return {
             "inv": obj.is_phase_inverted,
             "trim": obj.trim,

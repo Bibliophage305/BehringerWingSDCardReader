@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.dca import AudioDCA
+from wing_snapfile.models.audio.dca import DCA
 
 
-class AudioDCACodec:
+class DCACodec:
     @staticmethod
-    def decode(data: dict) -> AudioDCA:
-        return AudioDCA(
+    def decode(data: dict) -> DCA:
+        return DCA(
             name=data["name"],
             color=data["col"],
             icon=data["icon"],
@@ -15,7 +15,7 @@ class AudioDCACodec:
         )
 
     @staticmethod
-    def encode(obj: AudioDCA) -> dict:
+    def encode(obj: DCA) -> dict:
         return {
             "name": obj.name,
             "col": obj.color,

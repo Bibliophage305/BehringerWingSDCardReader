@@ -1,10 +1,13 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 from wing_snapfile.types.one_indexed_list import OneIndexedList
-from wing_snapfile.models.audio.monitor import AudioMonitor
+from wing_snapfile.models.audio.monitor import Monitor
 
 
-class AudioSoloConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class SoloConfig:
     mode: str
     monitor_outputs: str
     mute: bool
@@ -17,7 +20,9 @@ class AudioSoloConfig(msgspec.Struct, kw_only=True):
     source_solo: str
 
 
-class AudioRTAConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class RTAConfig:
     rta_range: int
     rta_gain: int
     rta_autogain: bool
@@ -29,7 +34,9 @@ class AudioRTAConfig(msgspec.Struct, kw_only=True):
     eq_autogain: bool
 
 
-class AudioMeterTapPoints(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class MeterTapPoints:
     channel_tap: str
     bus_tap: str
     main_tap: str
@@ -37,18 +44,22 @@ class AudioMeterTapPoints(msgspec.Struct, kw_only=True):
     dca_tap: str
 
 
-class AudioMeterConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class MeterConfig:
     scope_source: int
     scope_tap_point: str
 
-    surface_meter_tap_points: AudioMeterTapPoints
-    meter_page_tap_points: AudioMeterTapPoints
+    surface_meter_tap_points: MeterTapPoints
+    meter_page_tap_points: MeterTapPoints
 
     main_meter_source: str
     main_meter_position: str
 
 
-class AudioTalkbackAssignments(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class TalkbackAssignments:
     mode: str
 
     monitor_dim: int
@@ -61,27 +72,33 @@ class AudioTalkbackAssignments(msgspec.Struct, kw_only=True):
     main_assignments: OneIndexedList[bool]
 
 
-class AudioTalkbackConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class TalkbackConfig:
     assign: str
     fader_level: float
 
-    talkback_a: AudioTalkbackAssignments
-    talkback_b: AudioTalkbackAssignments
+    talkback_a: TalkbackAssignments
+    talkback_b: TalkbackAssignments
 
 
-class AudioAutomixConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class AutomixConfig:
     x_enable: bool
     y_enable: bool
 
 
-class AudioConfig(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class AudioConfig:
     mainlink: str
     dcamgrp: bool
 
-    mon: OneIndexedList[AudioMonitor]
+    mon: OneIndexedList[Monitor]
 
-    solo: AudioSoloConfig
-    rta: AudioRTAConfig
-    mtr: AudioMeterConfig
-    talk: AudioTalkbackConfig
-    amix: AudioAutomixConfig
+    solo: SoloConfig
+    rta: RTAConfig
+    mtr: MeterConfig
+    talk: TalkbackConfig
+    amix: AutomixConfig

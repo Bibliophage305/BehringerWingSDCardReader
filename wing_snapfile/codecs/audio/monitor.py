@@ -1,13 +1,13 @@
 from wing_snapfile.models.audio.monitor import (
-    AudioMonitor,
-    AudioMonitorEQ,
-    AudioMonitorDelay,
+    Monitor,
+    MonitorEQ,
+    MonitorDelay,
 )
 
-class AudioMonitorEQCodec:
+class MonitorEQCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMonitorEQ:
-        return AudioMonitorEQ(
+    def decode(data: dict) -> MonitorEQ:
+        return MonitorEQ(
             on=data["on"],
             lsg=float(data["lsg"]),
             lsf=float(data["lsf"]),
@@ -41,7 +41,7 @@ class AudioMonitorEQCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioMonitorEQ) -> dict:
+    def encode(obj: MonitorEQ) -> dict:
         return {
             "on": obj.on,
             "lsg": obj.lsg,
@@ -75,35 +75,35 @@ class AudioMonitorEQCodec:
             "hsf": obj.hsf,
         }
     
-class AudioMonitorDelayCodec:
+class MonitorDelayCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMonitorDelay:
-        return AudioMonitorDelay(
+    def decode(data: dict) -> MonitorDelay:
+        return MonitorDelay(
             on=data["on"],
             metres=float(data["m"]),
         )
 
     @staticmethod
-    def encode(obj: AudioMonitorDelay) -> dict:
+    def encode(obj: MonitorDelay) -> dict:
         return {
             "on": obj.on,
             "m": obj.metres,
         }
 
-class AudioMonitorCodec:
+class MonitorCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMonitor:
-        return AudioMonitor(
+    def decode(data: dict) -> Monitor:
+        return Monitor(
             fader_level=float(data["lvl"]),
             phase_invert=data["inv"],
 
             pan=data["pan"],
             width=data["wid"],
 
-            eq=AudioMonitorEQCodec.decode(data["eq"]),
+            eq=MonitorEQCodec.decode(data["eq"]),
             limiter_threshold=data["lim"],
 
-            delay=AudioMonitorDelayCodec.decode(data["dly"]),
+            delay=MonitorDelayCodec.decode(data["dly"]),
 
             dim=data["dim"],
             pfl_dim=data["pfldim"],
@@ -119,7 +119,7 @@ class AudioMonitorCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioMonitor) -> dict:
+    def encode(obj: Monitor) -> dict:
         return {
             "lvl": obj.fader_level,
             "inv": obj.phase_invert,
@@ -127,10 +127,10 @@ class AudioMonitorCodec:
             "pan": obj.pan,
             "wid": obj.width,
 
-            "eq": AudioMonitorEQCodec.encode(obj.eq),
+            "eq": MonitorEQCodec.encode(obj.eq),
             "lim": obj.limiter_threshold,
 
-            "dly": AudioMonitorDelayCodec.encode(obj.delay),
+            "dly": MonitorDelayCodec.encode(obj.delay),
 
             "dim": obj.dim,
             "pfldim": obj.pfl_dim,

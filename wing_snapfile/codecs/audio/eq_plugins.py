@@ -361,13 +361,13 @@ PLUGIN_MODEL_KEY_MAP: dict[type[EQPlugin], str] = {
 }
 
 
-class AudioEQPluginCodec:
+class EQPluginCodec:
     BASE_KEYS = {"on", "mdl", "mix"}
 
     @staticmethod
     def decode(data: dict[str, Any]) -> EQPlugin:
         model = data["mdl"]
-        plugin_data = {k: v for k, v in data.items() if k not in AudioEQPluginCodec.BASE_KEYS}
+        plugin_data = {k: v for k, v in data.items() if k not in EQPluginCodec.BASE_KEYS}
         if model == "STD" and "5g" in plugin_data:
             return WingSixBandEQCodec.decode(plugin_data)
         codec = PLUGIN_CODEC_MAP.get(model)

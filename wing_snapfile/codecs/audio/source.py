@@ -1,14 +1,14 @@
 from wing_snapfile.models.audio.source import (
-    AudioSource,
-    AudioPhaseInvertibleSource,
-    AudioPreampAccessibleSource,
-    AudioOscillatorSettings,
-    AudioOscillatorSource,
-    AudioUserSignalSettings,
-    AudioUserSignalFullSettings,
-    AudioUserSignalSource,
-    AudioUserSignalPatchSource,
-    AudioSourceBank,
+    Source,
+    PhaseInvertibleSource,
+    PreampAccessibleSource,
+    OscillatorSettings,
+    OscillatorSource,
+    UserSignalSettings,
+    UserSignalFullSettings,
+    UserSignalSource,
+    UserSignalPatchSource,
+    SourceBank,
 )
 from wing_snapfile.helpers.indexed import encode_indexed, parse_indexed
 
@@ -28,7 +28,7 @@ def _decode_source_base(data: dict) -> dict:
     }
 
 
-def _encode_source_base(obj: AudioSource) -> dict:
+def _encode_source_base(obj: Source) -> dict:
     return {
         "mode": obj.mode,
         "mute": obj.mute,
@@ -46,7 +46,7 @@ def _decode_phase_invertible(data: dict) -> dict:
     }
 
 
-def _encode_phase_invertible(obj: AudioPhaseInvertibleSource) -> dict:
+def _encode_phase_invertible(obj: PhaseInvertibleSource) -> dict:
     return {
         **_encode_source_base(obj),
         "pol": obj.phase_invert,
@@ -57,10 +57,10 @@ def _encode_phase_invertible(obj: AudioPhaseInvertibleSource) -> dict:
 # Leaf codecs
 # ---------------------------------------------------------------------------
 
-class AudioPreampAccessibleSourceCodec:
+class PreampAccessibleSourceCodec:
     @staticmethod
-    def decode(data: dict) -> AudioPreampAccessibleSource:
-        return AudioPreampAccessibleSource(
+    def decode(data: dict) -> PreampAccessibleSource:
+        return PreampAccessibleSource(
             **_decode_phase_invertible(data),
             gain=float(data["g"]),
             phantom_power=data["vph"],
@@ -69,7 +69,7 @@ class AudioPreampAccessibleSourceCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioPreampAccessibleSource) -> dict:
+    def encode(obj: PreampAccessibleSource) -> dict:
         return {
             **_encode_phase_invertible(obj),
             "g": obj.gain,
@@ -79,27 +79,27 @@ class AudioPreampAccessibleSourceCodec:
         }
 
 
-class AudioPhaseInvertibleSourceCodec:
+class PhaseInvertibleSourceCodec:
     @staticmethod
-    def decode(data: dict) -> AudioPhaseInvertibleSource:
-        return AudioPhaseInvertibleSource(**_decode_phase_invertible(data))
+    def decode(data: dict) -> PhaseInvertibleSource:
+        return PhaseInvertibleSource(**_decode_phase_invertible(data))
 
     @staticmethod
-    def encode(obj: AudioPhaseInvertibleSource) -> dict:
+    def encode(obj: PhaseInvertibleSource) -> dict:
         return _encode_phase_invertible(obj)
 
 
-class AudioOscillatorSettingsCodec:
+class OscillatorSettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioOscillatorSettings:
-        return AudioOscillatorSettings(
+    def decode(data: dict) -> OscillatorSettings:
+        return OscillatorSettings(
             level=float(data["lvl"]),
             mode=data["mode"],
             frequency=float(data["f"]),
         )
 
     @staticmethod
-    def encode(obj: AudioOscillatorSettings) -> dict:
+    def encode(obj: OscillatorSettings) -> dict:
         return {
             "lvl": obj.level,
             "mode": obj.mode,
@@ -107,42 +107,42 @@ class AudioOscillatorSettingsCodec:
         }
 
 
-class AudioOscillatorSourceCodec:
+class OscillatorSourceCodec:
     @staticmethod
-    def decode(data: dict) -> AudioOscillatorSource:
-        return AudioOscillatorSource(
+    def decode(data: dict) -> OscillatorSource:
+        return OscillatorSource(
             **_decode_source_base(data),
-            oscillator_settings=AudioOscillatorSettingsCodec.decode(data["osc"]),
+            oscillator_settings=OscillatorSettingsCodec.decode(data["osc"]),
         )
 
     @staticmethod
-    def encode(obj: AudioOscillatorSource) -> dict:
+    def encode(obj: OscillatorSource) -> dict:
         return {
             **_encode_source_base(obj),
-            "osc": AudioOscillatorSettingsCodec.encode(obj.oscillator_settings),
+            "osc": OscillatorSettingsCodec.encode(obj.oscillator_settings),
         }
 
 
-class AudioUserSignalSettingsCodec:
+class UserSignalSettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioUserSignalSettings:
-        return AudioUserSignalSettings(
+    def decode(data: dict) -> UserSignalSettings:
+        return UserSignalSettings(
             group=data["grp"],
             input=data["in"],
         )
 
     @staticmethod
-    def encode(obj: AudioUserSignalSettings) -> dict:
+    def encode(obj: UserSignalSettings) -> dict:
         return {
             "grp": obj.group,
             "in": obj.input,
         }
 
 
-class AudioUserSignalFullSettingsCodec:
+class UserSignalFullSettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioUserSignalFullSettings:
-        return AudioUserSignalFullSettings(
+    def decode(data: dict) -> UserSignalFullSettings:
+        return UserSignalFullSettings(
             group=data["grp"],
             input=data["in"],
             tap_point=data["tap"],
@@ -150,7 +150,7 @@ class AudioUserSignalFullSettingsCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioUserSignalFullSettings) -> dict:
+    def encode(obj: UserSignalFullSettings) -> dict:
         return {
             "grp": obj.group,
             "in": obj.input,
@@ -159,35 +159,35 @@ class AudioUserSignalFullSettingsCodec:
         }
 
 
-class AudioUserSignalSourceCodec:
+class UserSignalSourceCodec:
     @staticmethod
-    def decode(data: dict) -> AudioUserSignalSource:
-        return AudioUserSignalSource(
+    def decode(data: dict) -> UserSignalSource:
+        return UserSignalSource(
             **_decode_phase_invertible(data),
-            user_signal_settings=AudioUserSignalFullSettingsCodec.decode(data["user"]),
+            user_signal_settings=UserSignalFullSettingsCodec.decode(data["user"]),
         )
 
     @staticmethod
-    def encode(obj: AudioUserSignalSource) -> dict:
+    def encode(obj: UserSignalSource) -> dict:
         return {
             **_encode_phase_invertible(obj),
-            "user": AudioUserSignalFullSettingsCodec.encode(obj.user_signal_settings),
+            "user": UserSignalFullSettingsCodec.encode(obj.user_signal_settings),
         }
 
 
-class AudioUserSignalPatchSourceCodec:
+class UserSignalPatchSourceCodec:
     @staticmethod
-    def decode(data: dict) -> AudioUserSignalPatchSource:
-        return AudioUserSignalPatchSource(
+    def decode(data: dict) -> UserSignalPatchSource:
+        return UserSignalPatchSource(
             **_decode_phase_invertible(data),
-            user_signal_settings=AudioUserSignalSettingsCodec.decode(data["user"]),
+            user_signal_settings=UserSignalSettingsCodec.decode(data["user"]),
         )
 
     @staticmethod
-    def encode(obj: AudioUserSignalPatchSource) -> dict:
+    def encode(obj: UserSignalPatchSource) -> dict:
         return {
             **_encode_phase_invertible(obj),
-            "user": AudioUserSignalSettingsCodec.encode(obj.user_signal_settings),
+            "user": UserSignalSettingsCodec.encode(obj.user_signal_settings),
         }
 
 
@@ -198,105 +198,105 @@ class AudioUserSignalPatchSourceCodec:
 _USR_SPLIT = 24  # indices 1-24 → UserSignal, 25+ → UserSignalPatch
 
 
-class AudioSourceBankCodec:
+class SourceBankCodec:
     @staticmethod
-    def decode(data: dict) -> AudioSourceBank:
+    def decode(data: dict) -> SourceBank:
         usr = data["USR"]
-        return AudioSourceBank(
+        return SourceBank(
             local_sources=parse_indexed(
-                data["LCL"], AudioPreampAccessibleSourceCodec.decode
+                data["LCL"], PreampAccessibleSourceCodec.decode
             ),
             aux_sources=parse_indexed(
-                data["AUX"], AudioPhaseInvertibleSourceCodec.decode
+                data["AUX"], PhaseInvertibleSourceCodec.decode
             ),
             aes50_a_sources=parse_indexed(
-                data["A"], AudioPreampAccessibleSourceCodec.decode
+                data["A"], PreampAccessibleSourceCodec.decode
             ),
             aes50_b_sources=parse_indexed(
-                data["B"], AudioPreampAccessibleSourceCodec.decode
+                data["B"], PreampAccessibleSourceCodec.decode
             ),
             aes50_c_sources=parse_indexed(
-                data["C"], AudioPreampAccessibleSourceCodec.decode
+                data["C"], PreampAccessibleSourceCodec.decode
             ),
             stageconnect_sources=parse_indexed(
-                data["SC"], AudioPhaseInvertibleSourceCodec.decode
+                data["SC"], PhaseInvertibleSourceCodec.decode
             ),
             usb_sources=parse_indexed(
-                data["USB"], AudioPhaseInvertibleSourceCodec.decode
+                data["USB"], PhaseInvertibleSourceCodec.decode
             ),
             expansion_card_sources=parse_indexed(
-                data["CRD"], AudioPhaseInvertibleSourceCodec.decode
+                data["CRD"], PhaseInvertibleSourceCodec.decode
             ),
             module_sources=parse_indexed(
-                data["MOD"], AudioPhaseInvertibleSourceCodec.decode
+                data["MOD"], PhaseInvertibleSourceCodec.decode
             ),
             usb_playback_sources=parse_indexed(
-                data["PLAY"], AudioPhaseInvertibleSourceCodec.decode
+                data["PLAY"], PhaseInvertibleSourceCodec.decode
             ),
             aes3_sources=parse_indexed(
-                data["AES"], AudioPhaseInvertibleSourceCodec.decode
+                data["AES"], PhaseInvertibleSourceCodec.decode
             ),
             user_signal_sources=parse_indexed(
                 {k: v for k, v in usr.items() if int(k) <= _USR_SPLIT},
-                AudioUserSignalSourceCodec.decode,
+                UserSignalSourceCodec.decode,
             ),
             user_signal_patch_sources=parse_indexed(
                 {str(int(k) - _USR_SPLIT): v
                  for k, v in usr.items() if int(k) > _USR_SPLIT},
-                AudioUserSignalPatchSourceCodec.decode,
+                UserSignalPatchSourceCodec.decode,
             ),
             oscillator_sources=parse_indexed(
-                data["OSC"], AudioOscillatorSourceCodec.decode
+                data["OSC"], OscillatorSourceCodec.decode
             ),
         )
 
     @staticmethod
-    def encode(obj: AudioSourceBank) -> dict:
+    def encode(obj: SourceBank) -> dict:
         return {
             "LCL": encode_indexed(
-                obj.local_sources, AudioPreampAccessibleSourceCodec.encode
+                obj.local_sources, PreampAccessibleSourceCodec.encode
             ),
             "AUX": encode_indexed(
-                obj.aux_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.aux_sources, PhaseInvertibleSourceCodec.encode
             ),
             "A": encode_indexed(
-                obj.aes50_a_sources, AudioPreampAccessibleSourceCodec.encode
+                obj.aes50_a_sources, PreampAccessibleSourceCodec.encode
             ),
             "B": encode_indexed(
-                obj.aes50_b_sources, AudioPreampAccessibleSourceCodec.encode
+                obj.aes50_b_sources, PreampAccessibleSourceCodec.encode
             ),
             "C": encode_indexed(
-                obj.aes50_c_sources, AudioPreampAccessibleSourceCodec.encode
+                obj.aes50_c_sources, PreampAccessibleSourceCodec.encode
             ),
             "SC": encode_indexed(
-                obj.stageconnect_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.stageconnect_sources, PhaseInvertibleSourceCodec.encode
             ),
             "USB": encode_indexed(
-                obj.usb_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.usb_sources, PhaseInvertibleSourceCodec.encode
             ),
             "CRD": encode_indexed(
-                obj.expansion_card_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.expansion_card_sources, PhaseInvertibleSourceCodec.encode
             ),
             "MOD": encode_indexed(
-                obj.module_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.module_sources, PhaseInvertibleSourceCodec.encode
             ),
             "PLAY": encode_indexed(
-                obj.usb_playback_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.usb_playback_sources, PhaseInvertibleSourceCodec.encode
             ),
             "AES": encode_indexed(
-                obj.aes3_sources, AudioPhaseInvertibleSourceCodec.encode
+                obj.aes3_sources, PhaseInvertibleSourceCodec.encode
             ),
             "USR": {
                 **encode_indexed(
-                    obj.user_signal_sources, AudioUserSignalSourceCodec.encode
+                    obj.user_signal_sources, UserSignalSourceCodec.encode
                 ),
                 **encode_indexed(
                     obj.user_signal_patch_sources,
-                    AudioUserSignalPatchSourceCodec.encode,
+                    UserSignalPatchSourceCodec.encode,
                     offset=_USR_SPLIT,
                 ),
             },
             "OSC": encode_indexed(
-                obj.oscillator_sources, AudioOscillatorSourceCodec.encode
+                obj.oscillator_sources, OscillatorSourceCodec.encode
             ),
         }

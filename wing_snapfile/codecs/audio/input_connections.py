@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.input_connections import AudioInputConnections
+from wing_snapfile.models.audio.input_connections import InputConnections
 
 
-class AudioInputConnectionsCodec:
+class InputConnectionsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioInputConnections:
-        return AudioInputConnections(
+    def decode(data: dict) -> InputConnections:
+        return InputConnections(
             group=data["grp"],
             input=data["in"],
             alt_group=data["altgrp"],
@@ -12,7 +12,7 @@ class AudioInputConnectionsCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioInputConnections) -> dict:
+    def encode(obj: InputConnections) -> dict:
         return {
             "grp": obj.group,
             "in": obj.input,

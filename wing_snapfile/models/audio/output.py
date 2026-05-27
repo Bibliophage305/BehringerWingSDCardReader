@@ -1,22 +1,27 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 from wing_snapfile.types.one_indexed_list import OneIndexedList
 
 
-class AudioOutput(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Output:
     input_group: str
     input_number: int
 
 
-class AudioOutputBank(msgspec.Struct, kw_only=True):
-    local_outputs: OneIndexedList[AudioOutput]
-    aux_outputs: OneIndexedList[AudioOutput]
-    aes50_a_outputs: OneIndexedList[AudioOutput]
-    aes50_b_outputs: OneIndexedList[AudioOutput]
-    aes50_c_outputs: OneIndexedList[AudioOutput]
-    stageconnect_outputs: OneIndexedList[AudioOutput]
-    usb_outputs: OneIndexedList[AudioOutput]
-    expansion_card_outputs: OneIndexedList[AudioOutput]
-    module_outputs: OneIndexedList[AudioOutput]
-    usb_recording_outputs: OneIndexedList[AudioOutput]
-    aes3_outputs: OneIndexedList[AudioOutput]
+@dataclass_validate
+@dataclass(kw_only=True)
+class OutputBank:
+    local_outputs: OneIndexedList[Output]
+    aux_outputs: OneIndexedList[Output]
+    aes50_a_outputs: OneIndexedList[Output]
+    aes50_b_outputs: OneIndexedList[Output]
+    aes50_c_outputs: OneIndexedList[Output]
+    stageconnect_outputs: OneIndexedList[Output]
+    usb_outputs: OneIndexedList[Output]
+    expansion_card_outputs: OneIndexedList[Output]
+    module_outputs: OneIndexedList[Output]
+    usb_recording_outputs: OneIndexedList[Output]
+    aes3_outputs: OneIndexedList[Output]

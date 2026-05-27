@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.dynamics_crossover import AudioDynamicsCrossover
+from wing_snapfile.models.audio.dynamics_crossover import DynamicsCrossover
 
 
-class AudioDynamicsCrossoverCodec:
+class DynamicsCrossoverCodec:
     @staticmethod
-    def decode(data: dict) -> AudioDynamicsCrossover:
-        return AudioDynamicsCrossover(
+    def decode(data: dict) -> DynamicsCrossover:
+        return DynamicsCrossover(
             depth=data["depth"],
             type=data["type"],
             frequency=float(data["f"]),
@@ -12,7 +12,7 @@ class AudioDynamicsCrossoverCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioDynamicsCrossover) -> dict:
+    def encode(obj: DynamicsCrossover) -> dict:
         return {
             "depth": obj.depth,
             "type": obj.type,

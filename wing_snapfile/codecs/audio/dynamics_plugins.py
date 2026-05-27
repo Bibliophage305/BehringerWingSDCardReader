@@ -1,6 +1,6 @@
 from typing import Any
 from wing_snapfile.models.audio.dynamics_plugins import (
-    AudioDynamicsPlugin,
+    DynamicsPlugin,
     WingGate,
     WingDucker,
     Even88Gate,
@@ -827,21 +827,21 @@ PLUGIN_MODEL_KEY_MAP = {
     DrawMoreComp: "D241C",
 }
 
-class AudioDynamicsPluginCodec:
+class DynamicsPluginCodec:
     BASE_KEYS = {"on", "mdl", "mix", "gain"}
 
     @staticmethod
-    def decode(data: dict[str, Any]) -> AudioDynamicsPlugin:
+    def decode(data: dict[str, Any]) -> DynamicsPlugin:
         model = data["mdl"]
         if model not in PLUGIN_CODEC_MAP:
             raise KeyError(f"Unknown dynamics model: {model}")
         codec = PLUGIN_CODEC_MAP[model]
         # Pure plugin data
-        plugin_data = {k: v for k, v in data.items() if k not in AudioDynamicsPluginCodec.BASE_KEYS}
+        plugin_data = {k: v for k, v in data.items() if k not in DynamicsPluginCodec.BASE_KEYS}
         return codec.decode(plugin_data)
 
     @staticmethod
-    def encode(obj: AudioDynamicsPlugin) -> dict[str, Any]:
+    def encode(obj: DynamicsPlugin) -> dict[str, Any]:
         obj_type = type(obj)
         if obj_type not in PLUGIN_MODEL_KEY_MAP:
             raise KeyError(f"Unknown dynamics plugin type: {obj_type}")

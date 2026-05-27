@@ -1,7 +1,10 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 
-class AudioTapEQ(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class TapEQ:
     on: bool
     band1_gain: float
     band1_freq: float

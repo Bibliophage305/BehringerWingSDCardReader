@@ -1,10 +1,13 @@
-import msgspec
-from wing_snapfile.models.audio.dynamics_plugins import AudioDynamicsPlugin
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
+from wing_snapfile.models.audio.dynamics_plugins import DynamicsPlugin
 
 
-class AudioDynamics(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class DynamicsBlock:
     on: bool
     model: str
     mix: int
     gain: float
-    parameters: AudioDynamicsPlugin
+    parameters: DynamicsPlugin

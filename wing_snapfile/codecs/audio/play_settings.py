@@ -1,13 +1,13 @@
-from wing_snapfile.models.audio.play_settings import AudioPlaySettings
+from wing_snapfile.models.audio.play_settings import PlaySettings
 
 
-class AudioPlaySettingsCodec:
+class PlaySettingsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioPlaySettings:
-        return AudioPlaySettings(repeat=data["repeat"])
+    def decode(data: dict) -> PlaySettings:
+        return PlaySettings(repeat=data["repeat"])
 
     @staticmethod
-    def encode(obj: AudioPlaySettings) -> dict:
+    def encode(obj: PlaySettings) -> dict:
         return {
             "repeat": obj.repeat,
         }

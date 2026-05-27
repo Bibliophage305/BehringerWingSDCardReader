@@ -1,8 +1,12 @@
-import msgspec
-from typing import Union
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
+class EQPlugin:
+    pass
 
-class WingEQ(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WingEQ(EQPlugin):
     low_gain: float
     low_frequency: float
     low_q: float
@@ -24,6 +28,8 @@ class WingEQ(msgspec.Struct, kw_only=True):
     high_q: float
     high_type: str
 
+@dataclass_validate
+@dataclass(kw_only=True)
 class WingSixBandEQ(WingEQ):
     band_5_gain: float
     band_5_frequency: float
@@ -33,7 +39,9 @@ class WingSixBandEQ(WingEQ):
     band_6_q: float
     tilt: float
 
-class SoulAnalogue(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class SoulAnalogue(EQPlugin):
     low_frequency: float
     low_gain: float
     low_mid_frequency: float
@@ -47,7 +55,9 @@ class SoulAnalogue(msgspec.Struct, kw_only=True):
     high_frequency: float
     high_gain: float
 
-class Even88Formant(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Even88Formant(EQPlugin):
     low_frequency: float
     low_gain: float
     low_q: str
@@ -63,7 +73,9 @@ class Even88Formant(msgspec.Struct, kw_only=True):
     high_q: str
     high_type: str
 
-class Even84(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Even84(EQPlugin):
     gain: float
     low_frequency: str
     low_gain: float
@@ -73,7 +85,9 @@ class Even84(msgspec.Struct, kw_only=True):
     high_frequency: str
     high_gain: float
 
-class Fortissimo110(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Fortissimo110(EQPlugin):
     parametric_eq: bool
     low_mid_frequency: float
     low_mid_gain: float
@@ -90,7 +104,9 @@ class Fortissimo110(msgspec.Struct, kw_only=True):
     high_gain: float
     gain: float
 
-class Pulsar(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Pulsar(EQPlugin):
     eq1_enabled: bool
     eq1_low_boost: float
     eq1_low_attenuation: float
@@ -108,7 +124,9 @@ class Pulsar(msgspec.Struct, kw_only=True):
     eq5_high_boost: float
     eq5_high_frequency: str
 
-class MachEQ4(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class MachEQ4(EQPlugin):
     sub: float
     hz_40: float
     hz_160: float
@@ -118,8 +136,6 @@ class MachEQ4(msgspec.Struct, kw_only=True):
     air_mode: str
     again: bool
 
-
-EQPlugin = Union[WingEQ, WingSixBandEQ, SoulAnalogue, Even88Formant, Even84, Fortissimo110, Pulsar, MachEQ4]
 
 PLUGIN_MODEL_MAP: dict[str, type[EQPlugin]] = {
     "STD": WingEQ,

@@ -1,9 +1,11 @@
-import msgspec
-from typing import Union
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
-class AudioDynamicsPlugin(msgspec.Struct, kw_only=True): pass
+class DynamicsPlugin: pass
 
-class WingGate(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WingGate(DynamicsPlugin):
     threshold: float
     range: float
     attack: int
@@ -12,14 +14,18 @@ class WingGate(AudioDynamicsPlugin):
     accent: int
     ratio: str
 
-class WingDucker(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WingDucker(DynamicsPlugin):
     threshold: float
     range: float
     attack: int
     hold: float
     release: float
 
-class Even88Gate(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Even88Gate(DynamicsPlugin):
     threshold: float
     hysteresis: float
     range: float
@@ -27,11 +33,15 @@ class Even88Gate(AudioDynamicsPlugin):
     fast: bool
     m40: bool
 
-class DrawMore241(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class DrawMore241(DynamicsPlugin):
     threshold: float
     slow: bool
 
-class Soul9000Gate(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Soul9000Gate(DynamicsPlugin):
     threshold: float
     range: float
     hold: float
@@ -39,7 +49,9 @@ class Soul9000Gate(AudioDynamicsPlugin):
     fast: bool
     mode: str
 
-class DynamicEQ(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class DynamicEQ(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: float
@@ -50,7 +62,9 @@ class DynamicEQ(AudioDynamicsPlugin):
     q: float
     mode: str
 
-class DualDynamicEQ(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class DualDynamicEQ(DynamicsPlugin):
     band1_threshold: float
     band1_ratio: float
     band1_attack: float
@@ -70,17 +84,23 @@ class DualDynamicEQ(AudioDynamicsPlugin):
     band2_q: float
     band2_mode: str
 
-class BDX902DeEsser(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class BDX902DeEsser(DynamicsPlugin):
     frequency: float
     range: float
     mode: str
 
-class WaveDesigner(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WaveDesigner(DynamicsPlugin):
     attack: float
     sustain: float
     gain: float
 
-class AutoRider(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class AutoRider(DynamicsPlugin):
     threshold: float
     target: float
     speed: float
@@ -88,14 +108,18 @@ class AutoRider(AudioDynamicsPlugin):
     hold: float
     range: float
 
-class SoulWarmthPre(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class SoulWarmthPre(DynamicsPlugin):
     drive: float
     harmonic: float
     color: float
     trim: float
     mix: float
 
-class WingCompressor(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WingCompressor(DynamicsPlugin):
     threshold: float
     ratio: float
     knee: float
@@ -106,7 +130,9 @@ class WingCompressor(AudioDynamicsPlugin):
     envelope: str
     auto: bool
 
-class WingExpander(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class WingExpander(DynamicsPlugin):
     threshold: float
     ratio: float
     knee: float
@@ -117,7 +143,9 @@ class WingExpander(AudioDynamicsPlugin):
     envelope: str
     auto: bool
 
-class Even88Comp(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Even88Comp(DynamicsPlugin):
     knee: str
     threshold: float
     threshold_pad: bool
@@ -125,34 +153,46 @@ class Even88Comp(AudioDynamicsPlugin):
     attack: str
     release: float
 
-class OneKnobComp(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class OneKnobComp(DynamicsPlugin):
     gain_reduction: float
     auto_gain: bool
 
-class Soul9000(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Soul9000(DynamicsPlugin):
     threshold: float
     ratio: float
     fast: bool
     release: float
     peak: bool
 
-class BDX160Comp(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class BDX160Comp(DynamicsPlugin):
     threshold: float
     compression: float
 
-class BDX560Easy(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class BDX560Easy(DynamicsPlugin):
     threshold: float
     ratio: float
     easy: bool
 
-class Red3Compressor(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Red3Compressor(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: float
     release: float
     auto: bool
 
-class LMTCompressor(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class LMTCompressor(DynamicsPlugin):
     transient_speed: float
     transient_emphasis: float
     transient_gain: float
@@ -161,13 +201,17 @@ class LMTCompressor(AudioDynamicsPlugin):
     compressor_gain: float
     compressor_on: bool
 
-class SoulBusComp(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class SoulBusComp(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: float
     release: str
 
-class PIA2250Rack(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class PIA2250Rack(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: str
@@ -175,31 +219,41 @@ class PIA2250Rack(AudioDynamicsPlugin):
     knee: str
     type: str
 
-class LimiterAmp76(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class LimiterAmp76(DynamicsPlugin):
     input_gain: float
     output_gain: float
     attack: float
     release: float
     ratio: str
 
-class LALeveler(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class LALeveler(DynamicsPlugin):
     input_gain: float
     peak: float
     mode: str
 
-class FairKid(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class FairKid(DynamicsPlugin):
     input_gain: float
     threshold: float
     time_constant: float
     bias: float
 
-class LTA100Leveler(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class LTA100Leveler(DynamicsPlugin):
     input_gain: float
     gain_reduction: float
     attack: str
     release: str
 
-class EternalBliss(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class EternalBliss(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: float
@@ -209,20 +263,26 @@ class EternalBliss(AudioDynamicsPlugin):
     gate_limit_on: bool
     gate_limit: float
 
-class NoStressor(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class NoStressor(DynamicsPlugin):
     input_gain: float
     output_gain: float
     attack: float
     release: float
     ratio: str
 
-class SourceExtractor(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class SourceExtractor(DynamicsPlugin):
     threshold: float
     depth: float
     fast: bool
     peak: bool
 
-class PSELACombo(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class PSELACombo(DynamicsPlugin):
     threshold: float
     depth: float
     fast: bool
@@ -231,7 +291,9 @@ class PSELACombo(AudioDynamicsPlugin):
     compressor_peak: float
     compressor_mode: str
 
-class EvenCompLim(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class EvenCompLim(DynamicsPlugin):
     limiter_on: bool
     limiter_threshold: float
     limiter_recovery: str
@@ -243,7 +305,9 @@ class EvenCompLim(AudioDynamicsPlugin):
     compressor_fast: bool
     compressor_gain: float
 
-class DrawMoreComp(AudioDynamicsPlugin):
+@dataclass_validate
+@dataclass(kw_only=True)
+class DrawMoreComp(DynamicsPlugin):
     threshold: float
     ratio: float
     attack: float
@@ -252,7 +316,7 @@ class DrawMoreComp(AudioDynamicsPlugin):
     limiter_release: float
     auto: bool
 
-PLUGIN_MODEL_MAP: dict[str, type[AudioDynamicsPlugin]] = {
+PLUGIN_MODEL_MAP: dict[str, type[DynamicsPlugin]] = {
     "GATE": WingGate,
     "DUCK": WingDucker,
     "E88": Even88Gate,

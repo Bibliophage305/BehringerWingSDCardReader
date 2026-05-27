@@ -1,23 +1,23 @@
 from wing_snapfile.models.audio.config import (
     AudioConfig,
-    AudioSoloConfig,
-    AudioRTAConfig,
-    AudioMeterConfig,
-    AudioMeterTapPoints,
-    AudioTalkbackConfig,
-    AudioTalkbackAssignments,
-    AudioAutomixConfig,
+    SoloConfig,
+    RTAConfig,
+    MeterConfig,
+    MeterTapPoints,
+    TalkbackConfig,
+    TalkbackAssignments,
+    AutomixConfig,
 )
 
 from wing_snapfile.helpers.indexed import parse_indexed, encode_indexed
 
-from wing_snapfile.codecs.audio.monitor import AudioMonitorCodec
+from wing_snapfile.codecs.audio.monitor import MonitorCodec
 
 
-class AudioSoloConfigCodec:
+class SoloConfigCodec:
     @staticmethod
-    def decode(data: dict) -> AudioSoloConfig:
-        return AudioSoloConfig(
+    def decode(data: dict) -> SoloConfig:
+        return SoloConfig(
             mode=data["mode"],
             monitor_outputs=data["mon"],
             mute=data["mute"],
@@ -29,7 +29,7 @@ class AudioSoloConfigCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioSoloConfig) -> dict:
+    def encode(obj: SoloConfig) -> dict:
         return {
             "mode": obj.mode,
             "mon": obj.monitor_outputs,
@@ -42,10 +42,10 @@ class AudioSoloConfigCodec:
         }
 
 
-class AudioRTAConfigCodec:
+class RTAConfigCodec:
     @staticmethod
-    def decode(data: dict) -> AudioRTAConfig:
-        return AudioRTAConfig(
+    def decode(data: dict) -> RTAConfig:
+        return RTAConfig(
             rta_range=data["rtarange"],
             rta_gain=data["rtagain"],
             rta_autogain=data["rtaauto"],
@@ -57,7 +57,7 @@ class AudioRTAConfigCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioRTAConfig) -> dict:
+    def encode(obj: RTAConfig) -> dict:
         return {
             "rtarange": obj.rta_range,
             "rtagain": obj.rta_gain,
@@ -70,10 +70,10 @@ class AudioRTAConfigCodec:
         }
 
 
-class AudioMeterTapPointsCodec:
+class MeterTapPointsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMeterTapPoints:
-        return AudioMeterTapPoints(
+    def decode(data: dict) -> MeterTapPoints:
+        return MeterTapPoints(
             channel_tap=data["in"],
             bus_tap=data["bus"],
             main_tap=data["main"],
@@ -82,7 +82,7 @@ class AudioMeterTapPointsCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioMeterTapPoints) -> dict:
+    def encode(obj: MeterTapPoints) -> dict:
         return {
             "in": obj.channel_tap,
             "bus": obj.bus_tap,
@@ -92,34 +92,34 @@ class AudioMeterTapPointsCodec:
         }
 
 
-class AudioMeterConfigCodec:
+class MeterConfigCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMeterConfig:
-        return AudioMeterConfig(
+    def decode(data: dict) -> MeterConfig:
+        return MeterConfig(
             scope_source=data["scopesrc"],
             scope_tap_point=data["scopetap"],
-            surface_meter_tap_points=AudioMeterTapPointsCodec.decode(data["mtrsfc"]),
-            meter_page_tap_points=AudioMeterTapPointsCodec.decode(data["mtrpage"]),
+            surface_meter_tap_points=MeterTapPointsCodec.decode(data["mtrsfc"]),
+            meter_page_tap_points=MeterTapPointsCodec.decode(data["mtrpage"]),
             main_meter_source=data["mainmtr"],
             main_meter_position=data["mainpos"],
         )
 
     @staticmethod
-    def encode(obj: AudioMeterConfig) -> dict:
+    def encode(obj: MeterConfig) -> dict:
         return {
             "scopesrc": obj.scope_source,
             "scopetap": obj.scope_tap_point,
-            "mtrsfc": AudioMeterTapPointsCodec.encode(obj.surface_meter_tap_points),
-            "mtrpage": AudioMeterTapPointsCodec.encode(obj.meter_page_tap_points),
+            "mtrsfc": MeterTapPointsCodec.encode(obj.surface_meter_tap_points),
+            "mtrpage": MeterTapPointsCodec.encode(obj.meter_page_tap_points),
             "mainmtr": obj.main_meter_source,
             "mainpos": obj.main_meter_position,
         }
 
 
-class AudioTalkbackAssignmentsCodec:
+class TalkbackAssignmentsCodec:
     @staticmethod
-    def decode(data: dict) -> AudioTalkbackAssignments:
-        return AudioTalkbackAssignments(
+    def decode(data: dict) -> TalkbackAssignments:
+        return TalkbackAssignments(
             mode=data["mode"],
             monitor_dim=data["mondim"],
             bus_dim=data["busdim"],
@@ -145,7 +145,7 @@ class AudioTalkbackAssignmentsCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioTalkbackAssignments) -> dict:
+    def encode(obj: TalkbackAssignments) -> dict:
         return {
             "mode": obj.mode,
             "mondim": obj.monitor_dim,
@@ -158,36 +158,36 @@ class AudioTalkbackAssignmentsCodec:
         }
 
 
-class AudioTalkbackConfigCodec:
+class TalkbackConfigCodec:
     @staticmethod
-    def decode(data: dict) -> AudioTalkbackConfig:
-        return AudioTalkbackConfig(
+    def decode(data: dict) -> TalkbackConfig:
+        return TalkbackConfig(
             assign=data["assign"],
             fader_level=float(data["lvl"]),
-            talkback_a=AudioTalkbackAssignmentsCodec.decode(data["A"]),
-            talkback_b=AudioTalkbackAssignmentsCodec.decode(data["B"]),
+            talkback_a=TalkbackAssignmentsCodec.decode(data["A"]),
+            talkback_b=TalkbackAssignmentsCodec.decode(data["B"]),
         )
 
     @staticmethod
-    def encode(obj: AudioTalkbackConfig) -> dict:
+    def encode(obj: TalkbackConfig) -> dict:
         return {
             "assign": obj.assign,
             "lvl": obj.fader_level,
-            "A": AudioTalkbackAssignmentsCodec.encode(obj.talkback_a),
-            "B": AudioTalkbackAssignmentsCodec.encode(obj.talkback_b),
+            "A": TalkbackAssignmentsCodec.encode(obj.talkback_a),
+            "B": TalkbackAssignmentsCodec.encode(obj.talkback_b),
         }
 
 
-class AudioAutomixConfigCodec:
+class AutomixConfigCodec:
     @staticmethod
-    def decode(data: dict) -> AudioAutomixConfig:
-        return AudioAutomixConfig(
+    def decode(data: dict) -> AutomixConfig:
+        return AutomixConfig(
             x_enable=data["x"],
             y_enable=data["y"],
         )
 
     @staticmethod
-    def encode(obj: AudioAutomixConfig) -> dict:
+    def encode(obj: AutomixConfig) -> dict:
         return {
             "x": obj.x_enable,
             "y": obj.y_enable,
@@ -200,13 +200,13 @@ class AudioConfigCodec:
         return AudioConfig(
             mainlink=data["mainlink"],
             dcamgrp=data["dcamgrp"],
-            mon=parse_indexed(data["mon"], AudioMonitorCodec.decode),
+            mon=parse_indexed(data["mon"], MonitorCodec.decode),
 
-            solo=AudioSoloConfigCodec.decode(data["solo"]),
-            rta=AudioRTAConfigCodec.decode(data["rta"]),
-            mtr=AudioMeterConfigCodec.decode(data["mtr"]),
-            talk=AudioTalkbackConfigCodec.decode(data["talk"]),
-            amix=AudioAutomixConfigCodec.decode(data["amix"]),
+            solo=SoloConfigCodec.decode(data["solo"]),
+            rta=RTAConfigCodec.decode(data["rta"]),
+            mtr=MeterConfigCodec.decode(data["mtr"]),
+            talk=TalkbackConfigCodec.decode(data["talk"]),
+            amix=AutomixConfigCodec.decode(data["amix"]),
         )
 
     @staticmethod
@@ -214,10 +214,10 @@ class AudioConfigCodec:
         return {
             "mainlink": obj.mainlink,
             "dcamgrp": obj.dcamgrp,
-            "mon": encode_indexed(obj.mon, encoder=AudioMonitorCodec.encode),
-            "solo": AudioSoloConfigCodec.encode(obj.solo),
-            "rta": AudioRTAConfigCodec.encode(obj.rta),
-            "mtr": AudioMeterConfigCodec.encode(obj.mtr),
-            "talk": AudioTalkbackConfigCodec.encode(obj.talk),
-            "amix": AudioAutomixConfigCodec.encode(obj.amix),
+            "mon": encode_indexed(obj.mon, encoder=MonitorCodec.encode),
+            "solo": SoloConfigCodec.encode(obj.solo),
+            "rta": RTAConfigCodec.encode(obj.rta),
+            "mtr": MeterConfigCodec.encode(obj.mtr),
+            "talk": TalkbackConfigCodec.encode(obj.talk),
+            "amix": AutomixConfigCodec.encode(obj.amix),
         }

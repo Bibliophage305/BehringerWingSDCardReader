@@ -1,24 +1,21 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
-from wing_snapfile.models.audio.input_connections import AudioInputConnections
+from wing_snapfile.models.audio.input_connections import InputConnections
 from wing_snapfile.models.audio.input_settings import (
-    AudioInputSettings,
-    AudioSourceSwitchableDelayableInputSettings,
+    InputSettings,
+    FullInputSettings,
 )
 
 
-class AudioInput(msgspec.Struct, kw_only=True):
-    """Basic input — settings only, no routing connections."""
-    settings: AudioInputSettings
+@dataclass_validate
+@dataclass(kw_only=True)
+class Input:
+    settings: InputSettings
 
 
-class AudioRoutableInput(msgspec.Struct, kw_only=True):
-    """Input with routing connections and basic settings."""
-    settings: AudioInputSettings
-    connections: AudioInputConnections
-
-
-class AudioSourceSwitchableDelayableInput(msgspec.Struct, kw_only=True):
-    """Fully-featured input — routing connections, source switching, delay."""
-    settings: AudioSourceSwitchableDelayableInputSettings
-    connections: AudioInputConnections
+@dataclass_validate
+@dataclass(kw_only=True)
+class FullInput:
+    settings: FullInputSettings
+    connections: InputConnections

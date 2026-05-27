@@ -1,32 +1,32 @@
 from wing_snapfile.models.audio.channel import (
     DelaySettings,
-    AudioDirectInput,
-    AudioChannel,
-    AudioBusChannel,
-    AudioMatrixChannel,
-    AudioMainChannel,
-    AudioAuxChannel,
-    AudioFullChannel,
+    DirectInput,
+    Channel,
+    BusChannel,
+    MatrixChannel,
+    MainChannel,
+    AuxChannel,
+    FullChannel,
 )
 from wing_snapfile.helpers.indexed import encode_indexed, parse_indexed
 
-from wing_snapfile.codecs.audio.dynamics_crossover import AudioDynamicsCrossoverCodec
-from wing_snapfile.codecs.audio.dynamics_sidechain import AudioDynamicsSidechainCodec
-from wing_snapfile.codecs.audio.eq import AudioEQCodec
+from wing_snapfile.codecs.audio.dynamics_crossover import DynamicsCrossoverCodec
+from wing_snapfile.codecs.audio.dynamics_sidechain import DynamicsSidechainCodec
+from wing_snapfile.codecs.audio.eq_block import EQBlockCodec
 from wing_snapfile.codecs.audio.input import (
-    AudioInputCodec,
-    AudioSourceSwitchableDelayableInputCodec,
+    InputCodec,
+    FullInputCodec,
 )
-from wing_snapfile.codecs.audio.filter import AudioFilterCodec
-from wing_snapfile.codecs.audio.tap_eq import AudioTapEQCodec
-from wing_snapfile.codecs.audio.gate_sidechain import AudioGateSidechainCodec
-from wing_snapfile.codecs.audio.dynamics import AudioDynamicsCodec
-from wing_snapfile.codecs.audio.pre_insert_plugin import AudioPreInsertPluginCodec
-from wing_snapfile.codecs.audio.post_insert_plugin import (
-    AudioPostInsertPluginCodec,
-    AudioPostInsertPluginWithAutomixCodec,
+from wing_snapfile.codecs.audio.filter import FilterCodec
+from wing_snapfile.codecs.audio.tap_eq import TapEQCodec
+from wing_snapfile.codecs.audio.gate_sidechain import GateSidechainCodec
+from wing_snapfile.codecs.audio.dynamics_block import DynamicsBlockCodec
+from wing_snapfile.codecs.audio.pre_insert_block import PreInsertPluginCodec
+from wing_snapfile.codecs.audio.post_insert_block import (
+    PostInsertBlockCodec,
+    PostInsertBlockWithAutomixCodec,
 )
-from wing_snapfile.codecs.audio.send import AudioFullSendCodec, AudioLimitedSendCodec
+from wing_snapfile.codecs.audio.send import FullSendCodec, SendCodec
 
 
 # ---------------------------------------------------------------------------
@@ -51,10 +51,10 @@ class DelaySettingsCodec:
         }
 
 
-class AudioDirectInputCodec:
+class DirectInputCodec:
     @staticmethod
-    def decode(data: dict) -> AudioDirectInput:
-        return AudioDirectInput(
+    def decode(data: dict) -> DirectInput:
+        return DirectInput(
             direct_input=data["on"],
             fader_level=float(data["lvl"]),
             phase_invert=data["inv"],
@@ -62,7 +62,7 @@ class AudioDirectInputCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioDirectInput) -> dict:
+    def encode(obj: DirectInput) -> dict:
         return {
             "on": obj.direct_input,
             "lvl": obj.fader_level,
@@ -86,14 +86,14 @@ def _decode_channel_base(data: dict) -> dict:
         "pan": data["pan"],
         "width": data["wid"],
         "monitor_mode": data["mon"],
-        "eq_plugin": AudioEQCodec.decode(data["eq"]),
-        "dynamics_plugin": AudioDynamicsCodec.decode(data["dyn"]),
-        "pre_insert_plugin": AudioPreInsertPluginCodec.decode(data["preins"]),
-        "tags": data["tags"].split(",") if data["tags"] else [],
+        "eq_block": EQBlockCodec.decode(data["eq"]),
+        "dynamics_block": DynamicsBlockCodec.decode(data["dyn"]),
+        "pre_insert_block": PreInsertPluginCodec.decode(data["preins"]),
+        "tags": data["tags"].split(","),
     }
 
 
-def _encode_channel_base(obj: AudioChannel) -> dict:
+def _encode_channel_base(obj: Channel) -> dict:
     return {
         "col": obj.color,
         "name": obj.name,
@@ -104,24 +104,24 @@ def _encode_channel_base(obj: AudioChannel) -> dict:
         "pan": obj.pan,
         "wid": obj.width,
         "mon": obj.monitor_mode,
-        "eq": AudioEQCodec.encode(obj.eq_plugin),
-        "dyn": AudioDynamicsCodec.encode(obj.dynamics_plugin),
-        "preins": AudioPreInsertPluginCodec.encode(obj.pre_insert_plugin),
+        "eq": EQBlockCodec.encode(obj.eq_block),
+        "dyn": DynamicsBlockCodec.encode(obj.dynamics_block),
+        "preins": PreInsertPluginCodec.encode(obj.pre_insert_block),
         "tags": ",".join(obj.tags),
     }
 
 
 def _decode_dynamics_fully_processable(data: dict) -> dict:
     return {
-        "dynamics_sidechain": AudioDynamicsSidechainCodec.decode(data["dynsc"]),
-        "dynamics_crossover": AudioDynamicsCrossoverCodec.decode(data["dynxo"]),
+        "dynamics_sidechain": DynamicsSidechainCodec.decode(data["dynsc"]),
+        "dynamics_crossover": DynamicsCrossoverCodec.decode(data["dynxo"]),
     }
 
 
 def _encode_dynamics_fully_processable(obj) -> dict:
     return {
-        "dynsc": AudioDynamicsSidechainCodec.encode(obj.dynamics_sidechain),
-        "dynxo": AudioDynamicsCrossoverCodec.encode(obj.dynamics_crossover),
+        "dynsc": DynamicsSidechainCodec.encode(obj.dynamics_sidechain),
+        "dynxo": DynamicsCrossoverCodec.encode(obj.dynamics_crossover),
     }
 
 
@@ -130,20 +130,20 @@ def _decode_limited_sends(data: dict) -> dict:
     return {
         "bus_sends": parse_indexed(
             {k: v for k, v in send.items() if not k.startswith("MX")},
-            AudioLimitedSendCodec.decode,
+            SendCodec.decode,
         ),
         "matrix_sends": parse_indexed(
             {k[2:]: v for k, v in send.items() if k.startswith("MX")},
-            AudioLimitedSendCodec.decode,
+            SendCodec.decode,
         ),
     }
 
 
 def _encode_limited_sends(obj) -> dict:
     return {
-        **encode_indexed(obj.bus_sends, AudioLimitedSendCodec.encode),
+        **encode_indexed(obj.bus_sends, SendCodec.encode),
         **encode_indexed(
-            obj.matrix_sends, AudioLimitedSendCodec.encode, prefix="MX"
+            obj.matrix_sends, SendCodec.encode, prefix="MX"
         ),
     }
 
@@ -153,57 +153,57 @@ def _decode_full_sends(data: dict) -> dict:
     return {
         "bus_sends": parse_indexed(
             {k: v for k, v in send.items() if not k.startswith("MX")},
-            AudioFullSendCodec.decode,
+            FullSendCodec.decode,
         ),
         "matrix_sends": parse_indexed(
             {k[2:]: v for k, v in send.items() if k.startswith("MX")},
-            AudioFullSendCodec.decode,
+            FullSendCodec.decode,
         ),
     }
 
 
 def _encode_full_sends(obj) -> dict:
     return {
-        **encode_indexed(obj.bus_sends, AudioFullSendCodec.encode),
-        **encode_indexed(obj.matrix_sends, AudioFullSendCodec.encode, prefix="MX"),
+        **encode_indexed(obj.bus_sends, FullSendCodec.encode),
+        **encode_indexed(obj.matrix_sends, FullSendCodec.encode, prefix="MX"),
     }
 
 
 def _decode_main_sends(data: dict) -> dict:
     return {
-        "main_sends": parse_indexed(data["main"], AudioLimitedSendCodec.decode),
+        "main_sends": parse_indexed(data["main"], SendCodec.decode),
     }
 
 
 def _encode_main_sends(obj) -> dict:
-    return encode_indexed(obj.main_sends, AudioLimitedSendCodec.encode)
+    return encode_indexed(obj.main_sends, SendCodec.encode)
 
 
 # ---------------------------------------------------------------------------
 # Concrete channel codecs
 # ---------------------------------------------------------------------------
 
-class AudioBusChannelCodec:
+class BusChannelCodec:
     @staticmethod
-    def decode(data: dict) -> AudioBusChannel:
-        return AudioBusChannel(
+    def decode(data: dict) -> BusChannel:
+        return BusChannel(
             **_decode_channel_base(data),
             **_decode_limited_sends(data),
             **_decode_main_sends(data),
             **_decode_dynamics_fully_processable(data),
-            input=AudioInputCodec.decode(data["in"]),
-            post_insert_plugin=AudioPostInsertPluginCodec.decode(data["postins"]),
+            input=InputCodec.decode(data["in"]),
+            post_insert_block=PostInsertBlockCodec.decode(data["postins"]),
             delay_settings=DelaySettingsCodec.decode(data["dly"]),
             mono_bus=data["busmono"],
         )
 
     @staticmethod
-    def encode(obj: AudioBusChannel) -> dict:
+    def encode(obj: BusChannel) -> dict:
         return {
             **_encode_channel_base(obj),
             **_encode_dynamics_fully_processable(obj),
-            "in": AudioInputCodec.encode(obj.input),
-            "postins": AudioPostInsertPluginCodec.encode(obj.post_insert_plugin),
+            "in": InputCodec.encode(obj.input),
+            "postins": PostInsertBlockCodec.encode(obj.post_insert_block),
             "dly": DelaySettingsCodec.encode(obj.delay_settings),
             "send": _encode_limited_sends(obj),
             "main": _encode_main_sends(obj),
@@ -211,125 +211,125 @@ class AudioBusChannelCodec:
         }
 
 
-class AudioMatrixChannelCodec:
+class MatrixChannelCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMatrixChannel:
-        return AudioMatrixChannel(
+    def decode(data: dict) -> MatrixChannel:
+        return MatrixChannel(
             **_decode_channel_base(data),
             **_decode_dynamics_fully_processable(data),
-            input=AudioInputCodec.decode(data["in"]),
-            post_insert_plugin=AudioPostInsertPluginCodec.decode(data["postins"]),
+            input=InputCodec.decode(data["in"]),
+            post_insert_block=PostInsertBlockCodec.decode(data["postins"]),
             delay_settings=DelaySettingsCodec.decode(data["dly"]),
-            direct_input_settings=AudioDirectInputCodec.decode(data["dir"]),
+            direct_input_settings=DirectInputCodec.decode(data["dir"]),
             mono_bus=data["busmono"],
         )
 
     @staticmethod
-    def encode(obj: AudioMatrixChannel) -> dict:
+    def encode(obj: MatrixChannel) -> dict:
         return {
             **_encode_channel_base(obj),
             **_encode_dynamics_fully_processable(obj),
-            "in": AudioInputCodec.encode(obj.input),
-            "postins": AudioPostInsertPluginCodec.encode(obj.post_insert_plugin),
+            "in": InputCodec.encode(obj.input),
+            "postins": PostInsertBlockCodec.encode(obj.post_insert_block),
             "dly": DelaySettingsCodec.encode(obj.delay_settings),
-            "dir": AudioDirectInputCodec.encode(obj.direct_input_settings),
+            "dir": DirectInputCodec.encode(obj.direct_input_settings),
             "busmono": obj.mono_bus,
         }
 
 
-class AudioMainChannelCodec:
+class MainChannelCodec:
     @staticmethod
-    def decode(data: dict) -> AudioMainChannel:
-        return AudioMainChannel(
+    def decode(data: dict) -> MainChannel:
+        return MainChannel(
             **_decode_channel_base(data),
             **_decode_limited_sends(data),
             **_decode_dynamics_fully_processable(data),
-            input=AudioInputCodec.decode(data["in"]),
-            post_insert_plugin=AudioPostInsertPluginCodec.decode(data["postins"]),
+            input=InputCodec.decode(data["in"]),
+            post_insert_block=PostInsertBlockCodec.decode(data["postins"]),
             delay_settings=DelaySettingsCodec.decode(data["dly"]),
             mono_bus=data["busmono"],
         )
 
     @staticmethod
-    def encode(obj: AudioMainChannel) -> dict:
+    def encode(obj: MainChannel) -> dict:
         return {
             **_encode_channel_base(obj),
-            "in": AudioInputCodec.encode(obj.input),
+            "in": InputCodec.encode(obj.input),
             "send": _encode_limited_sends(obj),
             **_encode_dynamics_fully_processable(obj),
-            "postins": AudioPostInsertPluginCodec.encode(obj.post_insert_plugin),
+            "postins": PostInsertBlockCodec.encode(obj.post_insert_block),
             "dly": DelaySettingsCodec.encode(obj.delay_settings),
             "busmono": obj.mono_bus,
         }
 
 
-class AudioAuxChannelCodec:
+class AuxChannelCodec:
     @staticmethod
-    def decode(data: dict) -> AudioAuxChannel:
-        return AudioAuxChannel(
+    def decode(data: dict) -> AuxChannel:
+        return AuxChannel(
             **_decode_channel_base(data),
             **_decode_full_sends(data),
             **_decode_main_sends(data),
-            input=AudioSourceSwitchableDelayableInputCodec.decode(data["in"]),
+            input=FullInputCodec.decode(data["in"]),
             link_customization_to_source=data["clink"],
             solo_safe=data["solosafe"],
-            dynamics_sidechain=AudioDynamicsSidechainCodec.decode(data["dynsc"]),
+            dynamics_sidechain=DynamicsSidechainCodec.decode(data["dynsc"]),
         )
 
     @staticmethod
-    def encode(obj: AudioAuxChannel) -> dict:
+    def encode(obj: AuxChannel) -> dict:
         return {
             **_encode_channel_base(obj),
-            "in": AudioSourceSwitchableDelayableInputCodec.encode(obj.input),
+            "in": FullInputCodec.encode(obj.input),
             "clink": obj.link_customization_to_source,
             "solosafe": obj.solo_safe,
             "send": _encode_full_sends(obj),
             "main": _encode_main_sends(obj),
-            "dynsc": AudioDynamicsSidechainCodec.encode(obj.dynamics_sidechain),
+            "dynsc": DynamicsSidechainCodec.encode(obj.dynamics_sidechain),
         }
 
 
-class AudioFullChannelCodec:
+class FullChannelCodec:
     @staticmethod
-    def decode(data: dict) -> AudioFullChannel:
-        return AudioFullChannel(
+    def decode(data: dict) -> FullChannel:
+        return FullChannel(
             **_decode_channel_base(data),
             **_decode_dynamics_fully_processable(data),
             **_decode_full_sends(data),
             **_decode_main_sends(data),
-            input=AudioSourceSwitchableDelayableInputCodec.decode(data["in"]),
+            input=FullInputCodec.decode(data["in"]),
             link_customization_to_source=data["clink"],
             solo_safe=data["solosafe"],
-            post_insert_plugin=AudioPostInsertPluginWithAutomixCodec.decode(
+            post_insert_block=PostInsertBlockWithAutomixCodec.decode(
                 data["postins"]
             ),
-            filter=AudioFilterCodec.decode(data["flt"]),
+            filter=FilterCodec.decode(data["flt"]),
             processing_order=data["proc"],
             processing_tap_point=data["ptap"],
-            tap_eq=AudioTapEQCodec.decode(data["peq"]),
-            gate_plugin=AudioDynamicsCodec.decode(data["gate"]),
-            gate_sidechain=AudioGateSidechainCodec.decode(data["gatesc"]),
+            tap_eq=TapEQCodec.decode(data["peq"]),
+            gate_block=DynamicsBlockCodec.decode(data["gate"]),
+            gate_sidechain=GateSidechainCodec.decode(data["gatesc"]),
             tap_width=data["tapwid"],
         )
 
     @staticmethod
-    def encode(obj: AudioFullChannel) -> dict:
+    def encode(obj: FullChannel) -> dict:
         return {
             **_encode_channel_base(obj),
             **_encode_dynamics_fully_processable(obj),
-            "in": AudioSourceSwitchableDelayableInputCodec.encode(obj.input),
+            "in": FullInputCodec.encode(obj.input),
             "clink": obj.link_customization_to_source,
             "solosafe": obj.solo_safe,
-            "postins": AudioPostInsertPluginWithAutomixCodec.encode(
-                obj.post_insert_plugin
+            "postins": PostInsertBlockWithAutomixCodec.encode(
+                obj.post_insert_block
             ),
             "send": _encode_full_sends(obj),
             "main": _encode_main_sends(obj),
-            "flt": AudioFilterCodec.encode(obj.filter),
+            "flt": FilterCodec.encode(obj.filter),
             "proc": obj.processing_order,
             "ptap": obj.processing_tap_point,
-            "peq": AudioTapEQCodec.encode(obj.tap_eq),
-            "gate": AudioDynamicsCodec.encode(obj.gate_plugin),
-            "gatesc": AudioGateSidechainCodec.encode(obj.gate_sidechain),
+            "peq": TapEQCodec.encode(obj.tap_eq),
+            "gate": DynamicsBlockCodec.encode(obj.gate_block),
+            "gatesc": GateSidechainCodec.encode(obj.gate_sidechain),
             "tapwid": obj.tap_width,
         }

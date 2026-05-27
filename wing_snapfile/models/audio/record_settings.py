@@ -1,7 +1,10 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 
-class AudioRecordSettings(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class RecordSettings:
     path: str
     resolution: str
     channels: str

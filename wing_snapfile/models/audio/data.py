@@ -1,38 +1,41 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 from wing_snapfile.types.one_indexed_list import OneIndexedList
 
 from wing_snapfile.models.audio.config import AudioConfig
-from wing_snapfile.models.audio.io import AudioIo
+from wing_snapfile.models.audio.io import IO
 from wing_snapfile.models.audio.channel import (
-    AudioAuxChannel,
-    AudioFullChannel,
-    AudioBusChannel,
-    AudioMainChannel,
-    AudioMatrixChannel,
+    AuxChannel,
+    FullChannel,
+    BusChannel,
+    MainChannel,
+    MatrixChannel,
 )
-from wing_snapfile.models.audio.dca import AudioDCA
-from wing_snapfile.models.audio.mute_group import AudioMuteGroup
-from wing_snapfile.models.audio.cards import AudioCards
-from wing_snapfile.models.audio.play_settings import AudioPlaySettings
-from wing_snapfile.models.audio.record_settings import AudioRecordSettings
+from wing_snapfile.models.audio.dca import DCA
+from wing_snapfile.models.audio.mute_group import MuteGroup
+from wing_snapfile.models.audio.expansion_cards import ExpansionCards
+from wing_snapfile.models.audio.play_settings import PlaySettings
+from wing_snapfile.models.audio.record_settings import RecordSettings
 
 
-class AudioData(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class AudioData:
     config: AudioConfig
-    io: AudioIo
+    io: IO
 
-    channels: OneIndexedList[AudioFullChannel]
-    aux_channels: OneIndexedList[AudioAuxChannel]
-    busses: OneIndexedList[AudioBusChannel]
-    mains: OneIndexedList[AudioMainChannel]
-    matrices: OneIndexedList[AudioMatrixChannel]
+    channels: OneIndexedList[FullChannel]
+    aux_channels: OneIndexedList[AuxChannel]
+    busses: OneIndexedList[BusChannel]
+    mains: OneIndexedList[MainChannel]
+    matrices: OneIndexedList[MatrixChannel]
 
-    dcas: OneIndexedList[AudioDCA]
-    mute_groups: OneIndexedList[AudioMuteGroup]
+    dcas: OneIndexedList[DCA]
+    mute_groups: OneIndexedList[MuteGroup]
 
     fx: OneIndexedList[dict]
 
-    cards: AudioCards
-    play_settings: AudioPlaySettings
-    record_settings: AudioRecordSettings
+    expansion_cards: ExpansionCards
+    play_settings: PlaySettings
+    record_settings: RecordSettings

@@ -1,10 +1,10 @@
-from wing_snapfile.models.audio.tap_eq import AudioTapEQ
+from wing_snapfile.models.audio.tap_eq import TapEQ
 
 
-class AudioTapEQCodec:
+class TapEQCodec:
     @staticmethod
-    def decode(data: dict) -> AudioTapEQ:
-        return AudioTapEQ(
+    def decode(data: dict) -> TapEQ:
+        return TapEQ(
             on=data["on"],
             band1_gain=float(data["1g"]),
             band1_freq=float(data["1f"]),
@@ -18,7 +18,7 @@ class AudioTapEQCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioTapEQ) -> dict:
+    def encode(obj: TapEQ) -> dict:
         return {
             "on": obj.on,
             "1g": obj.band1_gain,

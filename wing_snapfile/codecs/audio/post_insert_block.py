@@ -1,29 +1,29 @@
-from wing_snapfile.models.audio.post_insert_plugin import (
-    AudioPostInsertPlugin,
-    AudioPostInsertPluginWithAutomix,
+from wing_snapfile.models.audio.post_insert_block import (
+    PostInsertBlock,
+    PostInsertBlockWithAutomix,
 )
 
 
-class AudioPostInsertPluginCodec:
+class PostInsertBlockCodec:
     @staticmethod
-    def decode(data: dict) -> AudioPostInsertPlugin:
-        return AudioPostInsertPlugin(
+    def decode(data: dict) -> PostInsertBlock:
+        return PostInsertBlock(
             on=data["on"],
             insert=data["ins"],
         )
 
     @staticmethod
-    def encode(obj: AudioPostInsertPlugin) -> dict:
+    def encode(obj: PostInsertBlock) -> dict:
         return {
             "on": obj.on,
             "ins": obj.insert,
         }
 
 
-class AudioPostInsertPluginWithAutomixCodec:
+class PostInsertBlockWithAutomixCodec:
     @staticmethod
-    def decode(data: dict) -> AudioPostInsertPluginWithAutomix:
-        return AudioPostInsertPluginWithAutomix(
+    def decode(data: dict) -> PostInsertBlockWithAutomix:
+        return PostInsertBlockWithAutomix(
             on=data["on"],
             insert=data["ins"],
             mode=data["mode"],
@@ -31,7 +31,7 @@ class AudioPostInsertPluginWithAutomixCodec:
         )
 
     @staticmethod
-    def encode(obj: AudioPostInsertPluginWithAutomix) -> dict:
+    def encode(obj: PostInsertBlockWithAutomix) -> dict:
         return {
             "on": obj.on,
             "mode": obj.mode,

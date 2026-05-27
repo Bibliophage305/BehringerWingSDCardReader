@@ -1,7 +1,10 @@
-import msgspec
+from dataclasses import dataclass
+from dataclass_type_validator import dataclass_validate
 
 
-class AudioMonitorEQ(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class MonitorEQ:
     on: bool
 
     lsg: float
@@ -35,21 +38,25 @@ class AudioMonitorEQ(msgspec.Struct, kw_only=True):
     hsf: float
 
 
-class AudioMonitorDelay(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class MonitorDelay:
     on: bool
     metres: float
 
 
-class AudioMonitor(msgspec.Struct, kw_only=True):
+@dataclass_validate
+@dataclass(kw_only=True)
+class Monitor:
     fader_level: float
     phase_invert: bool
 
     pan: int
     width: int
 
-    eq: AudioMonitorEQ
+    eq: MonitorEQ
     limiter_threshold: int
-    delay: AudioMonitorDelay
+    delay: MonitorDelay
 
     dim: int
     pfl_dim: int
