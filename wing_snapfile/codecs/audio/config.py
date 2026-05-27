@@ -9,7 +9,7 @@ from wing_snapfile.models.audio.config import (
     AutomixConfig,
 )
 
-from wing_snapfile.helpers.indexed import parse_indexed, encode_indexed
+from wing_snapfile.helpers.indexed import decode_one_indexed_list, encode_one_indexed_list
 
 from wing_snapfile.codecs.audio.monitor import MonitorCodec
 
@@ -125,19 +125,19 @@ class TalkbackAssignmentsCodec:
             bus_dim=data["busdim"],
             individual_send_levels=data["indiv"],
 
-            bus_assignments=parse_indexed(
+            bus_assignments=decode_one_indexed_list(
                 {k[1:]: v for k, v in data.items()
                  if k.startswith("B") and k[1:].isdigit()},
                 lambda x: x,
             ),
 
-            matrix_assignments=parse_indexed(
+            matrix_assignments=decode_one_indexed_list(
                 {k[2:]: v for k, v in data.items()
                  if k.startswith("MX") and k[2:].isdigit()},
                 lambda x: x,
             ),
 
-            main_assignments=parse_indexed(
+            main_assignments=decode_one_indexed_list(
                 {k[1:]: v for k, v in data.items()
                  if k.startswith("M") and k[1:].isdigit()},
                 lambda x: x,
@@ -200,7 +200,7 @@ class AudioConfigCodec:
         return AudioConfig(
             mainlink=data["mainlink"],
             dcamgrp=data["dcamgrp"],
-            mon=parse_indexed(data["mon"], MonitorCodec.decode),
+            mon=decode_one_indexed_list(data["mon"], MonitorCodec.decode),
 
             solo=SoloConfigCodec.decode(data["solo"]),
             rta=RTAConfigCodec.decode(data["rta"]),
@@ -214,7 +214,7 @@ class AudioConfigCodec:
         return {
             "mainlink": obj.mainlink,
             "dcamgrp": obj.dcamgrp,
-            "mon": encode_indexed(obj.mon, encoder=MonitorCodec.encode),
+            "mon": encode_one_indexed_list(obj.mon, encoder=MonitorCodec.encode),
             "solo": SoloConfigCodec.encode(obj.solo),
             "rta": RTAConfigCodec.encode(obj.rta),
             "mtr": MeterConfigCodec.encode(obj.mtr),

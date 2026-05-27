@@ -7,9 +7,9 @@ from wing_snapfile.models.audio.expansion_cards import (
 )
 
 from wing_snapfile.helpers.indexed import (
-    encode_indexed,
+    encode_one_indexed_list,
     filter_indexed_keys,
-    parse_indexed,
+    decode_one_indexed_list,
 )
 
 
@@ -54,7 +54,7 @@ class WLiveCardCodec:
             auto_play=data["auto_play"],
             auto_record=data["auto_rec"],
 
-            slots=parse_indexed(
+            slots=decode_one_indexed_list(
                 filter_indexed_keys(data),
                 WLiveCardSlotCodec.decode,
             ),
@@ -69,7 +69,7 @@ class WLiveCardCodec:
             "auto_stop": obj.auto_stop,
             "auto_play": obj.auto_play,
             "auto_rec": obj.auto_record,
-            **encode_indexed(obj.slots, WLiveCardSlotCodec.encode),
+            **encode_one_indexed_list(obj.slots, WLiveCardSlotCodec.encode),
         }
 
 

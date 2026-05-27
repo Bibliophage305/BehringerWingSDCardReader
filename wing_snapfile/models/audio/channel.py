@@ -4,7 +4,7 @@ from dataclass_type_validator import dataclass_validate
 from wing_snapfile.types.one_indexed_list import OneIndexedList
 from wing_snapfile.models.audio.dynamics_crossover import DynamicsCrossover
 from wing_snapfile.models.audio.dynamics_sidechain import DynamicsSidechain
-from wing_snapfile.models.audio.eq import EQBlock
+from wing_snapfile.models.audio.eq_block import EQBlock
 from wing_snapfile.models.audio.input import (
     Input,
     FullInput,
@@ -12,7 +12,7 @@ from wing_snapfile.models.audio.input import (
 from wing_snapfile.models.audio.filter import Filter
 from wing_snapfile.models.audio.tap_eq import TapEQ
 from wing_snapfile.models.audio.gate_sidechain import GateSidechain
-from wing_snapfile.models.audio.dynamics import DynamicsBlock
+from wing_snapfile.models.audio.dynamics_block import DynamicsBlock
 from wing_snapfile.models.audio.pre_insert_block import PreInsertBlock
 from wing_snapfile.models.audio.post_insert_block import (
     PostInsertBlock,

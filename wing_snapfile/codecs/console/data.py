@@ -1,7 +1,7 @@
 from wing_snapfile.models.console.data import ConsoleData
 
 from wing_snapfile.helpers.indexed import (
-    parse_indexed,
+    decode_one_indexed_list,
 )
 
 
@@ -13,7 +13,7 @@ class ConsoleDataCodec:
             layer=data["layer"],
             user=data["user"],
 
-            gpio=parse_indexed(data["gpio"], lambda x: x),
+            gpio=decode_one_indexed_list(data["gpio"], lambda x: x),
 
             global_safes=data["safes"],
 

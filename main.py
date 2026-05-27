@@ -6,8 +6,6 @@ import psutil
 import questionary
 import tqdm
 
-import msgspec
-
 from collections import defaultdict
 from pathlib import Path
 

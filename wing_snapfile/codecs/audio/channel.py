@@ -8,7 +8,7 @@ from wing_snapfile.models.audio.channel import (
     AuxChannel,
     FullChannel,
 )
-from wing_snapfile.helpers.indexed import encode_indexed, parse_indexed
+from wing_snapfile.helpers.indexed import encode_one_indexed_list, decode_one_indexed_list
 
 from wing_snapfile.codecs.audio.dynamics_crossover import DynamicsCrossoverCodec
 from wing_snapfile.codecs.audio.dynamics_sidechain import DynamicsSidechainCodec
@@ -128,11 +128,11 @@ def _encode_dynamics_fully_processable(obj) -> dict:
 def _decode_limited_sends(data: dict) -> dict:
     send = data["send"]
     return {
-        "bus_sends": parse_indexed(
+        "bus_sends": decode_one_indexed_list(
             {k: v for k, v in send.items() if not k.startswith("MX")},
             SendCodec.decode,
         ),
-        "matrix_sends": parse_indexed(
+        "matrix_sends": decode_one_indexed_list(
             {k[2:]: v for k, v in send.items() if k.startswith("MX")},
             SendCodec.decode,
         ),
@@ -141,8 +141,8 @@ def _decode_limited_sends(data: dict) -> dict:
 
 def _encode_limited_sends(obj) -> dict:
     return {
-        **encode_indexed(obj.bus_sends, SendCodec.encode),
-        **encode_indexed(
+        **encode_one_indexed_list(obj.bus_sends, SendCodec.encode),
+        **encode_one_indexed_list(
             obj.matrix_sends, SendCodec.encode, prefix="MX"
         ),
     }
@@ -151,11 +151,11 @@ def _encode_limited_sends(obj) -> dict:
 def _decode_full_sends(data: dict) -> dict:
     send = data["send"]
     return {
-        "bus_sends": parse_indexed(
+        "bus_sends": decode_one_indexed_list(
             {k: v for k, v in send.items() if not k.startswith("MX")},
             FullSendCodec.decode,
         ),
-        "matrix_sends": parse_indexed(
+        "matrix_sends": decode_one_indexed_list(
             {k[2:]: v for k, v in send.items() if k.startswith("MX")},
             FullSendCodec.decode,
         ),
@@ -164,19 +164,19 @@ def _decode_full_sends(data: dict) -> dict:
 
 def _encode_full_sends(obj) -> dict:
     return {
-        **encode_indexed(obj.bus_sends, FullSendCodec.encode),
-        **encode_indexed(obj.matrix_sends, FullSendCodec.encode, prefix="MX"),
+        **encode_one_indexed_list(obj.bus_sends, FullSendCodec.encode),
+        **encode_one_indexed_list(obj.matrix_sends, FullSendCodec.encode, prefix="MX"),
     }
 
 
 def _decode_main_sends(data: dict) -> dict:
     return {
-        "main_sends": parse_indexed(data["main"], SendCodec.decode),
+        "main_sends": decode_one_indexed_list(data["main"], SendCodec.decode),
     }
 
 
 def _encode_main_sends(obj) -> dict:
-    return encode_indexed(obj.main_sends, SendCodec.encode)
+    return encode_one_indexed_list(obj.main_sends, SendCodec.encode)
 
 
 # ---------------------------------------------------------------------------

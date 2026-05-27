@@ -10,7 +10,7 @@ from wing_snapfile.models.audio.source import (
     UserSignalPatchSource,
     SourceBank,
 )
-from wing_snapfile.helpers.indexed import encode_indexed, parse_indexed
+from wing_snapfile.helpers.indexed import encode_one_indexed_list, decode_one_indexed_list
 
 
 # ---------------------------------------------------------------------------
@@ -203,49 +203,49 @@ class SourceBankCodec:
     def decode(data: dict) -> SourceBank:
         usr = data["USR"]
         return SourceBank(
-            local_sources=parse_indexed(
+            local_sources=decode_one_indexed_list(
                 data["LCL"], PreampAccessibleSourceCodec.decode
             ),
-            aux_sources=parse_indexed(
+            aux_sources=decode_one_indexed_list(
                 data["AUX"], PhaseInvertibleSourceCodec.decode
             ),
-            aes50_a_sources=parse_indexed(
+            aes50_a_sources=decode_one_indexed_list(
                 data["A"], PreampAccessibleSourceCodec.decode
             ),
-            aes50_b_sources=parse_indexed(
+            aes50_b_sources=decode_one_indexed_list(
                 data["B"], PreampAccessibleSourceCodec.decode
             ),
-            aes50_c_sources=parse_indexed(
+            aes50_c_sources=decode_one_indexed_list(
                 data["C"], PreampAccessibleSourceCodec.decode
             ),
-            stageconnect_sources=parse_indexed(
+            stageconnect_sources=decode_one_indexed_list(
                 data["SC"], PhaseInvertibleSourceCodec.decode
             ),
-            usb_sources=parse_indexed(
+            usb_sources=decode_one_indexed_list(
                 data["USB"], PhaseInvertibleSourceCodec.decode
             ),
-            expansion_card_sources=parse_indexed(
+            expansion_card_sources=decode_one_indexed_list(
                 data["CRD"], PhaseInvertibleSourceCodec.decode
             ),
-            module_sources=parse_indexed(
+            module_sources=decode_one_indexed_list(
                 data["MOD"], PhaseInvertibleSourceCodec.decode
             ),
-            usb_playback_sources=parse_indexed(
+            usb_playback_sources=decode_one_indexed_list(
                 data["PLAY"], PhaseInvertibleSourceCodec.decode
             ),
-            aes3_sources=parse_indexed(
+            aes3_sources=decode_one_indexed_list(
                 data["AES"], PhaseInvertibleSourceCodec.decode
             ),
-            user_signal_sources=parse_indexed(
+            user_signal_sources=decode_one_indexed_list(
                 {k: v for k, v in usr.items() if int(k) <= _USR_SPLIT},
                 UserSignalSourceCodec.decode,
             ),
-            user_signal_patch_sources=parse_indexed(
+            user_signal_patch_sources=decode_one_indexed_list(
                 {str(int(k) - _USR_SPLIT): v
                  for k, v in usr.items() if int(k) > _USR_SPLIT},
                 UserSignalPatchSourceCodec.decode,
             ),
-            oscillator_sources=parse_indexed(
+            oscillator_sources=decode_one_indexed_list(
                 data["OSC"], OscillatorSourceCodec.decode
             ),
         )
@@ -253,50 +253,50 @@ class SourceBankCodec:
     @staticmethod
     def encode(obj: SourceBank) -> dict:
         return {
-            "LCL": encode_indexed(
+            "LCL": encode_one_indexed_list(
                 obj.local_sources, PreampAccessibleSourceCodec.encode
             ),
-            "AUX": encode_indexed(
+            "AUX": encode_one_indexed_list(
                 obj.aux_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "A": encode_indexed(
+            "A": encode_one_indexed_list(
                 obj.aes50_a_sources, PreampAccessibleSourceCodec.encode
             ),
-            "B": encode_indexed(
+            "B": encode_one_indexed_list(
                 obj.aes50_b_sources, PreampAccessibleSourceCodec.encode
             ),
-            "C": encode_indexed(
+            "C": encode_one_indexed_list(
                 obj.aes50_c_sources, PreampAccessibleSourceCodec.encode
             ),
-            "SC": encode_indexed(
+            "SC": encode_one_indexed_list(
                 obj.stageconnect_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "USB": encode_indexed(
+            "USB": encode_one_indexed_list(
                 obj.usb_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "CRD": encode_indexed(
+            "CRD": encode_one_indexed_list(
                 obj.expansion_card_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "MOD": encode_indexed(
+            "MOD": encode_one_indexed_list(
                 obj.module_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "PLAY": encode_indexed(
+            "PLAY": encode_one_indexed_list(
                 obj.usb_playback_sources, PhaseInvertibleSourceCodec.encode
             ),
-            "AES": encode_indexed(
+            "AES": encode_one_indexed_list(
                 obj.aes3_sources, PhaseInvertibleSourceCodec.encode
             ),
             "USR": {
-                **encode_indexed(
+                **encode_one_indexed_list(
                     obj.user_signal_sources, UserSignalSourceCodec.encode
                 ),
-                **encode_indexed(
+                **encode_one_indexed_list(
                     obj.user_signal_patch_sources,
                     UserSignalPatchSourceCodec.encode,
                     offset=_USR_SPLIT,
                 ),
             },
-            "OSC": encode_indexed(
+            "OSC": encode_one_indexed_list(
                 obj.oscillator_sources, OscillatorSourceCodec.encode
             ),
         }

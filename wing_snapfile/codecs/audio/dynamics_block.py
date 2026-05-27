@@ -1,4 +1,4 @@
-from wing_snapfile.models.audio.dynamics import DynamicsBlock
+from wing_snapfile.models.audio.dynamics_block import DynamicsBlock
 from wing_snapfile.codecs.audio.dynamics_plugins import DynamicsPluginCodec
 
 

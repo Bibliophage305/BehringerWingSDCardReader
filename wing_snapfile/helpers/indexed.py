@@ -2,11 +2,11 @@ from wing_snapfile.types.one_indexed_list import OneIndexedList
 from typing import Callable
 
 
-def parse_indexed(data: dict, decoder: Callable) -> OneIndexedList:
+def decode_one_indexed_list(data: dict, decoder: Callable) -> OneIndexedList:
     return OneIndexedList.from_indexed_dict(data, decoder)
 
 
-def encode_indexed(
+def encode_one_indexed_list(
     data: OneIndexedList,
     encoder: Callable = lambda x: x,
     offset: int = 0,

@@ -17,7 +17,7 @@ from wing_snapfile.codecs.audio.expansion_cards import ExpansionCardsCodec
 from wing_snapfile.codecs.audio.play_settings import PlaySettingsCodec
 from wing_snapfile.codecs.audio.record_settings import RecordSettingsCodec
 
-from wing_snapfile.helpers.indexed import encode_indexed, parse_indexed
+from wing_snapfile.helpers.indexed import encode_one_indexed_list, decode_one_indexed_list
 
 
 class AudioDataCodec:
@@ -27,42 +27,42 @@ class AudioDataCodec:
             config=AudioConfigCodec.decode(data["cfg"]),
             io=IOCodec.decode(data["io"]),
 
-            channels=parse_indexed(
+            channels=decode_one_indexed_list(
                 data["ch"],
                 FullChannelCodec.decode,
             ),
 
-            aux_channels=parse_indexed(
+            aux_channels=decode_one_indexed_list(
                 data["aux"],
                 AuxChannelCodec.decode,
             ),
 
-            busses=parse_indexed(
+            busses=decode_one_indexed_list(
                 data["bus"],
                 BusChannelCodec.decode,
             ),
 
-            mains=parse_indexed(
+            mains=decode_one_indexed_list(
                 data["main"],
                 MainChannelCodec.decode,
             ),
 
-            matrices=parse_indexed(
+            matrices=decode_one_indexed_list(
                 data["mtx"],
                 MatrixChannelCodec.decode,
             ),
 
-            dcas=parse_indexed(
+            dcas=decode_one_indexed_list(
                 data["dca"],
                 DCACodec.decode,
             ),
 
-            mute_groups=parse_indexed(
+            mute_groups=decode_one_indexed_list(
                 data["mgrp"],
                 MuteGroupCodec.decode,
             ),
 
-            fx=parse_indexed(
+            fx=decode_one_indexed_list(
                 data["fx"],
                 lambda x: x,   # still raw dicts for now
             ),
@@ -77,14 +77,14 @@ class AudioDataCodec:
         return {
             "cfg": AudioConfigCodec.encode(obj.config),
             "io": IOCodec.encode(obj.io),
-            "ch": encode_indexed(obj.channels, FullChannelCodec.encode),
-            "aux": encode_indexed(obj.aux_channels, AuxChannelCodec.encode),
-            "bus": encode_indexed(obj.busses, BusChannelCodec.encode),
-            "main": encode_indexed(obj.mains, MainChannelCodec.encode),
-            "mtx": encode_indexed(obj.matrices, MatrixChannelCodec.encode),
-            "dca": encode_indexed(obj.dcas, DCACodec.encode),
-            "mgrp": encode_indexed(obj.mute_groups, MuteGroupCodec.encode),
-            "fx": encode_indexed(obj.fx),
+            "ch": encode_one_indexed_list(obj.channels, FullChannelCodec.encode),
+            "aux": encode_one_indexed_list(obj.aux_channels, AuxChannelCodec.encode),
+            "bus": encode_one_indexed_list(obj.busses, BusChannelCodec.encode),
+            "main": encode_one_indexed_list(obj.mains, MainChannelCodec.encode),
+            "mtx": encode_one_indexed_list(obj.matrices, MatrixChannelCodec.encode),
+            "dca": encode_one_indexed_list(obj.dcas, DCACodec.encode),
+            "mgrp": encode_one_indexed_list(obj.mute_groups, MuteGroupCodec.encode),
+            "fx": encode_one_indexed_list(obj.fx),
 
             "cards": ExpansionCardsCodec.encode(obj.expansion_cards),
             "play": PlaySettingsCodec.encode(obj.play_settings),

@@ -1,4 +1,4 @@
-from wing_snapfile.models.audio.eq import EQBlock
+from wing_snapfile.models.audio.eq_block import EQBlock
 from wing_snapfile.codecs.audio.eq_plugins import EQPluginCodec
 
 
