@@ -48,13 +48,13 @@
           "pfldim": 12,
           "eqbdtrim": 5,
           "srclvl": 0,
-          "srcmix": -26.30498695,
+          "srcmix": -26.29999924,
           "src": "MTX.5",
           "dirin": "CH.3",
           "tags": ""
         },
         "2": {
-          "lvl": -7.790811539,
+          "lvl": -7.799999237,
           "inv": true,
           "pan": 49,
           "wid": 50,
@@ -91,8 +91,8 @@
           "dim": 30,
           "pfldim": 21,
           "eqbdtrim": 7,
-          "srclvl": -6.656892776,
-          "srcmix": -47.63440704,
+          "srclvl": -6.700000763,
+          "srcmix": -47.59999847,
           "src": "MAIN.1",
           "dirin": "CH.5",
           "tags": ""
@@ -100,7 +100,7 @@
       },
       "solo": {
         "mode": "LIVE",
-        "mon": "PH+SPK",
+        "mon": "PH",
         "mute": false,
         "chtap": "PFL",
         "bustap": "AFL",
@@ -122,11 +122,11 @@
         "scopesrc": 0,
         "scopetap": "IN",
         "mtrsfc": {
-          "in": "PRE",
-          "bus": "PRE",
+          "in": "POST",
+          "bus": "POST",
           "main": "PRE",
-          "mtx": "PRE",
-          "dca": "PRE"
+          "mtx": "POST",
+          "dca": "POST"
         },
         "mtrpage": {
           "in": "PRE",
@@ -242,7 +242,7 @@
             "col": 1,
             "name": "Snare",
             "icon": 1,
-            "tags": "",
+            "tags": "#M1",
             "rmt": "OFF",
             "rcvc": false
           },
@@ -281,7 +281,7 @@
             "col": 1,
             "name": "",
             "icon": 1,
-            "tags": "",
+            "tags": "#M5",
             "rmt": "AES A",
             "rcvc": true
           },
@@ -346,7 +346,7 @@
             "col": 1,
             "name": "",
             "icon": 1,
-            "tags": "",
+            "tags": "#M5",
             "rmt": "OFF",
             "rcvc": false
           },
@@ -450,7 +450,7 @@
             "col": 1,
             "name": "",
             "icon": 1,
-            "tags": "",
+            "tags": "#M5",
             "rmt": "OFF",
             "rcvc": false
           },
@@ -489,7 +489,7 @@
             "col": 1,
             "name": "",
             "icon": 1,
-            "tags": "",
+            "tags": "#M5",
             "rmt": "OFF",
             "rcvc": false
           },
@@ -2574,7 +2574,7 @@
             "col": 1,
             "name": "",
             "icon": 0,
-            "tags": ""
+            "tags": "#M5"
           },
           "11": {
             "mode": "M",
@@ -2601,7 +2601,7 @@
             "col": 1,
             "name": "",
             "icon": 0,
-            "tags": ""
+            "tags": "#M5"
           },
           "14": {
             "mode": "M",
@@ -2655,7 +2655,7 @@
             "col": 1,
             "name": "",
             "icon": 0,
-            "tags": ""
+            "tags": "#M5"
           },
           "20": {
             "mode": "M",
@@ -6780,7 +6780,7 @@
           "hcs": "12",
           "tf": true,
           "mdl": "TILT",
-          "tilt": -3.25
+          "tilt": -3.5
         },
         "clink": true,
         "col": 1,
@@ -6872,9 +6872,9 @@
           "q": 0.400000006
         },
         "dynsc": {
-          "type": "OFF",
+          "type": "NOTCH",
           "f": 1002.37439,
-          "q": 1.995881796,
+          "q": 1.512613416,
           "src": "SELF",
           "tap": "IN"
         },
@@ -8472,8 +8472,8 @@
         "tapwid": 100,
         "postins": {
           "on": false,
-          "mode": "FX",
-          "ins": "FX13",
+          "mode": "AUTO_X",
+          "ins": "NONE",
           "w": 0
         },
         "tags": ""
@@ -25194,7 +25194,7 @@
         },
         "preins": {
           "on": true,
-          "ins": "FX1"
+          "ins": "NONE"
         },
         "main": {
           "1": {
@@ -27564,7 +27564,7 @@
         },
         "dir": {
           "on": true,
-          "lvl": -16.76441956,
+          "lvl": -16.79999924,
           "inv": true,
           "in": "MON.PH"
         },
@@ -27608,7 +27608,7 @@
           "hf": 11999.27539,
           "hq": 0.997970223,
           "heq": "SHV",
-          "tilt": 0
+          "tilt": -2.25
         },
         "dyn": {
           "on": true,
@@ -27626,8 +27626,8 @@
           "q": 0.400000006
         },
         "dynsc": {
-          "type": "OFF",
-          "f": 1002.37439,
+          "type": "NOTCH",
+          "f": 111.608345,
           "q": 1.995881796,
           "src": "SELF",
           "tap": "BUS"
@@ -28490,11 +28490,11 @@
     "mgrp": {
       "1": {
         "name": "MGRP.1",
-        "mute": false
+        "mute": true
       },
       "2": {
         "name": "MGRP.2",
-        "mute": false
+        "mute": true
       },
       "3": {
         "name": "MGRP.3",
@@ -28506,7 +28506,7 @@
       },
       "5": {
         "name": "MGRP.5",
-        "mute": false
+        "mute": true
       },
       "6": {
         "name": "MGRP.6",
@@ -28514,7 +28514,7 @@
       },
       "7": {
         "name": "MGRP.7",
-        "mute": false
+        "mute": true
       },
       "8": {
         "name": "MGRP.8",
@@ -28538,32 +28538,41 @@
         "mspd": 30
       },
       "2": {
-        "mdl": "SPKMAN",
+        "mdl": "GEQ",
         "fxmix": 100,
-        "hpf": 100.2374573,
-        "hptype": "FLAT",
-        "lpf": 2000.000122,
-        "lptype": "FLAT",
-        "tiltf": 1000,
-        "tiltg": 0,
-        "phase": 0,
-        "invert": false,
-        "dist": 0,
-        "pos": 0,
-        "dyneq": false,
-        "deqthr": -20,
-        "deqratio": 2,
-        "deqatt": 50,
-        "deqrel": 300.8161621,
-        "deqfilt": "BP",
-        "deqg": 0,
-        "deqf": 1002.37439,
-        "deqq": 0.997970223,
-        "deqmode": "high",
-        "lim": false,
-        "limthr": 0,
-        "limrms": true,
-        "limrel": 151.212616
+        "type": "STD",
+        "20": 0,
+        "25": 0,
+        "31": 0,
+        "40": 0,
+        "50": 0,
+        "63": 0,
+        "80": 0,
+        "100": 0,
+        "125": 0,
+        "160": 0,
+        "200": 0,
+        "250": 0,
+        "315": 0,
+        "400": 0,
+        "500": 0,
+        "630": 0,
+        "800": 0,
+        "1k": 0,
+        "1k25": 0,
+        "1k6": 0,
+        "2k": 0,
+        "2k5": 0,
+        "3k15": 0,
+        "4k": 0,
+        "5k": 0,
+        "6k3": 0,
+        "8k": 0,
+        "10k": 0,
+        "12k5": 0,
+        "16k": 0,
+        "20k": 0,
+        "TRIM": 0
       },
       "3": {
         "mdl": "NONE",
@@ -28574,10 +28583,23 @@
         "fxmix": 100
       },
       "5": {
-        "mdl": "BBD-DL",
+        "mdl": "ROOM",
         "fxmix": 63,
-        "dly": 65,
-        "fb": 70
+        "pdel": 40,
+        "size": 50,
+        "dcy": 2.506768703,
+        "mult": 1.214194894,
+        "damp": 5683.258301,
+        "lc": 84.24117279,
+        "hc": 7261.5625,
+        "shp": 0,
+        "sprd": 25,
+        "diff": 40,
+        "spin": 30,
+        "ecl": 250,
+        "ecr": 350,
+        "efl": 20,
+        "efr": 20
       },
       "6": {
         "mdl": "NONE",
@@ -28592,8 +28614,13 @@
         "fxmix": 100
       },
       "9": {
-        "mdl": "NONE",
-        "fxmix": 100
+        "mdl": "EXT",
+        "fxmix": 100,
+        "egrp": "OFF",
+        "ein": 1,
+        "emode": "ST",
+        "lat": 45,
+        "trim": 0
       },
       "10": {
         "mdl": "NONE",
@@ -39198,8 +39225,9 @@
       "gpio": {
         "1": {
           "bu": {
-            "mode": "OFF",
-            "name": "GPIO 1"
+            "mode": "INS1",
+            "name": "GPIO 1 CUST_NAME",
+            "ch": 7
           }
         },
         "2": {
@@ -39224,9 +39252,10 @@
       "user": {
         "1": {
           "bu": {
-            "mode": "OFF",
+            "mode": "MUTE",
             "name": "",
-            "ledstate": 0
+            "ch": 4,
+            "ledstate": 4
           },
           "bd": {
             "mode": "OFF",
@@ -39236,9 +39265,10 @@
         },
         "2": {
           "bu": {
-            "mode": "OFF",
+            "mode": "INS1",
             "name": "",
-            "ledstate": 0
+            "ch": 2,
+            "ledstate": 1
           },
           "bd": {
             "mode": "OFF",
@@ -39469,17 +39499,19 @@
       },
       "1": {
         "1": {
-          "led": false,
+          "led": true,
           "col": 1,
           "enc": {
-            "mode": "OFF",
+            "mode": "SSND",
             "name": "",
+            "send": "BUS4",
             "ledstate": 0
           },
           "bu": {
-            "mode": "OFF",
+            "mode": "SDRECA",
             "name": "",
-            "ledstate": 0
+            "sdrec": "REC",
+            "ledstate": 1
           },
           "bd": {
             "mode": "OFF",
@@ -39488,7 +39520,7 @@
           }
         },
         "2": {
-          "led": false,
+          "led": true,
           "col": 1,
           "enc": {
             "mode": "OFF",
@@ -39547,11 +39579,12 @@
       },
       "2": {
         "1": {
-          "led": false,
-          "col": 1,
+          "led": true,
+          "col": 6,
           "enc": {
-            "mode": "OFF",
-            "name": ""
+            "mode": "PAN",
+            "name": "",
+            "ch": 3
           },
           "bu": {
             "mode": "OFF",
@@ -39563,7 +39596,7 @@
           }
         },
         "2": {
-          "led": false,
+          "led": true,
           "col": 1,
           "enc": {
             "mode": "OFF",
@@ -39613,8 +39646,8 @@
       },
       "3": {
         "1": {
-          "led": false,
-          "col": 1,
+          "led": true,
+          "col": 6,
           "enc": {
             "mode": "OFF",
             "name": ""
@@ -40471,8 +40504,8 @@
       },
       "16": {
         "1": {
-          "led": false,
-          "col": 1,
+          "led": true,
+          "col": 3,
           "enc": {
             "mode": "OFF",
             "name": ""
@@ -40494,8 +40527,10 @@
             "name": ""
           },
           "bu": {
-            "mode": "OFF",
-            "name": ""
+            "mode": "SPILL",
+            "name": "",
+            "area": "EXT",
+            "tgt": "SELCH"
           },
           "bd": {
             "mode": "OFF",
@@ -40681,11 +40716,13 @@
           }
         },
         "2": {
-          "led": false,
-          "col": 1,
+          "led": true,
+          "col": 6,
           "bu": {
-            "mode": "OFF",
-            "name": ""
+            "mode": "FXPAR",
+            "name": "",
+            "fx": "FX1",
+            "par": 6
           }
         },
         "3": {
@@ -40809,8 +40846,8 @@
       },
       "D4": {
         "1": {
-          "led": false,
-          "col": 1,
+          "led": true,
+          "col": 2,
           "bu": {
             "mode": "OFF",
             "name": ""
@@ -40849,7 +40886,7 @@
     },
     "gpio": {
       "1": {
-        "mode": "TGLNO",
+        "mode": "INNO",
         "gpstate": false
       },
       "2": {
